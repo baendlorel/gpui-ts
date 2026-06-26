@@ -8,7 +8,6 @@
     "skipLibCheck": true,
     "types": ["node"],
 
-    "declaration": false,
     "outDir": "dist",
     "rootDir": ".",
     "paths": {

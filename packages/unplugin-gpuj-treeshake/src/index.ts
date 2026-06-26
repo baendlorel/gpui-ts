@@ -98,16 +98,15 @@ function analyzeUsage(code: string, usedMethods: Set<string>, options: PluginOpt
     });
 
     let hasGpujImport = false;
+    const program = ast.program;
 
     // First pass: check if file imports gpuj
-    if (t.isProgram(ast)) {
-      for (const node of ast.body) {
-        if (t.isImportDeclaration(node)) {
-          const source = node.source.value;
-          if (source === options.gpujPackageName || source.startsWith(options.gpujPackageName + '/')) {
-            hasGpujImport = true;
-            break;
-          }
+    for (const node of program.body) {
+      if (t.isImportDeclaration(node)) {
+        const source = node.source.value;
+        if (source === options.gpujPackageName || source.startsWith(options.gpujPackageName + '/')) {
+          hasGpujImport = true;
+          break;
         }
       }
     }
@@ -117,10 +116,8 @@ function analyzeUsage(code: string, usedMethods: Set<string>, options: PluginOpt
     }
 
     // Second pass: find method calls on elements
-    if (t.isProgram(ast)) {
-      for (const node of ast.body) {
-        scanNodeForMethodCalls(node, usedMethods);
-      }
+    for (const node of program.body) {
+      scanNodeForMethodCalls(node, usedMethods);
     }
 
     if (options.debug && usedMethods.size > 0) {
@@ -200,14 +197,11 @@ function transformElementFile(code: string, usedMethods: Set<string>, options: P
       plugins: ['typescript'],
     });
 
-    if (!t.isProgram(ast)) {
-      return null;
-    }
-
+    const program = ast.program;
     let modified = false;
 
     // Find Object.assign(HTMLElement.prototype, {...}) call
-    for (const node of ast.body) {
+    for (const node of program.body) {
       if (t.isExpressionStatement(node) && t.isCallExpression(node.expression)) {
         const callExpr = node.expression;
 
@@ -261,7 +255,6 @@ function transformElementFile(code: string, usedMethods: Set<string>, options: P
       const output = generate(ast, {}, code);
       return {
         code: output.code,
-        map: output.rawMappings ? { mappings: output.rawMappings } : null,
       };
     }
 

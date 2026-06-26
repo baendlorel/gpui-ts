@@ -18,7 +18,7 @@ const button = btn()
   .rounded('0.5rem')
   .cursorPointer()
   .onClick(() => console.log('Button clicked!'))
-  .child(h('Click me'));
+  .child('Click me');
 
 const textField = input()
   .px('1rem')
@@ -26,8 +26,8 @@ const textField = input()
   .border()
   .rounded('0.25rem')
   .w('20rem')
-  .placeholder('Enter text...')
-  .onChange((e) => console.log('Input changed:', e));
+  .attr('placeholder', 'Enter text...')
+  .onChange((e: Event) => console.log('Input changed:', e));
 
 app.child(button, textField);
 

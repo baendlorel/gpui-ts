@@ -193,6 +193,8 @@ declare global {
     on(eventName: string, handler: EventListener): this;
     off(eventName: string, handler: EventListener): this;
   }
+
+  // TODO 对于input表单系列要有onChange\placeholder\setValue\type等单独扩展
 }
 
 Object.assign(HTMLElement.prototype, {
