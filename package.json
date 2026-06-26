@@ -26,6 +26,7 @@
     "monorepo"
   ],
   "scripts": {
+    "pub": "tsx ./scripts/index.ts --publish",
     "build": "tsx ./scripts/index.ts --build",
     "check": "tsc --noEmit -p tsconfig.build.json",
     "test": "vitest",
