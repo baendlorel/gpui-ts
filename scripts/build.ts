@@ -28,5 +28,6 @@ export function buildWithInfo(info: PackageInfo) {
 
   console.log(`[${info.name}] Running global tsdown build...`);
   const actualConfig = join(info.path, 'tsdown.config.ts') ?? config;
-  execSync(`tsdown --config ${actualConfig} ${info.path}`, { cwd: info.path, stdio: 'inherit', env: info.env });
+  //  ${info.path}
+  execSync(`tsdown --config ${actualConfig}`, { cwd: info.path, stdio: 'inherit', env: info.env });
 }
