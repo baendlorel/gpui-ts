@@ -2,12 +2,10 @@
 
 import { check } from './check.js';
 import { publish } from './publish.js';
-import { test } from './test.js';
 import { build } from './build.js';
 
 const taskHandler = {
   '--publish': publish,
-  '--test': test,
   '--check': check,
   '--build': build,
 };

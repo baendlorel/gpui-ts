@@ -15,7 +15,7 @@ export interface PackageInfo {
     /**
      * Used to tell the child process which package to build. The vite config will read this variable to determine the entry file and output file name.
      */
-    CURRENT_PKG_PATH: string;
+    LIB_DIR: string;
     TZ?: string | undefined;
   };
 }
@@ -33,7 +33,7 @@ const loadJson = (p: string) => JSON.parse(readFileSync(p, 'utf-8'));
 export function getPackageInfo(who: string = 'main'): PackageInfo[] {
   return getGroup(who)
     .map((absolutePackagePath) => {
-      const data = loadJson(absolutePackagePath);
+      const data = loadJson(join(absolutePackagePath, 'package.json'));
 
       return {
         path: absolutePackagePath,
@@ -41,7 +41,7 @@ export function getPackageInfo(who: string = 'main'): PackageInfo[] {
         json: data,
         name: data.name as string,
         nameVer: `${data.name}@${data.version}`,
-        env: { ...process.env, CURRENT_PKG_PATH: absolutePackagePath },
+        env: { ...process.env, LIB_DIR: absolutePackagePath },
       };
     })
     .filter((info): info is PackageInfo => info !== null);

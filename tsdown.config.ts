@@ -1,5 +1,6 @@
 import { defineConfig } from 'tsdown';
 import replace from '@rollup/plugin-replace';
+import { join } from 'node:path';
 
 const isDev = process.env.NODE_ENV === 'development';
 const plugins = () => [
@@ -15,9 +16,11 @@ const plugins = () => [
   }),
 ];
 
+const libDir = process.env.LIB_DIR as string;
+
 export default defineConfig([
   {
-    entry: ['src/index.ts'],
+    entry: [join(libDir, 'src', 'index.ts')],
     format: ['esm'],
     dts: true,
     clean: true,
