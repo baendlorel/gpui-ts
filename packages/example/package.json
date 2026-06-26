@@ -1,0 +1,24 @@
+{
+  "name": "@gpui-ts/example",
+  "version": "0.0.1",
+  "description": "Example usage of gpui-ts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gpui-ts": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baendlorel/gpui-ts",
+    "directory": "packages/example"
+  },
+  "license": "MIT"
+}

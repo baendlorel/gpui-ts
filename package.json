@@ -1,6 +1,7 @@
 {
   "name": "gpui-ts",
   "version": "0.0.1",
+  "private": true,
   "author": {
     "name": "Kasukabe Tsumugi",
     "email": "futami16237@gmail.com"
@@ -10,29 +11,25 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "gpui-ts is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
-  "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs"
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "description": "gpui-ts monorepo - a functional web front-end framework similar to gpui",
+  "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架monorepo",
   "homepage": "https://github.com/baendlorel/gpui-ts#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/baendlorel/gpui-ts"
   },
-  "keywords": [],
+  "keywords": ["framework", "web", "gpui", "typescript", "monorepo"],
   "scripts": {
-    "build": "tsx ./scripts/index.ts --build",
+    "build": "pnpm -r --filter './packages/**' run build",
+    "build:core": "pnpm --filter './packages/core' run build",
     "check": "tsc --noEmit -p tsconfig.build.json",
     "test": "vitest",
-    "lint": "oxlint ."
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "format": "prettier --write .",
+    "clean": "pnpm -r run clean && rm -rf node_modules",
+    "dev": "pnpm --filter './packages/example' run dev",
+    "preinstall": "npx only-allow pnpm"
   },
   "license": "MIT",
   "devDependencies": {
@@ -47,5 +44,10 @@
     "tsx": "^4.22.4",
     "vitest": "^4.1.7"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "pnpm": {
+    "overrides": {
+      "typescript": "^6.0.3"
+    }
+  }
 }

@@ -1,12 +1,13 @@
+# IDE
 .vscode/settings.json
 
+# Project specific
 .draft/.**
 .rollup.cache
 dynamicDirectory
 .fluxion-private/
 .image.json
 local-test
-
 
 # Logs
 logs
@@ -15,6 +16,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -31,8 +33,6 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
-
-# nyc test coverage
 .nyc_output
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
@@ -50,6 +50,11 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+
+# Package manager specific
+.yarn/*
+.pnp.*
+.pnpm-store/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -84,13 +89,12 @@ web_modules/
 .cache
 .parcel-cache
 
-# Next.js build output
-.next
-out
-
-# Nuxt.js build / generate output
-.nuxt
+# Build outputs
 dist
+build
+out
+.next
+.nuxt
 
 # Gatsby files
 .cache/
@@ -103,7 +107,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Sveltekit cache directory
 .svelte-kit/
@@ -135,15 +138,15 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# yarn v3
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Monorepo specific
+packages/*/dist
+packages/*/node_modules
+packages/*/.next
+packages/*/.nuxt
+packages/*/build
+packages/*/coverage
+

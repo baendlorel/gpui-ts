@@ -1,0 +1,15 @@
+# pnpm workspace configuration
+# 定义 monorepo 的 packages 位置
+packages:
+  - 'packages/*'
+  - 'examples/*'  # 预留 examples 目录
+
+# 连接 workspace 的依赖
+# 这样内部包可以互相引用
+linkWorkspacePackages: true
+
+# 自动安装 peer dependencies
+autoInstallPeers: true
+
+# 严格模式，确保依赖版本一致
+strictPeerDependencies: true

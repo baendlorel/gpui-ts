@@ -5,13 +5,17 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "strict": true,
+    "skipLibCheck": true,
     "types": ["node"],
 
     "declaration": false,
     "outDir": "dist",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@gpui-ts/core": ["./packages/core/src"],
+      "@gpui-ts/types": ["./packages/types/src"],
+      "@gpui-ts/example": ["./packages/example/src"]
     }
   },
   "include": [
@@ -21,7 +25,18 @@
     "./draft/**/*.ts",
     "*.config.ts",
     "./tests/**/*.ts",
-    "./local-test/**/*.ts"
+    "./local-test/**/*.ts",
+    "./packages/**/src/**/*.ts"
   ],
-  "exclude": ["**/dist/**/*.js", "**/dist/**/*.d.ts", "**/example/**/code/**"]
+  "exclude": [
+    "**/dist/**/*.js",
+    "**/dist/**/*.d.ts",
+    "**/example/**/code/**",
+    "node_modules"
+  ],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/types" },
+    { "path": "./packages/example" }
+  ]
 }

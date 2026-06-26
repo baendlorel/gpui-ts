@@ -1,11 +1,8 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "Bundler",
-    "types": ["node"],
-    "outDir": "dist"
-  },
-  "include": ["./src/**/*.ts"],
-  "exclude": ["**/dist/**/*.js", "**/dist/**/*.d.ts", "**/example/**/code/**", "./tests/**", "./document/**"]
+  "files": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/types" },
+    { "path": "./packages/example" }
+  ]
 }
