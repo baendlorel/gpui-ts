@@ -197,21 +197,20 @@ let p = HTMLElement.prototype;
 
 p.jpui = true;
 
-p.id_ = function (this: HTMLElement, id: string) {
-  this.id = id;
-  return this;
-};
-
-p.class = function (this: HTMLElement, c: string | string[]) {
-  if (typeof c === 'string') {
-    this.className = c;
-  } else if (Array.isArray(c)) {
-    this.className = c.join(' ');
-  } else {
-    $throw('Invalid argument type');
-  }
-  return this;
-};
+let o = {
+  id_(id: string) {
+    this.id = id;
+    return this;
+  },
+  class(c: string | string[]) {
+    if (Array.isArray(c)) {
+      this.className = c.join(' ');
+    } else {
+      this.className = c;
+    }
+    return this;
+  },
+} as HTMLElement;
 
 p.w = function (this: HTMLElement, w: string) {
   this.style.width = w;
