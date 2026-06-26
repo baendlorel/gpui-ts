@@ -1,5 +1,6 @@
 type otherstring = string & {};
 export class HTMLBuilder<Tag extends keyof HTMLElementTagNameMap> {
+  public readonly isGpuiTs = true;
   private _tag: string;
   private _className?: string;
   private _id?: string;
