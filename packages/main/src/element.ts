@@ -859,258 +859,207 @@ Object.assign(HTMLElement.prototype, {
   },
 
   onClick(handler) {
-    this.addEventListener('click', handler);
-    return this;
+    return this.on('click', handler as EventListener);
   },
 
   onDoubleClick(handler) {
-    this.addEventListener('dblclick', handler);
-    return this;
+    return this.on('dblclick', handler as EventListener);
   },
 
   onMouseDown(handler) {
-    this.addEventListener('mousedown', handler);
-    return this;
+    return this.on('mousedown', handler as EventListener);
   },
 
   onMouseUp(handler) {
-    this.addEventListener('mouseup', handler);
-    return this;
+    return this.on('mouseup', handler as EventListener);
   },
 
   onMouseMove(handler) {
-    this.addEventListener('mousemove', handler);
-    return this;
+    return this.on('mousemove', handler as EventListener);
   },
 
   onMouseEnter(handler) {
-    this.addEventListener('mouseenter', handler);
-    return this;
+    return this.on('mouseenter', handler as EventListener);
   },
 
   onMouseLeave(handler) {
-    this.addEventListener('mouseleave', handler);
-    return this;
+    return this.on('mouseleave', handler as EventListener);
   },
 
   onMouseOver(handler) {
-    this.addEventListener('mouseover', handler);
-    return this;
+    return this.on('mouseover', handler as EventListener);
   },
 
   onMouseOut(handler) {
-    this.addEventListener('mouseout', handler);
-    return this;
+    return this.on('mouseout', handler as EventListener);
   },
 
   onMouseWheel(handler) {
-    this.addEventListener('wheel', handler);
-    return this;
+    return this.on('wheel', handler as EventListener);
   },
 
   onKeyDown(handler) {
-    this.addEventListener('keydown', handler);
-    return this;
+    return this.on('keydown', handler as EventListener);
   },
 
   onKeyUp(handler) {
-    this.addEventListener('keyup', handler);
-    return this;
+    return this.on('keyup', handler as EventListener);
   },
 
   onKeyPress(handler) {
-    this.addEventListener('keypress', handler);
-    return this;
+    return this.on('keypress', handler as EventListener);
   },
 
   onFocus(handler) {
-    this.addEventListener('focus', handler);
-    return this;
+    return this.on('focus', handler as EventListener);
   },
 
   onBlur(handler) {
-    this.addEventListener('blur', handler);
-    return this;
+    return this.on('blur', handler as EventListener);
   },
 
   onFocusIn(handler) {
-    this.addEventListener('focusin', handler);
-    return this;
+    return this.on('focusin', handler as EventListener);
   },
 
   onFocusOut(handler) {
-    this.addEventListener('focusout', handler);
-    return this;
+    return this.on('focusout', handler as EventListener);
   },
 
   onChange(handler) {
-    this.addEventListener('change', handler);
-    return this;
+    return this.on('change', handler as EventListener);
   },
 
   onInput(handler) {
-    this.addEventListener('input', handler);
-    return this;
+    return this.on('input', handler as EventListener);
   },
 
   onSubmit(handler) {
-    this.addEventListener('submit', handler);
-    return this;
+    return this.on('submit', handler as EventListener);
   },
 
   onReset(handler) {
-    this.addEventListener('reset', handler);
-    return this;
+    return this.on('reset', handler as EventListener);
   },
 
   onTouchStart(handler) {
-    this.addEventListener('touchstart', handler);
-    return this;
+    return this.on('touchstart', handler as EventListener);
   },
 
   onTouchEnd(handler) {
-    this.addEventListener('touchend', handler);
-    return this;
+    return this.on('touchend', handler as EventListener);
   },
 
   onTouchMove(handler) {
-    this.addEventListener('touchmove', handler);
-    return this;
+    return this.on('touchmove', handler as EventListener);
   },
 
   onTouchCancel(handler) {
-    this.addEventListener('touchcancel', handler);
-    return this;
+    return this.on('touchcancel', handler as EventListener);
   },
 
   onDrag(handler: (event: DragEvent) => void) {
-    this.addEventListener('drag', handler);
-    return this;
+    return this.on('drag', handler as EventListener);
   },
 
   onDragStart(handler: (event: DragEvent) => void) {
-    this.addEventListener('dragstart', handler);
-    return this;
+    return this.on('dragstart', handler as EventListener);
   },
 
   onDragEnd(handler: (event: DragEvent) => void) {
-    this.addEventListener('dragend', handler);
-    return this;
+    return this.on('dragend', handler as EventListener);
   },
 
   onDragEnter(handler: (event: DragEvent) => void) {
-    this.addEventListener('dragenter', handler);
-    return this;
+    return this.on('dragenter', handler as EventListener);
   },
 
   onDragLeave(handler: (event: DragEvent) => void) {
-    this.addEventListener('dragleave', handler);
-    return this;
+    return this.on('dragleave', handler as EventListener);
   },
 
   onDragOver(handler: (event: DragEvent) => void) {
-    this.addEventListener('dragover', handler);
-    return this;
+    return this.on('dragover', handler as EventListener);
   },
 
   onDragDrop(handler: (event: DragEvent) => void) {
-    this.addEventListener('drop', handler);
-    return this;
+    return this.on('drop', handler as EventListener);
   },
 
   onCopy(handler: (event: ClipboardEvent) => void) {
-    this.addEventListener('copy', handler);
-    return this;
+    return this.on('copy', handler as EventListener);
   },
 
   onCut(handler: (event: ClipboardEvent) => void) {
-    this.addEventListener('cut', handler);
-    return this;
+    return this.on('cut', handler as EventListener);
   },
 
   onPaste(handler: (event: ClipboardEvent) => void) {
-    this.addEventListener('paste', handler);
-    return this;
+    return this.on('paste', handler as EventListener);
   },
 
   onScroll(handler) {
-    this.addEventListener('scroll', handler);
-    return this;
+    return this.on('scroll', handler as EventListener);
   },
 
   onResize(handler: (event: UIEvent) => void) {
-    this.addEventListener('resize', handler);
-    return this;
+    return this.on('resize', handler as EventListener);
   },
 
   onPlay(handler) {
-    this.addEventListener('play', handler);
-    return this;
+    return this.on('play', handler as EventListener);
   },
 
   onPause(handler) {
-    this.addEventListener('pause', handler);
-    return this;
+    return this.on('pause', handler as EventListener);
   },
 
   onEnded(handler) {
-    this.addEventListener('ended', handler);
-    return this;
+    return this.on('ended', handler as EventListener);
   },
 
   onVolumeChange(handler) {
-    this.addEventListener('volumechange', handler);
-    return this;
+    return this.on('volumechange', handler as EventListener);
   },
 
   onAnimationStart(handler) {
-    this.addEventListener('animationstart', handler);
-    return this;
+    return this.on('animationstart', handler as EventListener);
   },
 
   onAnimationEnd(handler) {
-    this.addEventListener('animationend', handler);
-    return this;
+    return this.on('animationend', handler as EventListener);
   },
 
   onAnimationIteration(handler) {
-    this.addEventListener('animationiteration', handler);
-    return this;
+    return this.on('animationiteration', handler as EventListener);
   },
 
   onTransitionEnd(handler) {
-    this.addEventListener('transitionend', handler);
-    return this;
+    return this.on('transitionend', handler as EventListener);
   },
 
   onPointerDown(handler) {
-    this.addEventListener('pointerdown', handler);
-    return this;
+    return this.on('pointerdown', handler as EventListener);
   },
 
   onPointerUp(handler) {
-    this.addEventListener('pointerup', handler);
-    return this;
+    return this.on('pointerup', handler as EventListener);
   },
 
   onPointerMove(handler) {
-    this.addEventListener('pointermove', handler);
-    return this;
+    return this.on('pointermove', handler as EventListener);
   },
 
   onPointerEnter(handler) {
-    this.addEventListener('pointerenter', handler);
-    return this;
+    return this.on('pointerenter', handler as EventListener);
   },
 
   onPointerLeave(handler) {
-    this.addEventListener('pointerleave', handler);
-    return this;
+    return this.on('pointerleave', handler as EventListener);
   },
 
   onPointerCancel(handler) {
-    this.addEventListener('pointercancel', handler);
-    return this;
+    return this.on('pointercancel', handler as EventListener);
   },
 
   on(eventName, handler) {

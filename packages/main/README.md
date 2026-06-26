@@ -1,35 +1,34 @@
-# gpuj
+# Zed Gpui TS
 
-[![npm version](https://img.shields.io/npm/v/gpuj.svg)](https://www.npmjs.org/package/gpuj)
-[![npm downloads](https://img.shields.io/npm/dm/gpuj.svg)](https://www.npmjs.org/package/gpuj)
+[![npm version](https://img.shields.io/npm/v/zed-gpui.svg)](https://www.npmjs.org/package/zed-gpui)
+[![npm downloads](https://img.shields.io/npm/dm/zed-gpui.svg)](https://www.npmjs.org/package/zed-gpui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="../../assets/icon.png" width="240px" alt="gpuj logo" />
+  <img src="../../assets/icon.png" width="240px" alt="zed-gpui logo" />
 </p>
 
 > A functional web front-end framework with gpui-inspired syntax
 
-gpuj is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
+zed-gpui is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
 
 ## Features
 
 - 🎨 **Rich styling API** - Flexbox, Grid, spacing, colors, typography, and more
 - ⚡ **Event handling** - Comprehensive event listeners (mouse, keyboard, touch, drag & drop, etc.)
 - 🔧 **Type-safe** - Full TypeScript support with type inference
-- 📦 **Auto-injection** - Optional inject module for seamless DOM integration
 - 🪶 **Lightweight** - Zero dependencies, tree-shakeable
 
 ## Installation
 
 ```bash
-pnpm add gpuj
+pnpm add zed-gpui
 ```
 
 ## Quick Start
 
 ```typescript
-import { div, p, btn } from 'gpuj';
+import { div, p, btn } from 'zed-gpui';
 
 // Create elements with chained styling
 const container = div()
@@ -41,7 +40,7 @@ const container = div()
 const title = p()
   .textSize('1.5rem')
   .text('#333')
-  .text('Hello, gpuj!');
+  .text('Hello, zed-gpui!');
 
 const button = btn()
   .px('1rem')
@@ -61,20 +60,6 @@ document.body.append(
 );
 ```
 
-## Auto-injection Mode
-
-For automatic `build()` calling, import the inject module:
-
-```typescript
-import 'gpuj/inject';
-import { div, p, btn } from 'gpuj';
-
-// Now you can use HTMLBuilder directly with DOM methods
-document.body.append(
-  div().flex().p('2rem'),
-  p().text('Auto-builded!')
-);
-```
 
 ## API Overview
 
@@ -155,6 +140,3 @@ btn()    // <button>
 
 MIT
 
----
-
-**GitHub**: [baendlorel/gpuj](https://github.com/baendlorel/gpuj)
