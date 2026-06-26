@@ -13,9 +13,9 @@
     "rootDir": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@gpui-ts/core": ["./packages/core/src"],
-      "@gpui-ts/types": ["./packages/types/src"],
-      "@gpui-ts/example": ["./packages/example/src"]
+      "@gpuj/core": ["./packages/core/src"],
+      "@gpuj/types": ["./packages/types/src"],
+      "@gpuj/example": ["./packages/example/src"]
     }
   },
   "include": [

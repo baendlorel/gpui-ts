@@ -10,9 +10,9 @@ const plugins = () => [
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 
     // global $throw
-    "$throw('": `throw new Error('[gpui-ts error] `,
-    '$throw(`': 'throw new Error(`[gpui-ts error] ',
-    '$throw("': `throw new Error("[gpui-ts error] `,
+    "$throw('": `throw new Error('[gpuj error] `,
+    '$throw(`': 'throw new Error(`[gpuj error] ',
+    '$throw("': `throw new Error("[gpuj error] `,
   }),
 ];
 

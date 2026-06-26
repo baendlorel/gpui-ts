@@ -1,5 +1,5 @@
 {
-  "name": "gpui-ts",
+  "name": "gpuj-workspace",
   "version": "0.0.1",
   "private": true,
   "author": {
@@ -11,12 +11,12 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "gpui-ts monorepo - a functional web front-end framework similar to gpui",
-  "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架monorepo",
-  "homepage": "https://github.com/baendlorel/gpui-ts#readme",
+  "description": "gpuj monorepo - a functional web front-end framework similar to gpui",
+  "description_zh": "gpuj 是一个写法类似 gpui 的函数式 web 前端框架 monorepo",
+  "homepage": "https://github.com/baendlorel/gpuj#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpui-ts"
+    "url": "https://github.com/baendlorel/gpuj"
   },
   "keywords": [
     "framework",

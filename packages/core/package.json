@@ -1,5 +1,5 @@
 {
-  "name": "jpui",
+  "name": "gpuj",
   "version": "0.0.1",
   "author": {
     "name": "Kasukabe Tsumugi",
@@ -10,8 +10,8 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "jpui is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
-  "description_zh": "jpui 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
+  "description": "gpuj is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
+  "description_zh": "gpuj 是一个写法类似 gpui 的函数式 web 前端框架，通过增强HTMLElement原型实现其功能",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -31,10 +31,10 @@
     "dist",
     "instruction.md"
   ],
-  "homepage": "https://github.com/baendlorel/gpui-ts#readme",
+  "homepage": "https://github.com/baendlorel/gpuj#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpui-ts",
+    "url": "https://github.com/baendlorel/gpuj",
     "directory": "packages/core"
   },
   "keywords": [

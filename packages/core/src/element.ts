@@ -221,9 +221,11 @@ function removeTrackedEventListener(element: HTMLElement, eventName: string) {
   }
 }
 
-HTMLElement.prototype.jpui = true;
+let p = HTMLElement.prototype;
 
-HTMLElement.prototype.class = function (this: HTMLElement, c: string | string[]) {
+p.jpui = true;
+
+p.class = function (this: HTMLElement, c: string | string[]) {
   if (typeof c === 'string') {
     this.className = c;
   } else if (Array.isArray(c)) {
@@ -234,400 +236,400 @@ HTMLElement.prototype.class = function (this: HTMLElement, c: string | string[])
   return this;
 };
 
-HTMLElement.prototype.w = function (this: HTMLElement, w: string) {
+p.w = function (this: HTMLElement, w: string) {
   this.style.width = w;
   return this;
 };
 
-HTMLElement.prototype.h = function (this: HTMLElement, h: string) {
+p.h = function (this: HTMLElement, h: string) {
   this.style.height = h;
   return this;
 };
 
-HTMLElement.prototype.size = function (this: HTMLElement, w: string, h: string) {
+p.size = function (this: HTMLElement, w: string, h: string) {
   this.style.width = w;
   this.style.height = h;
   return this;
 };
 
-HTMLElement.prototype.minW = function (this: HTMLElement, w: string) {
+p.minW = function (this: HTMLElement, w: string) {
   this.style.minWidth = w;
   return this;
 };
 
-HTMLElement.prototype.minH = function (this: HTMLElement, h: string) {
+p.minH = function (this: HTMLElement, h: string) {
   this.style.minHeight = h;
   return this;
 };
 
-HTMLElement.prototype.maxW = function (this: HTMLElement, w: string) {
+p.maxW = function (this: HTMLElement, w: string) {
   this.style.maxWidth = w;
   return this;
 };
 
-HTMLElement.prototype.maxH = function (this: HTMLElement, h: string) {
+p.maxH = function (this: HTMLElement, h: string) {
   this.style.maxHeight = h;
   return this;
 };
 
-HTMLElement.prototype.flex = function (this: HTMLElement) {
+p.flex = function (this: HTMLElement) {
   this.style.display = 'flex';
   return this;
 };
 
-HTMLElement.prototype.flexFlex = function (this: HTMLElement) {
+p.flexFlex = function (this: HTMLElement) {
   this.style.display = 'flex';
   this.style.flex = '1 1 0%';
   return this;
 };
 
-HTMLElement.prototype.flexNone = function (this: HTMLElement) {
+p.flexNone = function (this: HTMLElement) {
   this.style.flex = 'none';
   return this;
 };
 
-HTMLElement.prototype.flexAuto = function (this: HTMLElement) {
+p.flexAuto = function (this: HTMLElement) {
   this.style.flex = '1 1 auto';
   return this;
 };
 
-HTMLElement.prototype.flexGrow = function (this: HTMLElement, grow: number) {
+p.flexGrow = function (this: HTMLElement, grow: number) {
   this.style.flexGrow = String(grow);
   return this;
 };
 
-HTMLElement.prototype.flexShrink = function (this: HTMLElement, shrink: number) {
+p.flexShrink = function (this: HTMLElement, shrink: number) {
   this.style.flexShrink = String(shrink);
   return this;
 };
 
-HTMLElement.prototype.flexBasis = function (this: HTMLElement, basis: string) {
+p.flexBasis = function (this: HTMLElement, basis: string) {
   this.style.flexBasis = basis;
   return this;
 };
 
-HTMLElement.prototype.flexDirection = function (this: HTMLElement, direction: string) {
+p.flexDirection = function (this: HTMLElement, direction: string) {
   this.style.flexDirection = direction;
   return this;
 };
 
-HTMLElement.prototype.flexWrap = function (this: HTMLElement, wrap: string) {
+p.flexWrap = function (this: HTMLElement, wrap: string) {
   this.style.flexWrap = wrap;
   return this;
 };
 
-HTMLElement.prototype.grid = function (this: HTMLElement) {
+p.grid = function (this: HTMLElement) {
   this.style.display = 'grid';
   return this;
 };
 
-HTMLElement.prototype.gridTemplateColumns = function (this: HTMLElement, columns: string) {
+p.gridTemplateColumns = function (this: HTMLElement, columns: string) {
   this.style.gridTemplateColumns = columns;
   return this;
 };
 
-HTMLElement.prototype.gridTemplateRows = function (this: HTMLElement, rows: string) {
+p.gridTemplateRows = function (this: HTMLElement, rows: string) {
   this.style.gridTemplateRows = rows;
   return this;
 };
 
-HTMLElement.prototype.gridColumn = function (this: HTMLElement, column: string) {
+p.gridColumn = function (this: HTMLElement, column: string) {
   this.style.gridColumn = column;
   return this;
 };
 
-HTMLElement.prototype.gridRow = function (this: HTMLElement, row: string) {
+p.gridRow = function (this: HTMLElement, row: string) {
   this.style.gridRow = row;
   return this;
 };
 
-HTMLElement.prototype.gap = function (this: HTMLElement, gap: string) {
+p.gap = function (this: HTMLElement, gap: string) {
   this.style.gap = gap;
   return this;
 };
 
-HTMLElement.prototype.gapX = function (this: HTMLElement, gap: string) {
+p.gapX = function (this: HTMLElement, gap: string) {
   this.style.columnGap = gap;
   return this;
 };
 
-HTMLElement.prototype.gapY = function (this: HTMLElement, gap: string) {
+p.gapY = function (this: HTMLElement, gap: string) {
   this.style.rowGap = gap;
   return this;
 };
 
-HTMLElement.prototype.justify = function (this: HTMLElement, justify: string) {
+p.justify = function (this: HTMLElement, justify: string) {
   this.style.justifyContent = justify;
   return this;
 };
 
-HTMLElement.prototype.items = function (this: HTMLElement, items: string) {
+p.items = function (this: HTMLElement, items: string) {
   this.style.alignItems = items;
   return this;
 };
 
-HTMLElement.prototype.content = function (this: HTMLElement, content: string) {
+p.content = function (this: HTMLElement, content: string) {
   this.style.alignContent = content;
   return this;
 };
 
-HTMLElement.prototype.self = function (this: HTMLElement, alignSelf: string) {
+p.self = function (this: HTMLElement, alignSelf: string) {
   this.style.alignSelf = alignSelf;
   return this;
 };
 
-HTMLElement.prototype.justifySelf = function (this: HTMLElement, justifySelf: string) {
+p.justifySelf = function (this: HTMLElement, justifySelf: string) {
   this.style.justifySelf = justifySelf;
   return this;
 };
 
-HTMLElement.prototype.px = function (this: HTMLElement, px: string) {
+p.px = function (this: HTMLElement, px: string) {
   this.style.paddingLeft = px;
   this.style.paddingRight = px;
   return this;
 };
 
-HTMLElement.prototype.py = function (this: HTMLElement, py: string) {
+p.py = function (this: HTMLElement, py: string) {
   this.style.paddingTop = py;
   this.style.paddingBottom = py;
   return this;
 };
 
-HTMLElement.prototype.pt = function (this: HTMLElement, pt: string) {
+p.pt = function (this: HTMLElement, pt: string) {
   this.style.paddingTop = pt;
   return this;
 };
 
-HTMLElement.prototype.pr = function (this: HTMLElement, pr: string) {
+p.pr = function (this: HTMLElement, pr: string) {
   this.style.paddingRight = pr;
   return this;
 };
 
-HTMLElement.prototype.pb = function (this: HTMLElement, pb: string) {
+p.pb = function (this: HTMLElement, pb: string) {
   this.style.paddingBottom = pb;
   return this;
 };
 
-HTMLElement.prototype.pl = function (this: HTMLElement, pl: string) {
+p.pl = function (this: HTMLElement, pl: string) {
   this.style.paddingLeft = pl;
   return this;
 };
 
-HTMLElement.prototype.p = function (this: HTMLElement, p: string) {
+p.p = function (this: HTMLElement, p: string) {
   this.style.padding = p;
   return this;
 };
 
-HTMLElement.prototype.mx = function (this: HTMLElement, mx: string) {
+p.mx = function (this: HTMLElement, mx: string) {
   this.style.marginLeft = mx;
   this.style.marginRight = mx;
   return this;
 };
 
-HTMLElement.prototype.my = function (this: HTMLElement, my: string) {
+p.my = function (this: HTMLElement, my: string) {
   this.style.marginTop = my;
   this.style.marginBottom = my;
   return this;
 };
 
-HTMLElement.prototype.mt = function (this: HTMLElement, mt: string) {
+p.mt = function (this: HTMLElement, mt: string) {
   this.style.marginTop = mt;
   return this;
 };
 
-HTMLElement.prototype.mr = function (this: HTMLElement, mr: string) {
+p.mr = function (this: HTMLElement, mr: string) {
   this.style.marginRight = mr;
   return this;
 };
 
-HTMLElement.prototype.mb = function (this: HTMLElement, mb: string) {
+p.mb = function (this: HTMLElement, mb: string) {
   this.style.marginBottom = mb;
   return this;
 };
 
-HTMLElement.prototype.ml = function (this: HTMLElement, ml: string) {
+p.ml = function (this: HTMLElement, ml: string) {
   this.style.marginLeft = ml;
   return this;
 };
 
-HTMLElement.prototype.m = function (this: HTMLElement, m: string) {
+p.m = function (this: HTMLElement, m: string) {
   this.style.margin = m;
   return this;
 };
 
-HTMLElement.prototype.border = function (this: HTMLElement) {
+p.border = function (this: HTMLElement) {
   this.style.border = '1px solid currentColor';
   return this;
 };
 
-HTMLElement.prototype.borderW = function (this: HTMLElement, width: string) {
+p.borderW = function (this: HTMLElement, width: string) {
   this.style.borderWidth = width;
   return this;
 };
 
-HTMLElement.prototype.borderT = function (this: HTMLElement, width: string) {
+p.borderT = function (this: HTMLElement, width: string) {
   this.style.borderTopWidth = width;
   return this;
 };
 
-HTMLElement.prototype.borderR = function (this: HTMLElement, width: string) {
+p.borderR = function (this: HTMLElement, width: string) {
   this.style.borderRightWidth = width;
   return this;
 };
 
-HTMLElement.prototype.borderB = function (this: HTMLElement, width: string) {
+p.borderB = function (this: HTMLElement, width: string) {
   this.style.borderBottomWidth = width;
   return this;
 };
 
-HTMLElement.prototype.borderL = function (this: HTMLElement, width: string) {
+p.borderL = function (this: HTMLElement, width: string) {
   this.style.borderLeftWidth = width;
   return this;
 };
 
-HTMLElement.prototype.borderColor = function (this: HTMLElement, color: string) {
+p.borderColor = function (this: HTMLElement, color: string) {
   this.style.borderColor = color;
   return this;
 };
 
-HTMLElement.prototype.borderStyle = function (this: HTMLElement, style: string) {
+p.borderStyle = function (this: HTMLElement, style: string) {
   this.style.borderStyle = style;
   return this;
 };
 
-HTMLElement.prototype.rounded = function (this: HTMLElement, radius: string) {
+p.rounded = function (this: HTMLElement, radius: string) {
   this.style.borderRadius = radius;
   return this;
 };
 
-HTMLElement.prototype.roundedTL = function (this: HTMLElement, radius: string) {
+p.roundedTL = function (this: HTMLElement, radius: string) {
   this.style.borderTopLeftRadius = radius;
   return this;
 };
 
-HTMLElement.prototype.roundedTR = function (this: HTMLElement, radius: string) {
+p.roundedTR = function (this: HTMLElement, radius: string) {
   this.style.borderTopRightRadius = radius;
   return this;
 };
 
-HTMLElement.prototype.roundedBL = function (this: HTMLElement, radius: string) {
+p.roundedBL = function (this: HTMLElement, radius: string) {
   this.style.borderBottomLeftRadius = radius;
   return this;
 };
 
-HTMLElement.prototype.roundedBR = function (this: HTMLElement, radius: string) {
+p.roundedBR = function (this: HTMLElement, radius: string) {
   this.style.borderBottomRightRadius = radius;
   return this;
 };
 
-HTMLElement.prototype.bg = function (this: HTMLElement, color: string) {
+p.bg = function (this: HTMLElement, color: string) {
   this.style.backgroundColor = color;
   return this;
 };
 
-HTMLElement.prototype.bgColor = function (this: HTMLElement, color: string) {
+p.bgColor = function (this: HTMLElement, color: string) {
   this.style.backgroundColor = color;
   return this;
 };
 
-HTMLElement.prototype.bgImage = function (this: HTMLElement, image: string) {
+p.bgImage = function (this: HTMLElement, image: string) {
   this.style.backgroundImage = image;
   return this;
 };
 
-HTMLElement.prototype.bgSize = function (this: HTMLElement, size: string) {
+p.bgSize = function (this: HTMLElement, size: string) {
   this.style.backgroundSize = size;
   return this;
 };
 
-HTMLElement.prototype.bgPosition = function (this: HTMLElement, position: string) {
+p.bgPosition = function (this: HTMLElement, position: string) {
   this.style.backgroundPosition = position;
   return this;
 };
 
-HTMLElement.prototype.bgRepeat = function (this: HTMLElement, repeat: string) {
+p.bgRepeat = function (this: HTMLElement, repeat: string) {
   this.style.backgroundRepeat = repeat;
   return this;
 };
 
-HTMLElement.prototype.shadow = function (this: HTMLElement, shadow: string) {
+p.shadow = function (this: HTMLElement, shadow: string) {
   this.style.boxShadow = shadow;
   return this;
 };
 
-HTMLElement.prototype.shadowMd = function (this: HTMLElement) {
+p.shadowMd = function (this: HTMLElement) {
   this.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)';
   return this;
 };
 
-HTMLElement.prototype.shadowLg = function (this: HTMLElement) {
+p.shadowLg = function (this: HTMLElement) {
   this.style.boxShadow = '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)';
   return this;
 };
 
-HTMLElement.prototype.shadowNone = function (this: HTMLElement) {
+p.shadowNone = function (this: HTMLElement) {
   this.style.boxShadow = 'none';
   return this;
 };
 
-HTMLElement.prototype.opacity = function (this: HTMLElement, value: number) {
+p.opacity = function (this: HTMLElement, value: number) {
   this.style.opacity = String(value);
   return this;
 };
 
-HTMLElement.prototype.text = function (this: HTMLElement, color: string) {
+p.text = function (this: HTMLElement, color: string) {
   this.style.color = color;
   return this;
 };
 
-HTMLElement.prototype.textColor = function (this: HTMLElement, color: string) {
+p.textColor = function (this: HTMLElement, color: string) {
   this.style.color = color;
   return this;
 };
 
-HTMLElement.prototype.textSize = function (this: HTMLElement, size: string) {
+p.textSize = function (this: HTMLElement, size: string) {
   this.style.fontSize = size;
   return this;
 };
 
-HTMLElement.prototype.textAlign = function (this: HTMLElement, align: string) {
+p.textAlign = function (this: HTMLElement, align: string) {
   this.style.textAlign = align;
   return this;
 };
 
-HTMLElement.prototype.fontWeight = function (this: HTMLElement, weight: string) {
+p.fontWeight = function (this: HTMLElement, weight: string) {
   this.style.fontWeight = weight;
   return this;
 };
 
-HTMLElement.prototype.lineHeight = function (this: HTMLElement, height: string) {
+p.lineHeight = function (this: HTMLElement, height: string) {
   this.style.lineHeight = height;
   return this;
 };
 
-HTMLElement.prototype.letterSpacing = function (this: HTMLElement, spacing: string) {
+p.letterSpacing = function (this: HTMLElement, spacing: string) {
   this.style.letterSpacing = spacing;
   return this;
 };
 
-HTMLElement.prototype.textOverflow = function (this: HTMLElement, overflow: string) {
+p.textOverflow = function (this: HTMLElement, overflow: string) {
   this.style.textOverflow = overflow;
   return this;
 };
 
-HTMLElement.prototype.whitespace = function (this: HTMLElement, value: string) {
+p.whitespace = function (this: HTMLElement, value: string) {
   this.style.whiteSpace = value;
   return this;
 };
 
-HTMLElement.prototype.truncate = function (this: HTMLElement) {
+p.truncate = function (this: HTMLElement) {
   this.style.overflow = 'hidden';
   this.style.textOverflow = 'ellipsis';
   this.style.whiteSpace = 'nowrap';
   return this;
 };
 
-HTMLElement.prototype.lineClamp = function (this: HTMLElement, lines: number) {
+p.lineClamp = function (this: HTMLElement, lines: number) {
   this.style.display = '-webkit-box';
   this.style.webkitLineClamp = String(lines);
   this.style.webkitBoxOrient = 'vertical';
@@ -635,32 +637,32 @@ HTMLElement.prototype.lineClamp = function (this: HTMLElement, lines: number) {
   return this;
 };
 
-HTMLElement.prototype.relative = function (this: HTMLElement) {
+p.relative = function (this: HTMLElement) {
   this.style.position = 'relative';
   return this;
 };
 
-HTMLElement.prototype.absolute = function (this: HTMLElement) {
+p.absolute = function (this: HTMLElement) {
   this.style.position = 'absolute';
   return this;
 };
 
-HTMLElement.prototype.fixed = function (this: HTMLElement) {
+p.fixed = function (this: HTMLElement) {
   this.style.position = 'fixed';
   return this;
 };
 
-HTMLElement.prototype.sticky = function (this: HTMLElement) {
+p.sticky = function (this: HTMLElement) {
   this.style.position = 'sticky';
   return this;
 };
 
-HTMLElement.prototype.static = function (this: HTMLElement) {
+p.static = function (this: HTMLElement) {
   this.style.position = 'static';
   return this;
 };
 
-HTMLElement.prototype.inset = function (this: HTMLElement, value: string) {
+p.inset = function (this: HTMLElement, value: string) {
   this.style.top = value;
   this.style.right = value;
   this.style.bottom = value;
@@ -668,594 +670,479 @@ HTMLElement.prototype.inset = function (this: HTMLElement, value: string) {
   return this;
 };
 
-HTMLElement.prototype.insetY = function (this: HTMLElement, value: string) {
+p.insetY = function (this: HTMLElement, value: string) {
   this.style.top = value;
   this.style.bottom = value;
   return this;
 };
 
-HTMLElement.prototype.insetX = function (this: HTMLElement, value: string) {
+p.insetX = function (this: HTMLElement, value: string) {
   this.style.right = value;
   this.style.left = value;
   return this;
 };
 
-HTMLElement.prototype.top = function (this: HTMLElement, value: string) {
+p.top = function (this: HTMLElement, value: string) {
   this.style.top = value;
   return this;
 };
 
-HTMLElement.prototype.right = function (this: HTMLElement, value: string) {
+p.right = function (this: HTMLElement, value: string) {
   this.style.right = value;
   return this;
 };
 
-HTMLElement.prototype.bottom = function (this: HTMLElement, value: string) {
+p.bottom = function (this: HTMLElement, value: string) {
   this.style.bottom = value;
   return this;
 };
 
-HTMLElement.prototype.left = function (this: HTMLElement, value: string) {
+p.left = function (this: HTMLElement, value: string) {
   this.style.left = value;
   return this;
 };
 
-HTMLElement.prototype.z = function (this: HTMLElement, value: number) {
+p.z = function (this: HTMLElement, value: number) {
   this.style.zIndex = String(value);
   return this;
 };
 
-HTMLElement.prototype.zIndex = function (this: HTMLElement, value: number) {
+p.zIndex = function (this: HTMLElement, value: number) {
   this.style.zIndex = String(value);
   return this;
 };
 
-HTMLElement.prototype.overflow = function (this: HTMLElement, value: string) {
+p.overflow = function (this: HTMLElement, value: string) {
   this.style.overflow = value;
   return this;
 };
 
-HTMLElement.prototype.overflowX = function (this: HTMLElement, value: string) {
+p.overflowX = function (this: HTMLElement, value: string) {
   this.style.overflowX = value;
   return this;
 };
 
-HTMLElement.prototype.overflowY = function (this: HTMLElement, value: string) {
+p.overflowY = function (this: HTMLElement, value: string) {
   this.style.overflowY = value;
   return this;
 };
 
-HTMLElement.prototype.overflowHidden = function (this: HTMLElement) {
+p.overflowHidden = function (this: HTMLElement) {
   this.style.overflow = 'hidden';
   return this;
 };
 
-HTMLElement.prototype.overflowScroll = function (this: HTMLElement) {
+p.overflowScroll = function (this: HTMLElement) {
   this.style.overflow = 'scroll';
   return this;
 };
 
-HTMLElement.prototype.overflowAuto = function (this: HTMLElement) {
+p.overflowAuto = function (this: HTMLElement) {
   this.style.overflow = 'auto';
   return this;
 };
 
-HTMLElement.prototype.overflowVisible = function (this: HTMLElement) {
+p.overflowVisible = function (this: HTMLElement) {
   this.style.overflow = 'visible';
   return this;
 };
 
-HTMLElement.prototype.cursor = function (this: HTMLElement, cursor: string) {
+p.cursor = function (this: HTMLElement, cursor: string) {
   this.style.cursor = cursor;
   return this;
 };
 
-HTMLElement.prototype.cursorPointer = function (this: HTMLElement) {
+p.cursorPointer = function (this: HTMLElement) {
   this.style.cursor = 'pointer';
   return this;
 };
 
-HTMLElement.prototype.cursorDefault = function (this: HTMLElement) {
+p.cursorDefault = function (this: HTMLElement) {
   this.style.cursor = 'default';
   return this;
 };
 
-HTMLElement.prototype.cursorMove = function (this: HTMLElement) {
+p.cursorMove = function (this: HTMLElement) {
   this.style.cursor = 'move';
   return this;
 };
 
-HTMLElement.prototype.cursorGrab = function (this: HTMLElement) {
+p.cursorGrab = function (this: HTMLElement) {
   this.style.cursor = 'grab';
   return this;
 };
 
-HTMLElement.prototype.cursorGrabbing = function (this: HTMLElement) {
+p.cursorGrabbing = function (this: HTMLElement) {
   this.style.cursor = 'grabbing';
   return this;
 };
 
-HTMLElement.prototype.pointerEvents = function (this: HTMLElement, value: string) {
+p.pointerEvents = function (this: HTMLElement, value: string) {
   this.style.pointerEvents = value;
   return this;
 };
 
-HTMLElement.prototype.pointerEventsNone = function (this: HTMLElement) {
+p.pointerEventsNone = function (this: HTMLElement) {
   this.style.pointerEvents = 'none';
   return this;
 };
 
-HTMLElement.prototype.pointerEventsAuto = function (this: HTMLElement) {
+p.pointerEventsAuto = function (this: HTMLElement) {
   this.style.pointerEvents = 'auto';
   return this;
 };
 
-HTMLElement.prototype.userSelect = function (this: HTMLElement, value: string) {
+p.userSelect = function (this: HTMLElement, value: string) {
   this.style.userSelect = value;
   return this;
 };
 
-HTMLElement.prototype.selectNone = function (this: HTMLElement) {
+p.selectNone = function (this: HTMLElement) {
   this.style.userSelect = 'none';
   return this;
 };
 
-HTMLElement.prototype.selectText = function (this: HTMLElement) {
+p.selectText = function (this: HTMLElement) {
   this.style.userSelect = 'text';
   return this;
 };
 
-HTMLElement.prototype.selectAll = function (this: HTMLElement) {
+p.selectAll = function (this: HTMLElement) {
   this.style.userSelect = 'all';
   return this;
 };
 
-HTMLElement.prototype.block = function (this: HTMLElement) {
+p.block = function (this: HTMLElement) {
   this.style.display = 'block';
   return this;
 };
 
-HTMLElement.prototype.inlineBlock = function (this: HTMLElement) {
+p.inlineBlock = function (this: HTMLElement) {
   this.style.display = 'inline-block';
   return this;
 };
 
-HTMLElement.prototype.inline = function (this: HTMLElement) {
+p.inline = function (this: HTMLElement) {
   this.style.display = 'inline';
   return this;
 };
 
-HTMLElement.prototype.hide = function (this: HTMLElement) {
+p.hide = function (this: HTMLElement) {
   this.style.display = 'none';
   return this;
 };
 
-HTMLElement.prototype.visible = function (this: HTMLElement) {
+p.visible = function (this: HTMLElement) {
   this.style.visibility = 'visible';
   return this;
 };
 
-HTMLElement.prototype.invisible = function (this: HTMLElement) {
+p.invisible = function (this: HTMLElement) {
   this.style.visibility = 'hidden';
   return this;
 };
 
-HTMLElement.prototype.rotate = function (this: HTMLElement, deg: number) {
+p.rotate = function (this: HTMLElement, deg: number) {
   this.style.transform = `rotate(${deg}deg)`;
   return this;
 };
 
-HTMLElement.prototype.scale = function (this: HTMLElement, x: number, y?: number) {
+p.scale = function (this: HTMLElement, x: number, y?: number) {
   const yValue = y !== undefined ? y : x;
   this.style.transform = `scale(${x}, ${yValue})`;
   return this;
 };
 
-HTMLElement.prototype.transformTranslate = function (this: HTMLElement, x: string, y: string) {
+p.transformTranslate = function (this: HTMLElement, x: string, y: string) {
   this.style.transform = `translate(${x}, ${y})`;
   return this;
 };
 
-HTMLElement.prototype.transition = function (this: HTMLElement, property: string) {
+p.transition = function (this: HTMLElement, property: string) {
   this.style.transition = property;
   return this;
 };
 
-HTMLElement.prototype.transitionDuration = function (this: HTMLElement, duration: string) {
+p.transitionDuration = function (this: HTMLElement, duration: string) {
   this.style.transitionDuration = duration;
   return this;
 };
 
-HTMLElement.prototype.transitionTimingFunction = function (this: HTMLElement, timing: string) {
+p.transitionTimingFunction = function (this: HTMLElement, timing: string) {
   this.style.transitionTimingFunction = timing;
   return this;
 };
 
-HTMLElement.prototype.transitionDelay = function (this: HTMLElement, delay: string) {
+p.transitionDelay = function (this: HTMLElement, delay: string) {
   this.style.transitionDelay = delay;
   return this;
 };
 
-HTMLElement.prototype.onClick = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
+p.onClick = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'click', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDoubleClick = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onDoubleClick = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'dblclick', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseDown = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseDown = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mousedown', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseUp = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseUp = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mouseup', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseMove = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseMove = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mousemove', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseEnter = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseEnter = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mouseenter', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseLeave = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseLeave = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mouseleave', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseOver = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseOver = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mouseover', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseOut = function (
-  this: HTMLElement,
-  handler: (event: MouseEvent) => void,
-) {
+p.onMouseOut = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
   setEventListener(this, 'mouseout', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onMouseWheel = function (
-  this: HTMLElement,
-  handler: (event: WheelEvent) => void,
-) {
+p.onMouseWheel = function (this: HTMLElement, handler: (event: WheelEvent) => void) {
   setEventListener(this, 'wheel', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onKeyDown = function (
-  this: HTMLElement,
-  handler: (event: KeyboardEvent) => void,
-) {
+p.onKeyDown = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
   setEventListener(this, 'keydown', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onKeyUp = function (
-  this: HTMLElement,
-  handler: (event: KeyboardEvent) => void,
-) {
+p.onKeyUp = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
   setEventListener(this, 'keyup', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onKeyPress = function (
-  this: HTMLElement,
-  handler: (event: KeyboardEvent) => void,
-) {
+p.onKeyPress = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
   setEventListener(this, 'keypress', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onFocus = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
+p.onFocus = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
   setEventListener(this, 'focus', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onBlur = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
+p.onBlur = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
   setEventListener(this, 'blur', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onFocusIn = function (
-  this: HTMLElement,
-  handler: (event: FocusEvent) => void,
-) {
+p.onFocusIn = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
   setEventListener(this, 'focusin', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onFocusOut = function (
-  this: HTMLElement,
-  handler: (event: FocusEvent) => void,
-) {
+p.onFocusOut = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
   setEventListener(this, 'focusout', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onChange = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onChange = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'change', handler);
   return this;
 };
 
-HTMLElement.prototype.onInput = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onInput = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'input', handler);
   return this;
 };
 
-HTMLElement.prototype.onSubmit = function (
-  this: HTMLElement,
-  handler: (event: SubmitEvent) => void,
-) {
+p.onSubmit = function (this: HTMLElement, handler: (event: SubmitEvent) => void) {
   setEventListener(this, 'submit', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onReset = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onReset = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'reset', handler);
   return this;
 };
 
-HTMLElement.prototype.onTouchStart = function (
-  this: HTMLElement,
-  handler: (event: TouchEvent) => void,
-) {
+p.onTouchStart = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
   setEventListener(this, 'touchstart', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onTouchEnd = function (
-  this: HTMLElement,
-  handler: (event: TouchEvent) => void,
-) {
+p.onTouchEnd = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
   setEventListener(this, 'touchend', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onTouchMove = function (
-  this: HTMLElement,
-  handler: (event: TouchEvent) => void,
-) {
+p.onTouchMove = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
   setEventListener(this, 'touchmove', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onTouchCancel = function (
-  this: HTMLElement,
-  handler: (event: TouchEvent) => void,
-) {
+p.onTouchCancel = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
   setEventListener(this, 'touchcancel', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDrag = function (this: HTMLElement, handler: (event: DragEvent) => void) {
+p.onDrag = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'drag', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragStart = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragStart = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'dragstart', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragEnd = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragEnd = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'dragend', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragEnter = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragEnter = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'dragenter', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragLeave = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragLeave = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'dragleave', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragOver = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragOver = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'dragover', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onDragDrop = function (
-  this: HTMLElement,
-  handler: (event: DragEvent) => void,
-) {
+p.onDragDrop = function (this: HTMLElement, handler: (event: DragEvent) => void) {
   setEventListener(this, 'drop', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onCopy = function (
-  this: HTMLElement,
-  handler: (event: ClipboardEvent) => void,
-) {
+p.onCopy = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
   setEventListener(this, 'copy', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onCut = function (
-  this: HTMLElement,
-  handler: (event: ClipboardEvent) => void,
-) {
+p.onCut = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
   setEventListener(this, 'cut', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPaste = function (
-  this: HTMLElement,
-  handler: (event: ClipboardEvent) => void,
-) {
+p.onPaste = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
   setEventListener(this, 'paste', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onScroll = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onScroll = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'scroll', handler);
   return this;
 };
 
-HTMLElement.prototype.onResize = function (this: HTMLElement, handler: (event: UIEvent) => void) {
+p.onResize = function (this: HTMLElement, handler: (event: UIEvent) => void) {
   setEventListener(this, 'resize', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPlay = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onPlay = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'play', handler);
   return this;
 };
 
-HTMLElement.prototype.onPause = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onPause = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'pause', handler);
   return this;
 };
 
-HTMLElement.prototype.onEnded = function (this: HTMLElement, handler: (event: Event) => void) {
+p.onEnded = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'ended', handler);
   return this;
 };
 
-HTMLElement.prototype.onVolumeChange = function (
-  this: HTMLElement,
-  handler: (event: Event) => void,
-) {
+p.onVolumeChange = function (this: HTMLElement, handler: (event: Event) => void) {
   setEventListener(this, 'volumechange', handler);
   return this;
 };
 
-HTMLElement.prototype.onAnimationStart = function (
-  this: HTMLElement,
-  handler: (event: AnimationEvent) => void,
-) {
+p.onAnimationStart = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
   setEventListener(this, 'animationstart', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onAnimationEnd = function (
-  this: HTMLElement,
-  handler: (event: AnimationEvent) => void,
-) {
+p.onAnimationEnd = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
   setEventListener(this, 'animationend', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onAnimationIteration = function (
-  this: HTMLElement,
-  handler: (event: AnimationEvent) => void,
-) {
+p.onAnimationIteration = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
   setEventListener(this, 'animationiteration', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onTransitionEnd = function (
-  this: HTMLElement,
-  handler: (event: TransitionEvent) => void,
-) {
+p.onTransitionEnd = function (this: HTMLElement, handler: (event: TransitionEvent) => void) {
   setEventListener(this, 'transitionend', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerDown = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerDown = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointerdown', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerUp = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerUp = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointerup', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerMove = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerMove = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointermove', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerEnter = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerEnter = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointerenter', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerLeave = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerLeave = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointerleave', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.onPointerCancel = function (
-  this: HTMLElement,
-  handler: (event: PointerEvent) => void,
-) {
+p.onPointerCancel = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
   setEventListener(this, 'pointercancel', handler as EventListener);
   return this;
 };
 
-HTMLElement.prototype.on = function (this: HTMLElement, eventName: string, handler: EventListener) {
+p.on = function (this: HTMLElement, eventName: string, handler: EventListener) {
   setEventListener(this, eventName, handler);
   return this;
 };
 
-HTMLElement.prototype.off = function (this: HTMLElement, eventName: string) {
+p.off = function (this: HTMLElement, eventName: string) {
   removeTrackedEventListener(this, eventName);
   return this;
 };
+
+p = null as any; // clear reference to HTMLElement prototype
 
 export {};

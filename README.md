@@ -1,15 +1,15 @@
-# gpui-ts
+# gpuj
 
-[![npm version](https://img.shields.io/npm/v/gpui-ts.svg)](https://www.npmjs.org/package/gpui-ts)
-[![npm downloads](https://img.shields.io/npm/dm/gpui-ts.svg)](https://www.npmjs.org/package/gpui-ts)
+[![npm version](https://img.shields.io/npm/v/gpuj.svg)](https://www.npmjs.org/package/gpuj)
+[![npm downloads](https://img.shields.io/npm/dm/gpuj.svg)](https://www.npmjs.org/package/gpuj)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="assets/icon.png" width="240px" alt="gpui-ts logo" />
+  <img src="assets/icon.png" width="240px" alt="gpuj logo" />
 </p>
 
 ## Install
 
 ```bash
-pnpm add gpui-ts
+pnpm add gpuj
 ```

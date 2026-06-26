@@ -1,7 +1,7 @@
 {
-  "name": "@gpui-ts/example",
+  "name": "@gpuj/example",
   "version": "0.0.1",
-  "description": "Example usage of gpui-ts",
+  "description": "Example usage of gpuj",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "gpui-ts": "workspace:*"
+    "gpuj": "workspace:*"
   },
   "devDependencies": {
     "vite": "^5.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpui-ts",
+    "url": "https://github.com/baendlorel/gpuj",
     "directory": "packages/example"
   },
   "license": "MIT"

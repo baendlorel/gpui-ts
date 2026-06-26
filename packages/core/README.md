@@ -1,16 +1,16 @@
-# jpui
+# gpuj
 
-[![npm version](https://img.shields.io/npm/v/jpui.svg)](https://www.npmjs.org/package/jpui)
-[![npm downloads](https://img.shields.io/npm/dm/jpui.svg)](https://www.npmjs.org/package/jpui)
+[![npm version](https://img.shields.io/npm/v/gpuj.svg)](https://www.npmjs.org/package/gpuj)
+[![npm downloads](https://img.shields.io/npm/dm/gpuj.svg)](https://www.npmjs.org/package/gpuj)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="../../assets/icon.png" width="240px" alt="jpui logo" />
+  <img src="../../assets/icon.png" width="240px" alt="gpuj logo" />
 </p>
 
 > A functional web front-end framework with gpui-inspired syntax
 
-jpui is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
+gpuj is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
 
 ## Features
 
@@ -23,13 +23,13 @@ jpui is a lightweight, functional web framework that provides an elegant, chaina
 ## Installation
 
 ```bash
-pnpm add jpui
+pnpm add gpuj
 ```
 
 ## Quick Start
 
 ```typescript
-import { div, p, btn } from 'jpui';
+import { div, p, btn } from 'gpuj';
 
 // Create elements with chained styling
 const container = div()
@@ -41,7 +41,7 @@ const container = div()
 const title = p()
   .textSize('1.5rem')
   .text('#333')
-  .text('Hello, jpui!');
+  .text('Hello, gpuj!');
 
 const button = btn()
   .px('1rem')
@@ -66,8 +66,8 @@ document.body.append(
 For automatic `build()` calling, import the inject module:
 
 ```typescript
-import 'jpui/inject';
-import { div, p, btn } from 'jpui';
+import 'gpuj/inject';
+import { div, p, btn } from 'gpuj';
 
 // Now you can use HTMLBuilder directly with DOM methods
 document.body.append(
@@ -157,4 +157,4 @@ MIT
 
 ---
 
-**GitHub**: [baendlorel/jpui](https://github.com/baendlorel/jpui)
+**GitHub**: [baendlorel/gpuj](https://github.com/baendlorel/gpuj)
