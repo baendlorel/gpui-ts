@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "gpuj": "workspace:*"
+    "zed-gpui": "workspace:*"
   },
   "devDependencies": {
+    "unplugin-gpuj-treeshake": "workspace:*",
     "vite": "^5.0.0"
   },
   "repository": {
