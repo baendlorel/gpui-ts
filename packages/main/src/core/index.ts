@@ -6,6 +6,7 @@ declare global {
     attr_(attr: string, value: any): this;
     name_(name: string): this;
     child_(...nodes: any[]): this;
+    text_(text: string): this;
 
     class_(classList: string[]): this;
     class_(className: string): this;
@@ -76,7 +77,6 @@ declare global {
     shadowLg_(): this;
     shadowNone_(): this;
     opacity_(value: number): this;
-    text_(color: string): this;
     textColor_(color: string): this;
     textSize_(size: string): this;
     textAlign_(align: string): this;
@@ -486,8 +486,8 @@ Object.assign(HTMLElement.prototype, {
     this.style.opacity = String(value);
     return this;
   },
-  text_(color) {
-    this.style.color = color;
+  text_(t) {
+    this.textContent = t;
     return this;
   },
   textColor_(color) {
