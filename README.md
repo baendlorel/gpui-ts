@@ -5,9 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <a href="https://baendlorel.github.io/gpui-ts/">
-    <img src="assets/icon.png" width="240px" alt="gpui-ts logo" />
-  </a>
+  <img src="assets/icon.png" width="240px" alt="gpui-ts logo" />
 </p>
 
 ## Install

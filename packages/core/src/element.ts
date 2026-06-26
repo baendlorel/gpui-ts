@@ -7,7 +7,7 @@ export class HTMLBuilder<Tag extends keyof HTMLElementTagNameMap> {
   private _style: CSSStyleDeclaration = new CSSStyleDeclaration();
   private _events: Map<string, EventListener> = new Map();
 
-  constructor(tag: Tag | otherstring) {
+  constructor(tag: Tag | otherstring, id?: string) {
     this._tag = tag;
   }
 
@@ -990,6 +990,8 @@ export class HTMLBuilder<Tag extends keyof HTMLElementTagNameMap> {
   }
 
   // #endregion
+
+  //
 
   build(): HTMLElementTagNameMap[Tag] {
     const e = document.createElement(this._tag);
