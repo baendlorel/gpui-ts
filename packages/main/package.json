@@ -1,5 +1,5 @@
 {
-  "name": "gpuj",
+  "name": "zed-gpui",
   "version": "0.0.1",
   "author": {
     "name": "Kasukabe Tsumugi",
@@ -10,8 +10,8 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "gpuj is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
-  "description_zh": "gpuj 是一个写法类似 gpui 的函数式 web 前端框架，通过增强HTMLElement原型实现其功能",
+  "description": "zed-div is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
+  "description_zh": "zed-div 是一个写法类似 gpui 的函数式 web 前端框架，通过增强HTMLElement原型实现其功能",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -31,11 +31,11 @@
     "dist",
     "instruction.md"
   ],
-  "homepage": "https://github.com/baendlorel/gpuj#readme",
+  "homepage": "https://github.com/baendlorel/gpui-ts#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpuj",
-    "directory": "packages/core"
+    "url": "https://github.com/baendlorel/gpui-ts",
+    "directory": "packages/main"
   },
   "keywords": [
     "framework",
