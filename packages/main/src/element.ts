@@ -1,7 +1,11 @@
 declare global {
   interface HTMLElement {
     jpui: true;
+
+    // # utils
     id_(id: string): this;
+    attr(attr: string, value: any): this;
+    child(...nodes: any[]): this;
 
     // # styles
     class(classList: string[]): this;
@@ -188,17 +192,23 @@ declare global {
     onPointerCancel(handler: (event: PointerEvent) => void): this;
     on(eventName: string, handler: EventListener): this;
     off(eventName: string, handler: EventListener): this;
-
-    // # utils
   }
 }
 
 Object.assign(HTMLElement.prototype, {
-  id_(id: string) {
+  id_(id) {
     this.id = id;
     return this;
   },
-  class(c: string | string[]) {
+  attr(attr, value) {
+    this.setAttribute(attr, value);
+    return this;
+  },
+  child(...nodes) {
+    this.append(...nodes);
+    return this;
+  },
+  class(c) {
     if (Array.isArray(c)) {
       this.className = c.join(' ');
     } else {
@@ -206,38 +216,38 @@ Object.assign(HTMLElement.prototype, {
     }
     return this;
   },
-  w(this: HTMLElement, w: string) {
+  w(w: string) {
     this.style.width = w;
     return this;
   },
 
-  h(this: HTMLElement, h: string) {
+  h(h: string) {
     this.style.height = h;
     return this;
   },
 
-  size(this: HTMLElement, w: string, h: string) {
+  size(w: string, h: string) {
     this.style.width = w;
     this.style.height = h;
     return this;
   },
 
-  minW(this: HTMLElement, w: string) {
+  minW(w: string) {
     this.style.minWidth = w;
     return this;
   },
 
-  minH(this: HTMLElement, h: string) {
+  minH(h: string) {
     this.style.minHeight = h;
     return this;
   },
 
-  maxW(this: HTMLElement, w: string) {
+  maxW(w: string) {
     this.style.maxWidth = w;
     return this;
   },
 
-  maxH(this: HTMLElement, h: string) {
+  maxH(h: string) {
     this.style.maxHeight = h;
     return this;
   },
@@ -263,27 +273,27 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  flexGrow(this: HTMLElement, grow: number) {
+  flexGrow(grow: number) {
     this.style.flexGrow = String(grow);
     return this;
   },
 
-  flexShrink(this: HTMLElement, shrink: number) {
+  flexShrink(shrink: number) {
     this.style.flexShrink = String(shrink);
     return this;
   },
 
-  flexBasis(this: HTMLElement, basis: string) {
+  flexBasis(basis: string) {
     this.style.flexBasis = basis;
     return this;
   },
 
-  flexDirection(this: HTMLElement, direction: string) {
+  flexDirection(direction: string) {
     this.style.flexDirection = direction;
     return this;
   },
 
-  flexWrap(this: HTMLElement, wrap: string) {
+  flexWrap(wrap: string) {
     this.style.flexWrap = wrap;
     return this;
   },
@@ -293,136 +303,136 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  gridTemplateColumns(this: HTMLElement, columns: string) {
+  gridTemplateColumns(columns: string) {
     this.style.gridTemplateColumns = columns;
     return this;
   },
 
-  gridTemplateRows(this: HTMLElement, rows: string) {
+  gridTemplateRows(rows: string) {
     this.style.gridTemplateRows = rows;
     return this;
   },
 
-  gridColumn(this: HTMLElement, column: string) {
+  gridColumn(column: string) {
     this.style.gridColumn = column;
     return this;
   },
 
-  gridRow(this: HTMLElement, row: string) {
+  gridRow(row: string) {
     this.style.gridRow = row;
     return this;
   },
 
-  gap(this: HTMLElement, gap: string) {
+  gap(gap: string) {
     this.style.gap = gap;
     return this;
   },
 
-  gapX(this: HTMLElement, gap: string) {
+  gapX(gap: string) {
     this.style.columnGap = gap;
     return this;
   },
 
-  gapY(this: HTMLElement, gap: string) {
+  gapY(gap: string) {
     this.style.rowGap = gap;
     return this;
   },
 
-  justify(this: HTMLElement, justify: string) {
+  justify(justify: string) {
     this.style.justifyContent = justify;
     return this;
   },
 
-  items(this: HTMLElement, items: string) {
+  items(items: string) {
     this.style.alignItems = items;
     return this;
   },
 
-  content(this: HTMLElement, content: string) {
+  content(content: string) {
     this.style.alignContent = content;
     return this;
   },
 
-  self(this: HTMLElement, alignSelf: string) {
+  self(alignSelf: string) {
     this.style.alignSelf = alignSelf;
     return this;
   },
 
-  justifySelf(this: HTMLElement, justifySelf: string) {
+  justifySelf(justifySelf: string) {
     this.style.justifySelf = justifySelf;
     return this;
   },
 
-  px(this: HTMLElement, px: string) {
+  px(px: string) {
     this.style.paddingLeft = px;
     this.style.paddingRight = px;
     return this;
   },
 
-  py(this: HTMLElement, py: string) {
+  py(py: string) {
     this.style.paddingTop = py;
     this.style.paddingBottom = py;
     return this;
   },
 
-  pt(this: HTMLElement, pt: string) {
+  pt(pt: string) {
     this.style.paddingTop = pt;
     return this;
   },
 
-  pr(this: HTMLElement, pr: string) {
+  pr(pr: string) {
     this.style.paddingRight = pr;
     return this;
   },
 
-  pb(this: HTMLElement, pb: string) {
+  pb(pb: string) {
     this.style.paddingBottom = pb;
     return this;
   },
 
-  pl(this: HTMLElement, pl: string) {
+  pl(pl: string) {
     this.style.paddingLeft = pl;
     return this;
   },
 
-  p(this: HTMLElement, p: string) {
+  p(p: string) {
     this.style.padding = p;
     return this;
   },
 
-  mx(this: HTMLElement, mx: string) {
+  mx(mx: string) {
     this.style.marginLeft = mx;
     this.style.marginRight = mx;
     return this;
   },
 
-  my(this: HTMLElement, my: string) {
+  my(my: string) {
     this.style.marginTop = my;
     this.style.marginBottom = my;
     return this;
   },
 
-  mt(this: HTMLElement, mt: string) {
+  mt(mt: string) {
     this.style.marginTop = mt;
     return this;
   },
 
-  mr(this: HTMLElement, mr: string) {
+  mr(mr: string) {
     this.style.marginRight = mr;
     return this;
   },
 
-  mb(this: HTMLElement, mb: string) {
+  mb(mb: string) {
     this.style.marginBottom = mb;
     return this;
   },
 
-  ml(this: HTMLElement, ml: string) {
+  ml(ml: string) {
     this.style.marginLeft = ml;
     return this;
   },
 
-  m(this: HTMLElement, m: string) {
+  m(m: string) {
     this.style.margin = m;
     return this;
   },
@@ -432,97 +442,97 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  borderW(this: HTMLElement, width: string) {
+  borderW(width: string) {
     this.style.borderWidth = width;
     return this;
   },
 
-  borderT(this: HTMLElement, width: string) {
+  borderT(width: string) {
     this.style.borderTopWidth = width;
     return this;
   },
 
-  borderR(this: HTMLElement, width: string) {
+  borderR(width: string) {
     this.style.borderRightWidth = width;
     return this;
   },
 
-  borderB(this: HTMLElement, width: string) {
+  borderB(width: string) {
     this.style.borderBottomWidth = width;
     return this;
   },
 
-  borderL(this: HTMLElement, width: string) {
+  borderL(width: string) {
     this.style.borderLeftWidth = width;
     return this;
   },
 
-  borderColor(this: HTMLElement, color: string) {
+  borderColor(color: string) {
     this.style.borderColor = color;
     return this;
   },
 
-  borderStyle(this: HTMLElement, style: string) {
+  borderStyle(style: string) {
     this.style.borderStyle = style;
     return this;
   },
 
-  rounded(this: HTMLElement, radius: string) {
+  rounded(radius: string) {
     this.style.borderRadius = radius;
     return this;
   },
 
-  roundedTL(this: HTMLElement, radius: string) {
+  roundedTL(radius: string) {
     this.style.borderTopLeftRadius = radius;
     return this;
   },
 
-  roundedTR(this: HTMLElement, radius: string) {
+  roundedTR(radius: string) {
     this.style.borderTopRightRadius = radius;
     return this;
   },
 
-  roundedBL(this: HTMLElement, radius: string) {
+  roundedBL(radius: string) {
     this.style.borderBottomLeftRadius = radius;
     return this;
   },
 
-  roundedBR(this: HTMLElement, radius: string) {
+  roundedBR(radius: string) {
     this.style.borderBottomRightRadius = radius;
     return this;
   },
 
-  bg(this: HTMLElement, color: string) {
+  bg(color: string) {
     this.style.backgroundColor = color;
     return this;
   },
 
-  bgColor(this: HTMLElement, color: string) {
+  bgColor(color: string) {
     this.style.backgroundColor = color;
     return this;
   },
 
-  bgImage(this: HTMLElement, image: string) {
+  bgImage(image: string) {
     this.style.backgroundImage = image;
     return this;
   },
 
-  bgSize(this: HTMLElement, size: string) {
+  bgSize(size: string) {
     this.style.backgroundSize = size;
     return this;
   },
 
-  bgPosition(this: HTMLElement, position: string) {
+  bgPosition(position: string) {
     this.style.backgroundPosition = position;
     return this;
   },
 
-  bgRepeat(this: HTMLElement, repeat: string) {
+  bgRepeat(repeat: string) {
     this.style.backgroundRepeat = repeat;
     return this;
   },
 
-  shadow(this: HTMLElement, shadow: string) {
+  shadow(shadow: string) {
     this.style.boxShadow = shadow;
     return this;
   },
@@ -542,52 +552,52 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  opacity(this: HTMLElement, value: number) {
+  opacity(value: number) {
     this.style.opacity = String(value);
     return this;
   },
 
-  text(this: HTMLElement, color: string) {
+  text(color: string) {
     this.style.color = color;
     return this;
   },
 
-  textColor(this: HTMLElement, color: string) {
+  textColor(color: string) {
     this.style.color = color;
     return this;
   },
 
-  textSize(this: HTMLElement, size: string) {
+  textSize(size: string) {
     this.style.fontSize = size;
     return this;
   },
 
-  textAlign(this: HTMLElement, align: string) {
+  textAlign(align: string) {
     this.style.textAlign = align;
     return this;
   },
 
-  fontWeight(this: HTMLElement, weight: string) {
+  fontWeight(weight: string) {
     this.style.fontWeight = weight;
     return this;
   },
 
-  lineHeight(this: HTMLElement, height: string) {
+  lineHeight(height: string) {
     this.style.lineHeight = height;
     return this;
   },
 
-  letterSpacing(this: HTMLElement, spacing: string) {
+  letterSpacing(spacing: string) {
     this.style.letterSpacing = spacing;
     return this;
   },
 
-  textOverflow(this: HTMLElement, overflow: string) {
+  textOverflow(overflow: string) {
     this.style.textOverflow = overflow;
     return this;
   },
 
-  whitespace(this: HTMLElement, value: string) {
+  whitespace(value: string) {
     this.style.whiteSpace = value;
     return this;
   },
@@ -599,7 +609,7 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  lineClamp(this: HTMLElement, lines: number) {
+  lineClamp(lines: number) {
     this.style.display = '-webkit-box';
     this.style.webkitLineClamp = String(lines);
     this.style.webkitBoxOrient = 'vertical';
@@ -632,7 +642,7 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  inset(this: HTMLElement, value: string) {
+  inset(value: string) {
     this.style.top = value;
     this.style.right = value;
     this.style.bottom = value;
@@ -640,59 +650,59 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  insetY(this: HTMLElement, value: string) {
+  insetY(value: string) {
     this.style.top = value;
     this.style.bottom = value;
     return this;
   },
 
-  insetX(this: HTMLElement, value: string) {
+  insetX(value: string) {
     this.style.right = value;
     this.style.left = value;
     return this;
   },
 
-  top(this: HTMLElement, value: string) {
+  top(value: string) {
     this.style.top = value;
     return this;
   },
 
-  right(this: HTMLElement, value: string) {
+  right(value: string) {
     this.style.right = value;
     return this;
   },
 
-  bottom(this: HTMLElement, value: string) {
+  bottom(value: string) {
     this.style.bottom = value;
     return this;
   },
 
-  left(this: HTMLElement, value: string) {
+  left(value: string) {
     this.style.left = value;
     return this;
   },
 
-  z(this: HTMLElement, value: number) {
+  z(value: number) {
     this.style.zIndex = String(value);
     return this;
   },
 
-  zIndex(this: HTMLElement, value: number) {
+  zIndex(value: number) {
     this.style.zIndex = String(value);
     return this;
   },
 
-  overflow(this: HTMLElement, value: string) {
+  overflow(value: string) {
     this.style.overflow = value;
     return this;
   },
 
-  overflowX(this: HTMLElement, value: string) {
+  overflowX(value: string) {
     this.style.overflowX = value;
     return this;
   },
 
-  overflowY(this: HTMLElement, value: string) {
+  overflowY(value: string) {
     this.style.overflowY = value;
     return this;
   },
@@ -717,7 +727,7 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  cursor(this: HTMLElement, cursor: string) {
+  cursor(cursor: string) {
     this.style.cursor = cursor;
     return this;
   },
@@ -747,7 +757,7 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  pointerEvents(this: HTMLElement, value: string) {
+  pointerEvents(value: string) {
     this.style.pointerEvents = value;
     return this;
   },
@@ -762,7 +772,7 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  userSelect(this: HTMLElement, value: string) {
+  userSelect(value: string) {
     this.style.userSelect = value;
     return this;
   },
@@ -812,303 +822,303 @@ Object.assign(HTMLElement.prototype, {
     return this;
   },
 
-  rotate(this: HTMLElement, deg: number) {
+  rotate(deg: number) {
     this.style.transform = `rotate(${deg}deg)`;
     return this;
   },
 
-  scale(this: HTMLElement, x: number, y?: number) {
+  scale(x: number, y?: number) {
     const yValue = y !== undefined ? y : x;
     this.style.transform = `scale(${x}, ${yValue})`;
     return this;
   },
 
-  transformTranslate(this: HTMLElement, x: string, y: string) {
+  transformTranslate(x: string, y: string) {
     this.style.transform = `translate(${x}, ${y})`;
     return this;
   },
 
-  transition(this: HTMLElement, property: string) {
+  transition(property: string) {
     this.style.transition = property;
     return this;
   },
 
-  transitionDuration(this: HTMLElement, duration: string) {
+  transitionDuration(duration: string) {
     this.style.transitionDuration = duration;
     return this;
   },
 
-  transitionTimingFunction(this: HTMLElement, timing: string) {
+  transitionTimingFunction(timing: string) {
     this.style.transitionTimingFunction = timing;
     return this;
   },
 
-  transitionDelay(this: HTMLElement, delay: string) {
+  transitionDelay(delay: string) {
     this.style.transitionDelay = delay;
     return this;
   },
 
-  onClick(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onClick(handler: (event: MouseEvent) => void) {
     this.addEventListener('click', handler);
     return this;
   },
 
-  onDoubleClick(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onDoubleClick(handler: (event: MouseEvent) => void) {
     this.addEventListener('dblclick', handler as EventListener);
     return this;
   },
 
-  onMouseDown(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseDown(handler: (event: MouseEvent) => void) {
     this.addEventListener('mousedown', handler as EventListener);
     return this;
   },
 
-  onMouseUp(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseUp(handler: (event: MouseEvent) => void) {
     this.addEventListener('mouseup', handler as EventListener);
     return this;
   },
 
-  onMouseMove(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseMove(handler: (event: MouseEvent) => void) {
     this.addEventListener('mousemove', handler as EventListener);
     return this;
   },
 
-  onMouseEnter(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseEnter(handler: (event: MouseEvent) => void) {
     this.addEventListener('mouseenter', handler as EventListener);
     return this;
   },
 
-  onMouseLeave(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseLeave(handler: (event: MouseEvent) => void) {
     this.addEventListener('mouseleave', handler as EventListener);
     return this;
   },
 
-  onMouseOver(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseOver(handler: (event: MouseEvent) => void) {
     this.addEventListener('mouseover', handler as EventListener);
     return this;
   },
 
-  onMouseOut(this: HTMLElement, handler: (event: MouseEvent) => void) {
+  onMouseOut(handler: (event: MouseEvent) => void) {
     this.addEventListener('mouseout', handler as EventListener);
     return this;
   },
 
-  onMouseWheel(this: HTMLElement, handler: (event: WheelEvent) => void) {
+  onMouseWheel(handler: (event: WheelEvent) => void) {
     this.addEventListener('wheel', handler as EventListener);
     return this;
   },
 
-  onKeyDown(this: HTMLElement, handler: (event: KeyboardEvent) => void) {
+  onKeyDown(handler: (event: KeyboardEvent) => void) {
     this.addEventListener('keydown', handler as EventListener);
     return this;
   },
 
-  onKeyUp(this: HTMLElement, handler: (event: KeyboardEvent) => void) {
+  onKeyUp(handler: (event: KeyboardEvent) => void) {
     this.addEventListener('keyup', handler as EventListener);
     return this;
   },
 
-  onKeyPress(this: HTMLElement, handler: (event: KeyboardEvent) => void) {
+  onKeyPress(handler: (event: KeyboardEvent) => void) {
     this.addEventListener('keypress', handler as EventListener);
     return this;
   },
 
-  onFocus(this: HTMLElement, handler: (event: FocusEvent) => void) {
+  onFocus(handler: (event: FocusEvent) => void) {
     this.addEventListener('focus', handler as EventListener);
     return this;
   },
 
-  onBlur(this: HTMLElement, handler: (event: FocusEvent) => void) {
+  onBlur(handler: (event: FocusEvent) => void) {
     this.addEventListener('blur', handler as EventListener);
     return this;
   },
 
-  onFocusIn(this: HTMLElement, handler: (event: FocusEvent) => void) {
+  onFocusIn(handler: (event: FocusEvent) => void) {
     this.addEventListener('focusin', handler as EventListener);
     return this;
   },
 
-  onFocusOut(this: HTMLElement, handler: (event: FocusEvent) => void) {
+  onFocusOut(handler: (event: FocusEvent) => void) {
     this.addEventListener('focusout', handler as EventListener);
     return this;
   },
 
-  onChange(this: HTMLElement, handler: (event: Event) => void) {
+  onChange(handler: (event: Event) => void) {
     this.addEventListener('change', handler);
     return this;
   },
 
-  onInput(this: HTMLElement, handler: (event: Event) => void) {
+  onInput(handler: (event: Event) => void) {
     this.addEventListener('input', handler);
     return this;
   },
 
-  onSubmit(this: HTMLElement, handler: (event: SubmitEvent) => void) {
+  onSubmit(handler: (event: SubmitEvent) => void) {
     this.addEventListener('submit', handler as EventListener);
     return this;
   },
 
-  onReset(this: HTMLElement, handler: (event: Event) => void) {
+  onReset(handler: (event: Event) => void) {
     this.addEventListener('reset', handler);
     return this;
   },
 
-  onTouchStart(this: HTMLElement, handler: (event: TouchEvent) => void) {
+  onTouchStart(handler: (event: TouchEvent) => void) {
     this.addEventListener('touchstart', handler as EventListener);
     return this;
   },
 
-  onTouchEnd(this: HTMLElement, handler: (event: TouchEvent) => void) {
+  onTouchEnd(handler: (event: TouchEvent) => void) {
     this.addEventListener('touchend', handler as EventListener);
     return this;
   },
 
-  onTouchMove(this: HTMLElement, handler: (event: TouchEvent) => void) {
+  onTouchMove(handler: (event: TouchEvent) => void) {
     this.addEventListener('touchmove', handler as EventListener);
     return this;
   },
 
-  onTouchCancel(this: HTMLElement, handler: (event: TouchEvent) => void) {
+  onTouchCancel(handler: (event: TouchEvent) => void) {
     this.addEventListener('touchcancel', handler as EventListener);
     return this;
   },
 
-  onDrag(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDrag(handler: (event: DragEvent) => void) {
     this.addEventListener('drag', handler as EventListener);
     return this;
   },
 
-  onDragStart(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragStart(handler: (event: DragEvent) => void) {
     this.addEventListener('dragstart', handler as EventListener);
     return this;
   },
 
-  onDragEnd(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragEnd(handler: (event: DragEvent) => void) {
     this.addEventListener('dragend', handler as EventListener);
     return this;
   },
 
-  onDragEnter(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragEnter(handler: (event: DragEvent) => void) {
     this.addEventListener('dragenter', handler as EventListener);
     return this;
   },
 
-  onDragLeave(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragLeave(handler: (event: DragEvent) => void) {
     this.addEventListener('dragleave', handler as EventListener);
     return this;
   },
 
-  onDragOver(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragOver(handler: (event: DragEvent) => void) {
     this.addEventListener('dragover', handler as EventListener);
     return this;
   },
 
-  onDragDrop(this: HTMLElement, handler: (event: DragEvent) => void) {
+  onDragDrop(handler: (event: DragEvent) => void) {
     this.addEventListener('drop', handler as EventListener);
     return this;
   },
 
-  onCopy(this: HTMLElement, handler: (event: ClipboardEvent) => void) {
+  onCopy(handler: (event: ClipboardEvent) => void) {
     this.addEventListener('copy', handler as EventListener);
     return this;
   },
 
-  onCut(this: HTMLElement, handler: (event: ClipboardEvent) => void) {
+  onCut(handler: (event: ClipboardEvent) => void) {
     this.addEventListener('cut', handler as EventListener);
     return this;
   },
 
-  onPaste(this: HTMLElement, handler: (event: ClipboardEvent) => void) {
+  onPaste(handler: (event: ClipboardEvent) => void) {
     this.addEventListener('paste', handler as EventListener);
     return this;
   },
 
-  onScroll(this: HTMLElement, handler: (event: Event) => void) {
+  onScroll(handler: (event: Event) => void) {
     this.addEventListener('scroll', handler);
     return this;
   },
 
-  onResize(this: HTMLElement, handler: (event: UIEvent) => void) {
+  onResize(handler: (event: UIEvent) => void) {
     this.addEventListener('resize', handler as EventListener);
     return this;
   },
 
-  onPlay(this: HTMLElement, handler: (event: Event) => void) {
+  onPlay(handler: (event: Event) => void) {
     this.addEventListener('play', handler);
     return this;
   },
 
-  onPause(this: HTMLElement, handler: (event: Event) => void) {
+  onPause(handler: (event: Event) => void) {
     this.addEventListener('pause', handler);
     return this;
   },
 
-  onEnded(this: HTMLElement, handler: (event: Event) => void) {
+  onEnded(handler: (event: Event) => void) {
     this.addEventListener('ended', handler);
     return this;
   },
 
-  onVolumeChange(this: HTMLElement, handler: (event: Event) => void) {
+  onVolumeChange(handler: (event: Event) => void) {
     this.addEventListener('volumechange', handler);
     return this;
   },
 
-  onAnimationStart(this: HTMLElement, handler: (event: AnimationEvent) => void) {
+  onAnimationStart(handler: (event: AnimationEvent) => void) {
     this.addEventListener('animationstart', handler as EventListener);
     return this;
   },
 
-  onAnimationEnd(this: HTMLElement, handler: (event: AnimationEvent) => void) {
+  onAnimationEnd(handler: (event: AnimationEvent) => void) {
     this.addEventListener('animationend', handler as EventListener);
     return this;
   },
 
-  onAnimationIteration(this: HTMLElement, handler: (event: AnimationEvent) => void) {
+  onAnimationIteration(handler: (event: AnimationEvent) => void) {
     this.addEventListener('animationiteration', handler as EventListener);
     return this;
   },
 
-  onTransitionEnd(this: HTMLElement, handler: (event: TransitionEvent) => void) {
+  onTransitionEnd(handler: (event: TransitionEvent) => void) {
     this.addEventListener('transitionend', handler as EventListener);
     return this;
   },
 
-  onPointerDown(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerDown(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointerdown', handler as EventListener);
     return this;
   },
 
-  onPointerUp(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerUp(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointerup', handler as EventListener);
     return this;
   },
 
-  onPointerMove(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerMove(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointermove', handler as EventListener);
     return this;
   },
 
-  onPointerEnter(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerEnter(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointerenter', handler as EventListener);
     return this;
   },
 
-  onPointerLeave(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerLeave(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointerleave', handler as EventListener);
     return this;
   },
 
-  onPointerCancel(this: HTMLElement, handler: (event: PointerEvent) => void) {
+  onPointerCancel(handler: (event: PointerEvent) => void) {
     this.addEventListener('pointercancel', handler as EventListener);
     return this;
   },
 
-  on(this: HTMLElement, eventName: string, handler: EventListener) {
+  on(eventName: string, handler: EventListener) {
     this.addEventListener(eventName, handler);
     return this;
   },
 
-  off(this: HTMLElement, eventName: string, handler: EventListener) {
+  off(eventName: string, handler: EventListener) {
     this.removeEventListener(eventName, handler);
     return this;
   },
