@@ -1,6 +1,7 @@
 declare global {
   interface HTMLElement {
     jpui: true;
+    id_(id: string): this;
 
     // # styles
     class(classList: string[]): this;
@@ -186,44 +187,20 @@ declare global {
     onPointerLeave(handler: (event: PointerEvent) => void): this;
     onPointerCancel(handler: (event: PointerEvent) => void): this;
     on(eventName: string, handler: EventListener): this;
-    off(eventName: string): this;
+    off(eventName: string, handler: EventListener): this;
 
     // # utils
-  }
-}
-
-const trackedEventListeners = new WeakMap<HTMLElement, Map<string, EventListener>>();
-
-function setEventListener(element: HTMLElement, eventName: string, handler: EventListener) {
-  let listeners = trackedEventListeners.get(element);
-  if (!listeners) {
-    listeners = new Map();
-    trackedEventListeners.set(element, listeners);
-  }
-  const prev = listeners.get(eventName);
-  if (prev) {
-    element.removeEventListener(eventName, prev);
-  }
-  listeners.set(eventName, handler);
-  element.addEventListener(eventName, handler);
-}
-
-function removeTrackedEventListener(element: HTMLElement, eventName: string) {
-  const listeners = trackedEventListeners.get(element);
-  const handler = listeners?.get(eventName);
-  if (!handler) {
-    return;
-  }
-  element.removeEventListener(eventName, handler);
-  listeners!.delete(eventName);
-  if (listeners!.size === 0) {
-    trackedEventListeners.delete(element);
   }
 }
 
 let p = HTMLElement.prototype;
 
 p.jpui = true;
+
+p.id_ = function (this: HTMLElement, id: string) {
+  this.id = id;
+  return this;
+};
 
 p.class = function (this: HTMLElement, c: string | string[]) {
   if (typeof c === 'string') {
@@ -879,267 +856,267 @@ p.transitionDelay = function (this: HTMLElement, delay: string) {
 };
 
 p.onClick = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'click', handler as EventListener);
+  this.addEventListener('click', handler);
   return this;
 };
 
 p.onDoubleClick = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'dblclick', handler as EventListener);
+  this.addEventListener('dblclick', handler as EventListener);
   return this;
 };
 
 p.onMouseDown = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mousedown', handler as EventListener);
+  this.addEventListener('mousedown', handler as EventListener);
   return this;
 };
 
 p.onMouseUp = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mouseup', handler as EventListener);
+  this.addEventListener('mouseup', handler as EventListener);
   return this;
 };
 
 p.onMouseMove = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mousemove', handler as EventListener);
+  this.addEventListener('mousemove', handler as EventListener);
   return this;
 };
 
 p.onMouseEnter = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mouseenter', handler as EventListener);
+  this.addEventListener('mouseenter', handler as EventListener);
   return this;
 };
 
 p.onMouseLeave = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mouseleave', handler as EventListener);
+  this.addEventListener('mouseleave', handler as EventListener);
   return this;
 };
 
 p.onMouseOver = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mouseover', handler as EventListener);
+  this.addEventListener('mouseover', handler as EventListener);
   return this;
 };
 
 p.onMouseOut = function (this: HTMLElement, handler: (event: MouseEvent) => void) {
-  setEventListener(this, 'mouseout', handler as EventListener);
+  this.addEventListener('mouseout', handler as EventListener);
   return this;
 };
 
 p.onMouseWheel = function (this: HTMLElement, handler: (event: WheelEvent) => void) {
-  setEventListener(this, 'wheel', handler as EventListener);
+  this.addEventListener('wheel', handler as EventListener);
   return this;
 };
 
 p.onKeyDown = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
-  setEventListener(this, 'keydown', handler as EventListener);
+  this.addEventListener('keydown', handler as EventListener);
   return this;
 };
 
 p.onKeyUp = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
-  setEventListener(this, 'keyup', handler as EventListener);
+  this.addEventListener('keyup', handler as EventListener);
   return this;
 };
 
 p.onKeyPress = function (this: HTMLElement, handler: (event: KeyboardEvent) => void) {
-  setEventListener(this, 'keypress', handler as EventListener);
+  this.addEventListener('keypress', handler as EventListener);
   return this;
 };
 
 p.onFocus = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
-  setEventListener(this, 'focus', handler as EventListener);
+  this.addEventListener('focus', handler as EventListener);
   return this;
 };
 
 p.onBlur = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
-  setEventListener(this, 'blur', handler as EventListener);
+  this.addEventListener('blur', handler as EventListener);
   return this;
 };
 
 p.onFocusIn = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
-  setEventListener(this, 'focusin', handler as EventListener);
+  this.addEventListener('focusin', handler as EventListener);
   return this;
 };
 
 p.onFocusOut = function (this: HTMLElement, handler: (event: FocusEvent) => void) {
-  setEventListener(this, 'focusout', handler as EventListener);
+  this.addEventListener('focusout', handler as EventListener);
   return this;
 };
 
 p.onChange = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'change', handler);
+  this.addEventListener('change', handler);
   return this;
 };
 
 p.onInput = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'input', handler);
+  this.addEventListener('input', handler);
   return this;
 };
 
 p.onSubmit = function (this: HTMLElement, handler: (event: SubmitEvent) => void) {
-  setEventListener(this, 'submit', handler as EventListener);
+  this.addEventListener('submit', handler as EventListener);
   return this;
 };
 
 p.onReset = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'reset', handler);
+  this.addEventListener('reset', handler);
   return this;
 };
 
 p.onTouchStart = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
-  setEventListener(this, 'touchstart', handler as EventListener);
+  this.addEventListener('touchstart', handler as EventListener);
   return this;
 };
 
 p.onTouchEnd = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
-  setEventListener(this, 'touchend', handler as EventListener);
+  this.addEventListener('touchend', handler as EventListener);
   return this;
 };
 
 p.onTouchMove = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
-  setEventListener(this, 'touchmove', handler as EventListener);
+  this.addEventListener('touchmove', handler as EventListener);
   return this;
 };
 
 p.onTouchCancel = function (this: HTMLElement, handler: (event: TouchEvent) => void) {
-  setEventListener(this, 'touchcancel', handler as EventListener);
+  this.addEventListener('touchcancel', handler as EventListener);
   return this;
 };
 
 p.onDrag = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'drag', handler as EventListener);
+  this.addEventListener('drag', handler as EventListener);
   return this;
 };
 
 p.onDragStart = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'dragstart', handler as EventListener);
+  this.addEventListener('dragstart', handler as EventListener);
   return this;
 };
 
 p.onDragEnd = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'dragend', handler as EventListener);
+  this.addEventListener('dragend', handler as EventListener);
   return this;
 };
 
 p.onDragEnter = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'dragenter', handler as EventListener);
+  this.addEventListener('dragenter', handler as EventListener);
   return this;
 };
 
 p.onDragLeave = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'dragleave', handler as EventListener);
+  this.addEventListener('dragleave', handler as EventListener);
   return this;
 };
 
 p.onDragOver = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'dragover', handler as EventListener);
+  this.addEventListener('dragover', handler as EventListener);
   return this;
 };
 
 p.onDragDrop = function (this: HTMLElement, handler: (event: DragEvent) => void) {
-  setEventListener(this, 'drop', handler as EventListener);
+  this.addEventListener('drop', handler as EventListener);
   return this;
 };
 
 p.onCopy = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
-  setEventListener(this, 'copy', handler as EventListener);
+  this.addEventListener('copy', handler as EventListener);
   return this;
 };
 
 p.onCut = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
-  setEventListener(this, 'cut', handler as EventListener);
+  this.addEventListener('cut', handler as EventListener);
   return this;
 };
 
 p.onPaste = function (this: HTMLElement, handler: (event: ClipboardEvent) => void) {
-  setEventListener(this, 'paste', handler as EventListener);
+  this.addEventListener('paste', handler as EventListener);
   return this;
 };
 
 p.onScroll = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'scroll', handler);
+  this.addEventListener('scroll', handler);
   return this;
 };
 
 p.onResize = function (this: HTMLElement, handler: (event: UIEvent) => void) {
-  setEventListener(this, 'resize', handler as EventListener);
+  this.addEventListener('resize', handler as EventListener);
   return this;
 };
 
 p.onPlay = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'play', handler);
+  this.addEventListener('play', handler);
   return this;
 };
 
 p.onPause = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'pause', handler);
+  this.addEventListener('pause', handler);
   return this;
 };
 
 p.onEnded = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'ended', handler);
+  this.addEventListener('ended', handler);
   return this;
 };
 
 p.onVolumeChange = function (this: HTMLElement, handler: (event: Event) => void) {
-  setEventListener(this, 'volumechange', handler);
+  this.addEventListener('volumechange', handler);
   return this;
 };
 
 p.onAnimationStart = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
-  setEventListener(this, 'animationstart', handler as EventListener);
+  this.addEventListener('animationstart', handler as EventListener);
   return this;
 };
 
 p.onAnimationEnd = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
-  setEventListener(this, 'animationend', handler as EventListener);
+  this.addEventListener('animationend', handler as EventListener);
   return this;
 };
 
 p.onAnimationIteration = function (this: HTMLElement, handler: (event: AnimationEvent) => void) {
-  setEventListener(this, 'animationiteration', handler as EventListener);
+  this.addEventListener('animationiteration', handler as EventListener);
   return this;
 };
 
 p.onTransitionEnd = function (this: HTMLElement, handler: (event: TransitionEvent) => void) {
-  setEventListener(this, 'transitionend', handler as EventListener);
+  this.addEventListener('transitionend', handler as EventListener);
   return this;
 };
 
 p.onPointerDown = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointerdown', handler as EventListener);
+  this.addEventListener('pointerdown', handler as EventListener);
   return this;
 };
 
 p.onPointerUp = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointerup', handler as EventListener);
+  this.addEventListener('pointerup', handler as EventListener);
   return this;
 };
 
 p.onPointerMove = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointermove', handler as EventListener);
+  this.addEventListener('pointermove', handler as EventListener);
   return this;
 };
 
 p.onPointerEnter = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointerenter', handler as EventListener);
+  this.addEventListener('pointerenter', handler as EventListener);
   return this;
 };
 
 p.onPointerLeave = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointerleave', handler as EventListener);
+  this.addEventListener('pointerleave', handler as EventListener);
   return this;
 };
 
 p.onPointerCancel = function (this: HTMLElement, handler: (event: PointerEvent) => void) {
-  setEventListener(this, 'pointercancel', handler as EventListener);
+  this.addEventListener('pointercancel', handler as EventListener);
   return this;
 };
 
 p.on = function (this: HTMLElement, eventName: string, handler: EventListener) {
-  setEventListener(this, eventName, handler);
+  this.addEventListener(eventName, handler);
   return this;
 };
 
-p.off = function (this: HTMLElement, eventName: string) {
-  removeTrackedEventListener(this, eventName);
+p.off = function (this: HTMLElement, eventName: string, handler: EventListener) {
+  this.removeEventListener(eventName, handler);
   return this;
 };
 
