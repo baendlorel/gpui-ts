@@ -1,7 +1,7 @@
-import { HTMLBuilder } from './element.js';
+import './element.js';
 
-export const div = () => new HTMLBuilder('div');
-export const span = () => new HTMLBuilder('span');
-export const section = () => new HTMLBuilder('section');
-export const p = () => new HTMLBuilder('p');
-export const btn = () => new HTMLBuilder('button');
+export const div = () => document.createElement('div');
+export const span = () => document.createElement('span');
+export const section = () => document.createElement('section');
+export const p = () => document.createElement('p');
+export const btn = () => document.createElement('button');
