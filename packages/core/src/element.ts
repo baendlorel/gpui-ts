@@ -3,6 +3,7 @@ export class HTMLBuilder {
   private _className?: string;
   private _id?: string;
   private _style: CSSStyleDeclaration = new CSSStyleDeclaration();
+  private _events: Map<string, EventListener> = new Map();
 
   constructor(tag: string) {
     this._tag = tag;
@@ -707,6 +708,285 @@ export class HTMLBuilder {
 
   // #region events
 
+  // Mouse events
+  onClick(handler: (event: MouseEvent) => void): this {
+    this._events.set('click', handler as EventListener);
+    return this;
+  }
+
+  onDoubleClick(handler: (event: MouseEvent) => void): this {
+    this._events.set('dblclick', handler as EventListener);
+    return this;
+  }
+
+  onMouseDown(handler: (event: MouseEvent) => void): this {
+    this._events.set('mousedown', handler as EventListener);
+    return this;
+  }
+
+  onMouseUp(handler: (event: MouseEvent) => void): this {
+    this._events.set('mouseup', handler as EventListener);
+    return this;
+  }
+
+  onMouseMove(handler: (event: MouseEvent) => void): this {
+    this._events.set('mousemove', handler as EventListener);
+    return this;
+  }
+
+  onMouseEnter(handler: (event: MouseEvent) => void): this {
+    this._events.set('mouseenter', handler as EventListener);
+    return this;
+  }
+
+  onMouseLeave(handler: (event: MouseEvent) => void): this {
+    this._events.set('mouseleave', handler as EventListener);
+    return this;
+  }
+
+  onMouseOver(handler: (event: MouseEvent) => void): this {
+    this._events.set('mouseover', handler as EventListener);
+    return this;
+  }
+
+  onMouseOut(handler: (event: MouseEvent) => void): this {
+    this._events.set('mouseout', handler as EventListener);
+    return this;
+  }
+
+  onMouseWheel(handler: (event: WheelEvent) => void): this {
+    this._events.set('wheel', handler as EventListener);
+    return this;
+  }
+
+  // Keyboard events
+  onKeyDown(handler: (event: KeyboardEvent) => void): this {
+    this._events.set('keydown', handler as EventListener);
+    return this;
+  }
+
+  onKeyUp(handler: (event: KeyboardEvent) => void): this {
+    this._events.set('keyup', handler as EventListener);
+    return this;
+  }
+
+  onKeyPress(handler: (event: KeyboardEvent) => void): this {
+    this._events.set('keypress', handler as EventListener);
+    return this;
+  }
+
+  // Focus events
+  onFocus(handler: (event: FocusEvent) => void): this {
+    this._events.set('focus', handler as EventListener);
+    return this;
+  }
+
+  onBlur(handler: (event: FocusEvent) => void): this {
+    this._events.set('blur', handler as EventListener);
+    return this;
+  }
+
+  onFocusIn(handler: (event: FocusEvent) => void): this {
+    this._events.set('focusin', handler as EventListener);
+    return this;
+  }
+
+  onFocusOut(handler: (event: FocusEvent) => void): this {
+    this._events.set('focusout', handler as EventListener);
+    return this;
+  }
+
+  // Form events
+  onChange(handler: (event: Event) => void): this {
+    this._events.set('change', handler);
+    return this;
+  }
+
+  onInput(handler: (event: Event) => void): this {
+    this._events.set('input', handler);
+    return this;
+  }
+
+  onSubmit(handler: (event: SubmitEvent) => void): this {
+    this._events.set('submit', handler as EventListener);
+    return this;
+  }
+
+  onReset(handler: (event: Event) => void): this {
+    this._events.set('reset', handler);
+    return this;
+  }
+
+  // Touch events
+  onTouchStart(handler: (event: TouchEvent) => void): this {
+    this._events.set('touchstart', handler as EventListener);
+    return this;
+  }
+
+  onTouchEnd(handler: (event: TouchEvent) => void): this {
+    this._events.set('touchend', handler as EventListener);
+    return this;
+  }
+
+  onTouchMove(handler: (event: TouchEvent) => void): this {
+    this._events.set('touchmove', handler as EventListener);
+    return this;
+  }
+
+  onTouchCancel(handler: (event: TouchEvent) => void): this {
+    this._events.set('touchcancel', handler as EventListener);
+    return this;
+  }
+
+  // Drag events
+  onDrag(handler: (event: DragEvent) => void): this {
+    this._events.set('drag', handler as EventListener);
+    return this;
+  }
+
+  onDragStart(handler: (event: DragEvent) => void): this {
+    this._events.set('dragstart', handler as EventListener);
+    return this;
+  }
+
+  onDragEnd(handler: (event: DragEvent) => void): this {
+    this._events.set('dragend', handler as EventListener);
+    return this;
+  }
+
+  onDragEnter(handler: (event: DragEvent) => void): this {
+    this._events.set('dragenter', handler as EventListener);
+    return this;
+  }
+
+  onDragLeave(handler: (event: DragEvent) => void): this {
+    this._events.set('dragleave', handler as EventListener);
+    return this;
+  }
+
+  onDragOver(handler: (event: DragEvent) => void): this {
+    this._events.set('dragover', handler as EventListener);
+    return this;
+  }
+
+  onDragDrop(handler: (event: DragEvent) => void): this {
+    this._events.set('drop', handler as EventListener);
+    return this;
+  }
+
+  // Clipboard events
+  onCopy(handler: (event: ClipboardEvent) => void): this {
+    this._events.set('copy', handler as EventListener);
+    return this;
+  }
+
+  onCut(handler: (event: ClipboardEvent) => void): this {
+    this._events.set('cut', handler as EventListener);
+    return this;
+  }
+
+  onPaste(handler: (event: ClipboardEvent) => void): this {
+    this._events.set('paste', handler as EventListener);
+    return this;
+  }
+
+  // UI events
+  onScroll(handler: (event: Event) => void): this {
+    this._events.set('scroll', handler);
+    return this;
+  }
+
+  onResize(handler: (event: UIEvent) => void): this {
+    this._events.set('resize', handler as EventListener);
+    return this;
+  }
+
+  // Media events
+  onPlay(handler: (event: Event) => void): this {
+    this._events.set('play', handler);
+    return this;
+  }
+
+  onPause(handler: (event: Event) => void): this {
+    this._events.set('pause', handler);
+    return this;
+  }
+
+  onEnded(handler: (event: Event) => void): this {
+    this._events.set('ended', handler);
+    return this;
+  }
+
+  onVolumeChange(handler: (event: Event) => void): this {
+    this._events.set('volumechange', handler);
+    return this;
+  }
+
+  // Animation events
+  onAnimationStart(handler: (event: AnimationEvent) => void): this {
+    this._events.set('animationstart', handler as EventListener);
+    return this;
+  }
+
+  onAnimationEnd(handler: (event: AnimationEvent) => void): this {
+    this._events.set('animationend', handler as EventListener);
+    return this;
+  }
+
+  onAnimationIteration(handler: (event: AnimationEvent) => void): this {
+    this._events.set('animationiteration', handler as EventListener);
+    return this;
+  }
+
+  // Transition events
+  onTransitionEnd(handler: (event: TransitionEvent) => void): this {
+    this._events.set('transitionend', handler as EventListener);
+    return this;
+  }
+
+  // Pointer events
+  onPointerDown(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointerdown', handler as EventListener);
+    return this;
+  }
+
+  onPointerUp(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointerup', handler as EventListener);
+    return this;
+  }
+
+  onPointerMove(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointermove', handler as EventListener);
+    return this;
+  }
+
+  onPointerEnter(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointerenter', handler as EventListener);
+    return this;
+  }
+
+  onPointerLeave(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointerleave', handler as EventListener);
+    return this;
+  }
+
+  onPointerCancel(handler: (event: PointerEvent) => void): this {
+    this._events.set('pointercancel', handler as EventListener);
+    return this;
+  }
+
+  // Custom event handler
+  on(eventName: string, handler: EventListener): this {
+    this._events.set(eventName, handler);
+    return this;
+  }
+
+  // Remove event handler
+  off(eventName: string): this {
+    this._events.delete(eventName);
+    return this;
+  }
+
   // #endregion
 
   build() {
@@ -718,6 +998,8 @@ export class HTMLBuilder {
       e.className = this._className;
     }
     e.style.cssText = this._style.cssText;
+    // Apply event listeners
+    this._events.forEach((fn, evt) => e.addEventListener(evt, fn));
     return e;
   }
 }
