@@ -28,15 +28,6 @@
     "./local-test/**/*.ts",
     "./packages/**/src/**/*.ts"
   ],
-  "exclude": [
-    "**/dist/**/*.js",
-    "**/dist/**/*.d.ts",
-    "**/example/**/code/**",
-    "node_modules"
-  ],
-  "references": [
-    { "path": "./packages/core" },
-    { "path": "./packages/types" },
-    { "path": "./packages/example" }
-  ]
+  "exclude": ["**/dist/**/*.js", "**/dist/**/*.d.ts", "**/example/**/code/**", "node_modules"],
+  "references": [{ "path": "./packages/core" }, { "path": "./packages/example" }]
 }

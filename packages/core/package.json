@@ -8,6 +8,7 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "type": "module",
   "purpose": "npm",
   "description": "gpui-ts is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
   "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
@@ -16,6 +17,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
+    },
+    "./inject": {
+      "types": "./dist/inject.d.ts",
+      "import": "./dist/inject.mjs",
+      "default": "./dist/inject.mjs"
     }
   },
   "scripts": {
@@ -38,6 +44,5 @@
     "typescript",
     "javascript"
   ],
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }

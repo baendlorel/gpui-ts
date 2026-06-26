@@ -30,4 +30,18 @@ export default defineConfig([
       onlyBundle: ['type-narrow'],
     },
   },
+  {
+    entry: [{ inject: 'src/inject.ts' }],
+    format: ['esm'],
+    dts: true,
+    clean: true,
+    sourcemap: true,
+    minify: !isDev,
+    target: 'node24',
+    treeshake: !isDev,
+    plugins: plugins(),
+    deps: {
+      onlyBundle: ['type-narrow'],
+    },
+  },
 ]);
