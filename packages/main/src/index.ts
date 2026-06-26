@@ -10,3 +10,15 @@ export const p = () => document.createElement('p');
 export const input = () => document.createElement('input');
 export const textarea = () => document.createElement('textarea');
 export const btn = () => document.createElement('button');
+
+export const select = (options: Array<{ value: any; label: string }>) => {
+  const s = document.createElement('select');
+  s.append(
+    ...options.map((v) => {
+      const o = document.createElement('option');
+      o.value = v.value;
+      o.textContent = v.label;
+      return o;
+    }),
+  );
+};
