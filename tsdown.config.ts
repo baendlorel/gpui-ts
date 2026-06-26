@@ -3,7 +3,7 @@ import replace from '@rollup/plugin-replace';
 
 const isDev = process.env.NODE_ENV === 'development';
 const plugins = () => [
-  replace({
+  (replace as any)({
     preventAssignment: true,
     delimiters: ['', ''],
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),

@@ -3,7 +3,7 @@ import { writeFileSync } from 'node:fs';
 
 import { Version } from './version.js';
 import { ask } from './ask.js';
-import { getPackageInfo, syncRootVersion, PackageInfo } from './package-info.js';
+import { getPackageInfo, PackageInfo } from './package-info.js';
 import { buildWithInfo } from './build.js';
 import { join } from 'node:path';
 
@@ -37,16 +37,13 @@ export async function publish(who: string | undefined) {
     info.json.version = newVer;
     writeFileSync(join(info.path, 'package.json'), JSON.stringify(info.json, null, 2), 'utf-8');
   });
-  const syncedRootPath = syncRootVersion(group);
 
   // ! Ensure all versions are bumped. Otherwise inter-dependencies may cause build failures
   group.forEach(buildWithInfo);
   group.forEach(gitTag);
 
   const releaseInfo = group.map((info, i) => `${i}.${info.name}@${info.json.version}`).join('\n');
-  const changedPaths = [
-    ...new Set([...group.map((info) => join(info.path, 'package.json')), ...(syncedRootPath ? [syncedRootPath] : [])]),
-  ];
+  const changedPaths = [...new Set([...group.map((info) => join(info.path, 'package.json'))])];
   execSync(`git add ${changedPaths.join(' ')}`, { stdio: 'inherit' });
   execSync(`git commit -m "release: \n${releaseInfo}"`, { stdio: 'inherit' });
   console.log('Committed :', releaseInfo);

@@ -1,7 +1,6 @@
-import { writeFileSync } from 'node:fs';
-import { loadJson, loadPackageJson, type CommonPackageJson } from '../common/utils.js';
-import { dirs } from '../common/consts.js';
-import { Version } from '../common/version.js';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { Version } from './version.js';
+import { join } from 'node:path';
 
 export interface PackageInfo {
   /**
@@ -9,7 +8,7 @@ export interface PackageInfo {
    */
   path: string;
   version: Version;
-  json: CommonPackageJson;
+  json: any;
   name: string;
   nameVer: string;
   env: {
@@ -21,26 +20,20 @@ export interface PackageInfo {
   };
 }
 
-const publishGroupMap = new Map<string, string[]>([
-  ['main', ['core', 'kt.js', 'mui']],
-  ['router', ['core', 'kt.js', 'router']],
-  ['plugin', ['vite', 'babel', 'transformer', 'create']],
-  ['all', ['shared', 'core', 'kt.js', 'mui', 'mui-icon', 'router']],
-]);
+const publishGroupMap = new Map<string, string[]>([['main', ['core']]]);
 
-const getAbsolutePath = (who: string) => dirs.packages.tryJoin(who) ?? dirs.plugins.join(who);
+const getAbsolutePath = (who: string) => join(import.meta.dirname, '..', 'packages', who);
 const getGroup = (who: string): string[] => {
   const raw = publishGroupMap.get(who);
   return raw ? raw.map(getAbsolutePath) : [getAbsolutePath(who)];
 };
 
+const loadJson = (p: string) => JSON.parse(readFileSync(p, 'utf-8'));
+
 export function getPackageInfo(who: string = 'main'): PackageInfo[] {
   return getGroup(who)
     .map((absolutePackagePath) => {
-      const data = loadPackageJson(absolutePackagePath);
-      if (!data) {
-        return null;
-      }
+      const data = loadJson(absolutePackagePath);
 
       return {
         path: absolutePackagePath,
@@ -52,21 +45,4 @@ export function getPackageInfo(who: string = 'main'): PackageInfo[] {
       };
     })
     .filter((info): info is PackageInfo => info !== null);
-}
-
-export function syncRootVersion(group: PackageInfo[]): string | null {
-  const coreInfo = group.find((info) => info.name === '@ktjs/core');
-  if (!coreInfo) {
-    return null;
-  }
-
-  const data = loadJson(dirs.rootPackageJson);
-  if (data.version === coreInfo.json.version) {
-    return null;
-  }
-
-  data.version = coreInfo.json.version;
-  writeFileSync(dirs.rootPackageJson, JSON.stringify(data, null, 2) + '\n', 'utf-8');
-  console.log(`Synced root package version to ${coreInfo.json.version} from @ktjs/core`);
-  return dirs.rootPackageJson;
 }
