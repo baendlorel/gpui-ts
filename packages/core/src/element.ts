@@ -1,11 +1,12 @@
-export class HTMLBuilder {
+type otherstring = string & {};
+export class HTMLBuilder<Tag extends keyof HTMLElementTagNameMap> {
   private _tag: string;
   private _className?: string;
   private _id?: string;
   private _style: CSSStyleDeclaration = new CSSStyleDeclaration();
   private _events: Map<string, EventListener> = new Map();
 
-  constructor(tag: string) {
+  constructor(tag: Tag | otherstring) {
     this._tag = tag;
   }
 
@@ -989,7 +990,7 @@ export class HTMLBuilder {
 
   // #endregion
 
-  build() {
+  build(): HTMLElementTagNameMap[Tag] {
     const e = document.createElement(this._tag);
     if (this._id) {
       e.id = this._id;
@@ -1000,6 +1001,6 @@ export class HTMLBuilder {
     e.style.cssText = this._style.cssText;
     // Apply event listeners
     this._events.forEach((fn, evt) => e.addEventListener(evt, fn));
-    return e;
+    return e as HTMLElementTagNameMap[Tag];
   }
 }
