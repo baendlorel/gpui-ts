@@ -48,16 +48,16 @@ importers:
         specifier: workspace:*
         version: link:../main
     devDependencies:
-      unplugin-gpuj-treeshake:
+      unplugin-zed-gpui-treeshake:
         specifier: workspace:*
-        version: link:../unplugin-gpuj-treeshake
+        version: link:../unplugin-zed-gpui-treeshake
       vite:
         specifier: ^5.0.0
         version: 5.4.21(@types/node@26.0.1)(lightningcss@1.32.0)(terser@5.48.0)
 
   packages/main: {}
 
-  packages/unplugin-gpuj-treeshake:
+  packages/unplugin-zed-gpui-treeshake:
     devDependencies:
       '@babel/generator':
         specifier: ^8.0.0

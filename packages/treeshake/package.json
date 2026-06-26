@@ -1,7 +1,7 @@
 {
-  "name": "unplugin-gpuj-treeshake",
+  "name": "unplugin-zed-gpui-treeshake",
   "version": "0.0.1",
-  "description": "Unplugin for gpuj tree-shaking optimization - removes unused gpuj methods from bundle",
+  "description": "Unplugin for zed-gpui tree-shaking optimization - removes unused zed-gpui methods from bundle",
   "author": {
     "name": "Kasukabe Tsumugi",
     "email": "futami16237@gmail.com"
@@ -64,7 +64,7 @@
   },
   "keywords": [
     "unplugin",
-    "gpuj",
+    "zed-gpui",
     "tree-shaking",
     "bundle",
     "optimization",
@@ -86,7 +86,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpuj",
-    "directory": "packages/unplugin-gpuj-treeshake"
+    "url": "https://github.com/baendlorel/gpui-ts",
+    "directory": "packages/unplugin-zed-gpui-treeshake"
   }
 }

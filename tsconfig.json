@@ -12,9 +12,9 @@
     "rootDir": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@gpuj/core": ["./packages/core/src"],
-      "@gpuj/types": ["./packages/types/src"],
-      "@gpuj/example": ["./packages/example/src"]
+      "@zed-gpui/core": ["./packages/core/src"],
+      "@zed-gpui/types": ["./packages/types/src"],
+      "@zed-gpui/example": ["./packages/example/src"]
     }
   },
   "include": [

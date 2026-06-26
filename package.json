@@ -1,5 +1,5 @@
 {
-  "name": "gpuj-workspace",
+  "name": "zed-gpui-workspace",
   "version": "0.0.1",
   "private": true,
   "author": {
@@ -11,12 +11,12 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "gpuj monorepo - a functional web front-end framework similar to gpui",
-  "description_zh": "gpuj 是一个写法类似 gpui 的函数式 web 前端框架 monorepo",
-  "homepage": "https://github.com/baendlorel/gpuj#readme",
+  "description": "zed-gpui monorepo - a functional web front-end framework with gpui-inspired syntax",
+  "description_zh": "zed-gpui 是一个采用 gpui 风格语法的函数式 web 前端框架 monorepo",
+  "homepage": "https://github.com/baendlorel/gpui-ts#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baendlorel/gpuj"
+    "url": "https://github.com/baendlorel/gpui-ts"
   },
   "keywords": [
     "framework",

@@ -5,14 +5,14 @@ import generate from '@babel/generator';
 
 export interface PluginOptions {
   /**
-   * gpuj package name or import path
-   * @default 'gpuj'
+   * zed-gpui package name or import path
+   * @default 'zed-gpui'
    */
-  gpujPackageName?: string;
+  zedGpuiPackageName?: string;
 
   /**
-   * Path to the element.ts file in gpuj package
-   * @default 'gpuj/element'
+   * Path to the element.ts file in zed-gpui package
+   * @default 'zed-gpui/element'
    */
   elementPath?: string;
 
@@ -24,22 +24,22 @@ export interface PluginOptions {
 }
 
 const defaultOptions: PluginOptions = {
-  gpujPackageName: 'gpuj',
-  elementPath: 'gpuj/element',
+  zedGpuiPackageName: 'zed-gpui',
+  elementPath: 'zed-gpui/element',
   debug: false,
 };
 
 /**
- * Unplugin for gpuj tree-shaking optimization
- * Removes unused gpuj methods from the bundle
+ * Unplugin for zed-gpui tree-shaking optimization
+ * Removes unused zed-gpui methods from the bundle
  */
-export const gpujTreeshakePlugin = createUnplugin((options: PluginOptions = {}) => {
+export const zedGpuiTreeshakePlugin = createUnplugin((options: PluginOptions = {}) => {
   const opts = { ...defaultOptions, ...options };
   const usedMethods = new Set<string>();
   let hasProcessedElement = false;
 
   return {
-    name: 'unplugin-gpuj-treeshake',
+    name: 'unplugin-zed-gpui-treeshake',
 
     transform(code, id) {
       // Skip if we've already processed element.ts
@@ -47,11 +47,14 @@ export const gpujTreeshakePlugin = createUnplugin((options: PluginOptions = {}) 
         return null;
       }
 
-      // Check if this is the gpuj element.ts file
+      // Check if this is the zed-gpui element.ts file
       if (id.includes('element.ts') || id.includes('element.js')) {
         if (opts.debug) {
-          console.log(`[gpuj-treeshake] Processing element file: ${id}`);
-          console.log(`[gpuj-treeshake] Used methods (${usedMethods.size}):`, Array.from(usedMethods).sort());
+          console.log(`[zed-gpui-treeshake] Processing element file: ${id}`);
+          console.log(
+            `[zed-gpui-treeshake] Used methods (${usedMethods.size}):`,
+            Array.from(usedMethods).sort(),
+          );
         }
 
         hasProcessedElement = true;
@@ -75,7 +78,7 @@ export const gpujTreeshakePlugin = createUnplugin((options: PluginOptions = {}) 
 });
 
 /**
- * Check if a file should be analyzed for gpuj usage
+ * Check if a file should be analyzed for zed-gpui usage
  */
 function shouldProcessFile(id: string): boolean {
   // Skip node_modules and dist directories
@@ -88,7 +91,7 @@ function shouldProcessFile(id: string): boolean {
 }
 
 /**
- * Analyze code to find gpuj method usage
+ * Analyze code to find zed-gpui method usage
  */
 function analyzeUsage(code: string, usedMethods: Set<string>, options: PluginOptions) {
   try {
@@ -97,21 +100,24 @@ function analyzeUsage(code: string, usedMethods: Set<string>, options: PluginOpt
       plugins: ['typescript', 'jsx'],
     });
 
-    let hasGpujImport = false;
+    let hasZedGpuiImport = false;
     const program = ast.program;
 
-    // First pass: check if file imports gpuj
+    // First pass: check if file imports zed-gpui
     for (const node of program.body) {
       if (t.isImportDeclaration(node)) {
         const source = node.source.value;
-        if (source === options.gpujPackageName || source.startsWith(options.gpujPackageName + '/')) {
-          hasGpujImport = true;
+        if (
+          source === options.zedGpuiPackageName ||
+          source.startsWith(options.zedGpuiPackageName + '/')
+        ) {
+          hasZedGpuiImport = true;
           break;
         }
       }
     }
 
-    if (!hasGpujImport && !hasGpujUsage(code)) {
+    if (!hasZedGpuiImport && !hasZedGpuiUsage(code)) {
       return;
     }
 
@@ -121,20 +127,20 @@ function analyzeUsage(code: string, usedMethods: Set<string>, options: PluginOpt
     }
 
     if (options.debug && usedMethods.size > 0) {
-      console.log(`[gpuj-treeshake] Found methods in file:`, Array.from(usedMethods).sort());
+      console.log(`[zed-gpui-treeshake] Found methods in file:`, Array.from(usedMethods).sort());
     }
   } catch (error) {
     // Parse errors are expected for some files (like JSON, config files, etc.)
     if (options.debug) {
-      console.warn(`[gpuj-treeshake] Failed to parse:`, error);
+      console.warn(`[zed-gpui-treeshake] Failed to parse:`, error);
     }
   }
 }
 
 /**
- * Quick check if code might contain gpuj usage
+ * Quick check if code might contain zed-gpui usage
  */
-function hasGpujUsage(code: string): boolean {
+function hasZedGpuiUsage(code: string): boolean {
   // Look for common patterns like .flex(), .w(), .h(), etc.
   const patterns = [
     /\.\s*([a-z_][a-zA-Z0-9_]*)\s*\(/g, // Method calls like .flex(, .w(, etc.
@@ -167,7 +173,7 @@ function scanNodeForMethodCalls(node: t.Node, usedMethods: Set<string>) {
     const property = node.callee.property;
     if (t.isIdentifier(property)) {
       const methodName = property.name;
-      // Check if it looks like a gpuj method (camelCase or snake_case)
+      // Check if it looks like a zed-gpui method (camelCase or snake_case)
       if (/^[a-z][a-zA-Z0-9_]*$/.test(methodName)) {
         usedMethods.add(methodName);
       }
@@ -232,7 +238,7 @@ function transformElementFile(code: string, usedMethods: Set<string>, options: P
                 const isUsed = usedMethods.has(methodName);
 
                 if (!isUsed && options.debug) {
-                  console.log(`[gpuj-treeshake] Removing unused method: ${methodName}`);
+                  console.log(`[zed-gpui-treeshake] Removing unused method: ${methodName}`);
                 }
 
                 return isUsed;
@@ -242,7 +248,9 @@ function transformElementFile(code: string, usedMethods: Set<string>, options: P
               if (newCount !== originalProperties) {
                 modified = true;
                 if (options.debug) {
-                  console.log(`[gpuj-treeshake] Removed ${originalProperties - newCount} unused methods`);
+                  console.log(
+                    `[zed-gpui-treeshake] Removed ${originalProperties - newCount} unused methods`,
+                  );
                 }
               }
             }
@@ -260,9 +268,9 @@ function transformElementFile(code: string, usedMethods: Set<string>, options: P
 
     return null;
   } catch (error) {
-    console.error('[gpuj-treeshake] Failed to transform element file:', error);
+    console.error('[zed-gpui-treeshake] Failed to transform element file:', error);
     return null;
   }
 }
 
-export default gpujTreeshakePlugin;
+export default zedGpuiTreeshakePlugin;

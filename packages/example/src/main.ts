@@ -1,6 +1,6 @@
 import { div, h, btn, input } from 'zed-gpui';
 
-// Example usage of gpuj - plugin will detect these methods
+// Example usage of zed-gpui - the plugin will detect these methods
 const app = div()
   .flex()
   .w('100%')

@@ -20,7 +20,7 @@ export interface PackageInfo {
   };
 }
 
-const publishGroupMap = new Map<string, string[]>();
+const publishGroupMap = new Map<string | undefined, string[]>([[undefined, ['main', 'treeshake']]]);
 
 const getAbsolutePath = (who: string) => join(import.meta.dirname, '..', 'packages', who);
 const getGroup = (who: string): string[] => {

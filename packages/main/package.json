@@ -10,8 +10,8 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "zed-div is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
-  "description_zh": "zed-div 是一个写法类似 gpui 的函数式 web 前端框架，通过增强HTMLElement原型实现其功能",
+  "description": "zed-gpui is a functional web front-end framework with gpui-inspired syntax, which enhances the HTMLElement prototype to implement its functionality",
+  "description_zh": "zed-gpui 是一个采用 gpui 风格语法的函数式 web 前端框架，通过增强 HTMLElement 原型实现能力",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

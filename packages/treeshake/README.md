@@ -1,13 +1,13 @@
-# unplugin-gpuj-treeshake
+# unplugin-zed-gpui-treeshake
 
-> 🌳 Tree-shaking optimization plugin for gpuj framework
+> 🌳 Tree-shaking optimization plugin for zed-gpui framework
 
-Remove unused gpuj methods from your bundle to reduce bundle size.
+Remove unused zed-gpui methods from your bundle to reduce bundle size.
 
 ## Features
 
-- 🚀 **Bundle Size Optimization**: Removes unused gpuj methods automatically
-- 🔍 **Usage Analysis**: Analyzes your code to find which gpuj methods are actually used
+- 🚀 **Bundle Size Optimization**: Removes unused zed-gpui methods automatically
+- 🔍 **Usage Analysis**: Analyzes your code to find which zed-gpui methods are actually used
 - 📦 **Unplugin Support**: Works with Vite, Webpack, Rollup, esbuild, and more
 - ⚡ **Zero Config**: Works out of the box with sensible defaults
 - 🛠️ **TypeScript Support**: Full TypeScript support
@@ -15,15 +15,15 @@ Remove unused gpuj methods from your bundle to reduce bundle size.
 ## Installation
 
 ```bash
-npm install unplugin-gpuj-treeshake -D
+npm install unplugin-zed-gpui-treeshake -D
 ```
 
 ```bash
-pnpm add unplugin-gpuj-treeshake -D
+pnpm add unplugin-zed-gpui-treeshake -D
 ```
 
 ```bash
-yarn add unplugin-gpuj-treeshake -D
+yarn add unplugin-zed-gpui-treeshake -D
 ```
 
 ## Usage
@@ -33,11 +33,11 @@ yarn add unplugin-gpuj-treeshake -D
 ```typescript
 // vite.config.ts
 import { defineConfig } from 'vite';
-import gpujTreeshake from 'unplugin-gpuj-treeshake/vite';
+import zedGpuiTreeshake from 'unplugin-zed-gpui-treeshake/vite';
 
 export default defineConfig({
   plugins: [
-    gpujTreeshake({
+    zedGpuiTreeshake({
       // options (optional)
       debug: false, // Enable debug logging
     }),
@@ -49,11 +49,11 @@ export default defineConfig({
 
 ```javascript
 // webpack.config.js
-const gpujTreeshake = require('unplugin-gpuj-treeshake/webpack');
+const zedGpuiTreeshake = require('unplugin-zed-gpui-treeshake/webpack');
 
 module.exports = {
   plugins: [
-    gpujTreeshake({
+    zedGpuiTreeshake({
       // options (optional)
       debug: false,
     }),
@@ -65,11 +65,11 @@ module.exports = {
 
 ```javascript
 // rollup.config.js
-import gpujTreeshake from 'unplugin-gpuj-treeshake/rollup';
+import zedGpuiTreeshake from 'unplugin-zed-gpui-treeshake/rollup';
 
 export default {
   plugins: [
-    gpujTreeshake({
+    zedGpuiTreeshake({
       // options (optional)
       debug: false,
     }),
@@ -82,11 +82,11 @@ export default {
 ```javascript
 // esbuild.config.js
 import { build } from 'esbuild';
-import gpujTreeshake from 'unplugin-gpuj-treeshake/esbuild';
+import zedGpuiTreeshake from 'unplugin-zed-gpui-treeshake/esbuild';
 
 build({
   plugins: [
-    gpujTreeshake({
+    zedGpuiTreeshake({
       // options (optional)
       debug: false,
     }),
@@ -96,19 +96,19 @@ build({
 
 ## Options
 
-### `gpujPackageName`
+### `zedGpuiPackageName`
 
 - Type: `string`
-- Default: `'gpuj'`
+- Default: `'zed-gpui'`
 
-The name of the gpuj package in your dependencies.
+The name of the zed-gpui package in your dependencies.
 
 ### `elementPath`
 
 - Type: `string`
-- Default: `'gpuj/element'`
+- Default: `'zed-gpui/element'`
 
-Path to the element.ts file in the gpuj package.
+Path to the element.ts file in the zed-gpui package.
 
 ### `debug`
 
@@ -119,11 +119,11 @@ Enable debug logging to see which methods are being removed.
 
 ## How it works
 
-1. **Analysis Phase**: The plugin scans all your source files to find which gpuj methods are actually being used (like `.flex()`, `.w()`, `.h()`, etc.)
+1. **Analysis Phase**: The plugin scans all your source files to find which zed-gpui methods are actually being used (like `.flex()`, `.w()`, `.h()`, etc.)
 
-2. **Optimization Phase**: When the bundler processes the gpuj `element.ts` file, the plugin removes all unused method definitions from `Object.assign(HTMLElement.prototype, {...})`
+2. **Optimization Phase**: When the bundler processes the zed-gpui `element.ts` file, the plugin removes all unused method definitions from `Object.assign(HTMLElement.prototype, {...})`
 
-3. **Result**: Your final bundle only contains the gpuj methods that you actually use
+3. **Result**: Your final bundle only contains the zed-gpui methods that you actually use
 
 ## Example
 

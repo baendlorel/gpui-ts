@@ -31,16 +31,9 @@ pnpm add zed-gpui
 import { div, p, btn } from 'zed-gpui';
 
 // Create elements with chained styling
-const container = div()
-  .flex()
-  .gap('1rem')
-  .p('2rem')
-  .bg('#f0f0f0');
+const container = div().flex().gap('1rem').p('2rem').bg('#f0f0f0');
 
-const title = p()
-  .textSize('1.5rem')
-  .text('#333')
-  .text('Hello, zed-gpui!');
+const title = p().textSize('1.5rem').text('#333').text('Hello, zed-gpui!');
 
 const button = btn()
   .px('1rem')
@@ -53,24 +46,19 @@ const button = btn()
   .text('Click Me');
 
 // Build and append to DOM
-document.body.append(
-  container.build(),
-  title.build(),
-  button.build()
-);
+document.body.append(container.build(), title.build(), button.build());
 ```
-
 
 ## API Overview
 
 ### Element Creation
 
 ```typescript
-div()    // <div>
-span()   // <span>
-section()// <section>
-p()      // <p>
-btn()    // <button>
+div(); // <div>
+span(); // <span>
+section(); // <section>
+p(); // <p>
+btn(); // <button>
 ```
 
 ### Layout & Display
@@ -139,4 +127,3 @@ btn()    // <button>
 ## License
 
 MIT
-
