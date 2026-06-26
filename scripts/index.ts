@@ -1,0 +1,30 @@
+#!/usr/bin/env tsx
+
+import { rollupBuild } from './rollup-build.js';
+import { check } from './check.js';
+import { publish } from './publish.js';
+import { syncReadme } from './readme.js';
+import { test } from './test.js';
+import { vitebuild } from './build.js';
+
+const taskHandler = {
+  '--publish': publish,
+  '--rollup-build': rollupBuild,
+  '--test': test,
+  '--check': check,
+  '--readme': syncReadme,
+  '--vite-build': vitebuild,
+};
+
+async function main() {
+  const task = process.argv[2];
+  const args = process.argv.slice(3);
+  const [who] = args;
+  const handler = taskHandler[task as keyof typeof taskHandler];
+  if (handler) {
+    await handler(who);
+  } else {
+    console.error(`Unknown task: ${task}`);
+  }
+}
+main();

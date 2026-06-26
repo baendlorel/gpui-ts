@@ -1,0 +1,8 @@
+{
+  // # This is the minimum tsconfig.json for a package.
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": ["./src/**/*"]
+}

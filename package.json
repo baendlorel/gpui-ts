@@ -1,0 +1,49 @@
+{
+  "name": "gpui-ts",
+  "version": "0.0.1",
+  "author": {
+    "name": "Kasukabe Tsumugi",
+    "email": "futami16237@gmail.com"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "purpose": "npm",
+  "description": "gpui-ts is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
+  "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/baendlorel/gpui-ts#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baendlorel/gpui-ts"
+  },
+  "keywords": [],
+  "scripts": {
+    "check": "tsc --noEmit -p tsconfig.build.json",
+    "test": "vitest",
+    "lint": "oxlint ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-replace": "^6.0.3",
+    "@types/node": "^25.9.1",
+    "oxlint": "^1.67.0",
+    "prettier": "^3.8.3",
+    "tsdown": "^0.22.3",
+    "tslib": "^2.8.1",
+    "type-narrow": "^0.2.2",
+    "typescript": "^6.0.3",
+    "tsx": "^4.22.4",
+    "vitest": "^4.1.7"
+  },
+  "dependencies": {}
+}
