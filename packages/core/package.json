@@ -1,5 +1,5 @@
 {
-  "name": "gpui-ts",
+  "name": "jpui",
   "version": "0.0.1",
   "author": {
     "name": "Kasukabe Tsumugi",
@@ -10,8 +10,8 @@
   },
   "type": "module",
   "purpose": "npm",
-  "description": "gpui-ts is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
-  "description_zh": "gpui-ts 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
+  "description": "jpui is a functional web front-end framework similar to gpui, which enhances the HTMLElement prototype to implement its functionality",
+  "description_zh": "jpui 是一个写法类似gpui的函数式web前端框架，通过增强HTMLElement原型实现其功能",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

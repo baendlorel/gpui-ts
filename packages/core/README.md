@@ -1,16 +1,16 @@
-# gpui-ts
+# jpui
 
-[![npm version](https://img.shields.io/npm/v/gpui-ts.svg)](https://www.npmjs.org/package/gpui-ts)
-[![npm downloads](https://img.shields.io/npm/dm/gpui-ts.svg)](https://www.npmjs.org/package/gpui-ts)
+[![npm version](https://img.shields.io/npm/v/jpui.svg)](https://www.npmjs.org/package/jpui)
+[![npm downloads](https://img.shields.io/npm/dm/jpui.svg)](https://www.npmjs.org/package/jpui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="assets/icon.png" width="240px" alt="gpui-ts logo" />
+  <img src="../../assets/icon.png" width="240px" alt="jpui logo" />
 </p>
 
 > A functional web front-end framework with gpui-inspired syntax
 
-gpui-ts is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
+jpui is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
 
 ## Features
 
@@ -23,13 +23,13 @@ gpui-ts is a lightweight, functional web framework that provides an elegant, cha
 ## Installation
 
 ```bash
-pnpm add gpui-ts
+pnpm add jpui
 ```
 
 ## Quick Start
 
 ```typescript
-import { div, p, btn } from 'gpui-ts';
+import { div, p, btn } from 'jpui';
 
 // Create elements with chained styling
 const container = div()
@@ -41,7 +41,7 @@ const container = div()
 const title = p()
   .textSize('1.5rem')
   .text('#333')
-  .text('Hello, gpui-ts!');
+  .text('Hello, jpui!');
 
 const button = btn()
   .px('1rem')
@@ -66,8 +66,8 @@ document.body.append(
 For automatic `build()` calling, import the inject module:
 
 ```typescript
-import 'gpui-ts/inject';
-import { div, p, btn } from 'gpui-ts';
+import 'jpui/inject';
+import { div, p, btn } from 'jpui';
 
 // Now you can use HTMLBuilder directly with DOM methods
 document.body.append(
@@ -157,4 +157,4 @@ MIT
 
 ---
 
-**GitHub**: [baendlorel/gpui-ts](https://github.com/baendlorel/gpui-ts)
+**GitHub**: [baendlorel/jpui](https://github.com/baendlorel/jpui)
