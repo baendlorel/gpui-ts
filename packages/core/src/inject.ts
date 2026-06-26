@@ -3,7 +3,7 @@
  * 自动为 HTMLBuilder 调用 build() 方法
  */
 
-import { HTMLBuilder } from './element';
+import type { HTMLBuilder } from './element.js';
 
 // Convert HTMLBuilder to HTMLElement if needed
 function toHTMLElement(value: unknown): HTMLElement | Text | string | unknown {
@@ -22,27 +22,45 @@ declare global {
   interface HTMLElement {
     append(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     appendChild(child: HTMLElement | Text | HTMLBuilder<any>): HTMLElement;
-    insertBefore(node: HTMLElement | Text | HTMLBuilder<any>, child: HTMLElement | null): HTMLElement;
-    replaceChild(newChild: HTMLElement | Text | HTMLBuilder<any>, oldChild: HTMLElement): HTMLElement;
+    insertBefore(
+      node: HTMLElement | Text | HTMLBuilder<any>,
+      child: HTMLElement | null,
+    ): HTMLElement;
+    replaceChild(
+      newChild: HTMLElement | Text | HTMLBuilder<any>,
+      oldChild: HTMLElement,
+    ): HTMLElement;
   }
 
   interface Document {
     append(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     appendChild(child: HTMLElement | Text | HTMLBuilder<any>): HTMLElement;
-    insertBefore(node: HTMLElement | Text | HTMLBuilder<any>, child: HTMLElement | null): HTMLElement;
+    insertBefore(
+      node: HTMLElement | Text | HTMLBuilder<any>,
+      child: HTMLElement | null,
+    ): HTMLElement;
   }
 
   interface DocumentFragment {
     append(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     appendChild(child: HTMLElement | Text | HTMLBuilder<any>): HTMLElement;
-    insertBefore(node: HTMLElement | Text | HTMLBuilder<any>, child: HTMLElement | null): HTMLElement;
+    insertBefore(
+      node: HTMLElement | Text | HTMLBuilder<any>,
+      child: HTMLElement | null,
+    ): HTMLElement;
   }
 
   interface Element {
     append(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     appendChild(child: HTMLElement | Text | HTMLBuilder<any>): HTMLElement;
-    insertBefore(node: HTMLElement | Text | HTMLBuilder<any>, child: HTMLElement | null): HTMLElement;
-    replaceChild(newChild: HTMLElement | Text | HTMLBuilder<any>, oldChild: HTMLElement): HTMLElement;
+    insertBefore(
+      node: HTMLElement | Text | HTMLBuilder<any>,
+      child: HTMLElement | null,
+    ): HTMLElement;
+    replaceChild(
+      newChild: HTMLElement | Text | HTMLBuilder<any>,
+      oldChild: HTMLElement,
+    ): HTMLElement;
     prepend(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     after(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
     before(...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]): void;
@@ -83,7 +101,10 @@ export function injectBuilderSupport(): void {
     return originalAppend.apply(this, convertedNodes as any);
   };
 
-  HTMLElement.prototype.appendChild = function (this: HTMLElement, child: HTMLElement | Text | HTMLBuilder<any>) {
+  HTMLElement.prototype.appendChild = function (
+    this: HTMLElement,
+    child: HTMLElement | Text | HTMLBuilder<any>,
+  ) {
     const convertedChild = toHTMLElement(child);
     return originalAppendChild.call(this, convertedChild as any);
   };
@@ -143,12 +164,18 @@ export function injectBuilderSupport(): void {
   const originalDocAppendChild = Document.prototype.appendChild;
   const originalDocInsertBefore = Document.prototype.insertBefore;
 
-  Document.prototype.append = function (this: Document, ...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]) {
+  Document.prototype.append = function (
+    this: Document,
+    ...nodes: (HTMLElement | Text | string | HTMLBuilder<any>)[]
+  ) {
     const convertedNodes = nodes.map(toHTMLElement);
     return originalDocAppend.apply(this, convertedNodes as any);
   };
 
-  Document.prototype.appendChild = function (this: Document, child: HTMLElement | Text | HTMLBuilder<any>) {
+  Document.prototype.appendChild = function (
+    this: Document,
+    child: HTMLElement | Text | HTMLBuilder<any>,
+  ) {
     const convertedChild = toHTMLElement(child);
     return originalDocAppendChild.call(this, convertedChild as any);
   };

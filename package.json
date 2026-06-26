@@ -18,10 +18,15 @@
     "type": "git",
     "url": "https://github.com/baendlorel/gpui-ts"
   },
-  "keywords": ["framework", "web", "gpui", "typescript", "monorepo"],
+  "keywords": [
+    "framework",
+    "web",
+    "gpui",
+    "typescript",
+    "monorepo"
+  ],
   "scripts": {
-    "build": "pnpm -r --filter './packages/**' run build",
-    "build:core": "pnpm --filter './packages/core' run build",
+    "build": "tsx ./scripts/index.ts --build",
     "check": "tsc --noEmit -p tsconfig.build.json",
     "test": "vitest",
     "lint": "oxlint .",
