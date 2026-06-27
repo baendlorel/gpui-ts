@@ -1,6 +1,6 @@
 declare global {
   interface HTMLElement {
-    jpui: true;
+    readonly gpui: true;
 
     // #region functional methods
     /**
@@ -222,6 +222,7 @@ declare global {
 }
 
 $_(HTMLElement, {
+  gpui: true,
   // #region functional methods
   tap_(fn) {
     fn(this);
