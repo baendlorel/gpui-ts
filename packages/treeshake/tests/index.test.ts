@@ -6,7 +6,7 @@ type PluginInstance = {
 };
 
 const elementCode = `
-Object.assign(HTMLElement.prototype, {
+$_(HTMLElement, {
   class_() {},
   value_() {},
   disabled_() {},
@@ -15,14 +15,14 @@ Object.assign(HTMLElement.prototype, {
   unused_() {},
 } as HTMLElement);
 
-Object.assign(HTMLInputElement.prototype, {
+$_(HTMLInputElement, {
   value_() {},
   disabled_() {},
   placeholder_() {},
   unused_() {},
 } as HTMLInputElement);
 
-Object.assign(HTMLButtonElement.prototype, {
+$_(HTMLButtonElement, {
   value_() {},
   disabled_() {},
   autofocus_() {},
@@ -54,7 +54,7 @@ function transformRealElementAfterAnalyze(sourceCode: string) {
   const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
   plugin.transform(sourceCode, '/src/main.ts');
   const result = plugin.transform(
-    `enhance(HTMLElement,{id_(e){return this.id=e,this},child_(...e){return this.append(...e),this},class_(e){return this.className=e,this}}),enhance(HTMLInputElement,{value_(e){return this.value=e,this}});`,
+    `$_(HTMLElement,{id_(e){return this.id=e,this},child_(...e){return this.append(...e),this},class_(e){return this.className=e,this}}),$_(HTMLInputElement,{value_(e){return this.value=e,this}});`,
     '/node_modules/zed-gpui/dist/index.mjs',
   );
 
@@ -81,15 +81,15 @@ describe('zedGpuiTreeshakePlugin', () => {
       btn().disabled_();
     `);
 
-    expect(code).toContain('Object.assign(HTMLInputElement.prototype');
-    expect(code).toContain('Object.assign(HTMLButtonElement.prototype');
-    expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*value_\(\) \{\}/);
+    expect(code).toContain('$_(HTMLInputElement,');
+    expect(code).toContain('$_(HTMLButtonElement,');
+    expect(code).toMatch(/HTMLInputElement,[\s\S]*value_\(\) \{\}/);
     expect(code).not.toMatch(
-      /HTMLInputElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
+      /HTMLInputElement,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
     );
-    expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}/);
+    expect(code).toMatch(/HTMLButtonElement,[\s\S]*disabled_\(\) \{\}/);
     expect(code).not.toMatch(
-      /HTMLButtonElement\.prototype,[\s\S]*value_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
+      /HTMLButtonElement,[\s\S]*value_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
     );
   });
 
@@ -100,10 +100,10 @@ describe('zedGpuiTreeshakePlugin', () => {
       h('button').autofocus_();
     `);
 
-    expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*placeholder_\(\) \{\}/);
-    expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*autofocus_\(\) \{\}/);
+    expect(code).toMatch(/HTMLInputElement,[\s\S]*placeholder_\(\) \{\}/);
+    expect(code).toMatch(/HTMLButtonElement,[\s\S]*autofocus_\(\) \{\}/);
     expect(code).not.toMatch(
-      /HTMLInputElement\.prototype,[\s\S]*autofocus_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
+      /HTMLInputElement,[\s\S]*autofocus_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
     );
   });
 
@@ -113,9 +113,9 @@ describe('zedGpuiTreeshakePlugin', () => {
       getElement().value_('unknown');
     `);
 
-    expect(code).toMatch(/HTMLElement\.prototype,[\s\S]*value_\(\) \{\}/);
-    expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*value_\(\) \{\}/);
-    expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*value_\(\) \{\}/);
+    expect(code).toMatch(/HTMLElement,[\s\S]*value_\(\) \{\}/);
+    expect(code).toMatch(/HTMLInputElement,[\s\S]*value_\(\) \{\}/);
+    expect(code).toMatch(/HTMLButtonElement,[\s\S]*value_\(\) \{\}/);
     expectRemoved(code, 'unused_');
   });
 
@@ -132,14 +132,14 @@ describe('zedGpuiTreeshakePlugin', () => {
     expect(code).not.toContain('HTMLInputElement');
   });
 
-  it('removes empty enhance calls from sequence expressions', () => {
+  it('removes empty $_ calls from sequence expressions', () => {
     const code = transformRealElementAfterAnalyze(`
       import 'zed-gpui';
       document.querySelector<HTMLDivElement>('#app')!.child_('aasdf', 'fds');
     `);
 
-    expect(code).toContain('enhance(HTMLElement');
-    expect(code).not.toContain('enhance(HTMLInputElement, {})');
+    expect(code).toContain('$_(HTMLElement');
+    expect(code).not.toContain('$_(HTMLInputElement, {})');
   });
 
   it('uses TypeScript annotations to identify exact element methods', () => {
@@ -149,7 +149,7 @@ describe('zedGpuiTreeshakePlugin', () => {
       field.disabled_();
     `);
 
-    expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*disabled_\(\) \{\}/);
+    expect(code).toMatch(/HTMLInputElement,[\s\S]*disabled_\(\) \{\}/);
     expect(code).not.toMatch(
       /HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
     );

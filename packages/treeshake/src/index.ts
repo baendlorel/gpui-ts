@@ -69,7 +69,7 @@ const tagElementTypes: Record<string, string> = {
  * Unplugin for zed-gpui tree-shaking optimization
  * Removes unused zed-gpui methods from the bundle
  */
-export const zedGpuiPlugin = createUnplugin((options: PluginOptions = {}) => {
+export const zedGpuiPlugin = createUnplugin<PluginOptions | undefined>((options = {}) => {
   const opts = { ...defaultOptions, ...options };
   const usedMethods: UsedMethods = {
     unknown: new Set(),
@@ -168,7 +168,7 @@ function hasZedGpuiUsage(code: string): boolean {
 }
 
 function hasPrototypeEnhancement(code: string): boolean {
-  return /HTML[A-Za-z]*Element/.test(code);
+  return code.includes('$_(') && /HTML[A-Za-z]*Element/.test(code);
 }
 
 /**
@@ -372,11 +372,15 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
       for (const expression of t.isSequenceExpression(node.expression)
         ? node.expression.expressions
         : [node.expression]) {
-        if (!t.isCallExpression(expression) || expression.arguments.length < 2) {
+        if (
+          !t.isCallExpression(expression) ||
+          !t.isIdentifier(expression.callee, { name: '$_' }) ||
+          expression.arguments.length < 2
+        ) {
           continue;
         }
 
-        const targetPrototype = getAssignedPrototype(expression.arguments[0]);
+        const targetPrototype = getEnhancedPrototype(expression.arguments[0]);
         const sourceArg = unwrapExpression(expression.arguments[1]);
         if (targetPrototype && t.isObjectExpression(sourceArg)) {
           assignments.push({ targetPrototype, sourceArg, call: expression });
@@ -473,17 +477,8 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
   }
 }
 
-function getAssignedPrototype(node: t.Node): string | undefined {
-  if (t.isIdentifier(node) && isElementType(node.name)) {
-    return node.name;
-  }
-
-  return t.isMemberExpression(node) &&
-    t.isIdentifier(node.object) &&
-    t.isIdentifier(node.property, { name: 'prototype' }) &&
-    isElementType(node.object.name)
-    ? node.object.name
-    : undefined;
+function getEnhancedPrototype(node: t.Node): string | undefined {
+  return t.isIdentifier(node) && isElementType(node.name) ? node.name : undefined;
 }
 
 function unwrapExpression(node: t.Node): t.Node {

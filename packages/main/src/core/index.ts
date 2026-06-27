@@ -7,6 +7,8 @@ declare global {
     name_(name: string): this;
     child_(...nodes: any[]): this;
     text_(text: string): this;
+    remove_(): this;
+    dataset_(key: string, value: any): this;
 
     class_(classList: string[]): this;
     class_(className: string): this;
@@ -206,6 +208,14 @@ $_(HTMLElement, {
   },
   child_(...nodes) {
     this.append(...nodes);
+    return this;
+  },
+  remove_() {
+    this.remove();
+    return this;
+  },
+  dataset_(k, v) {
+    this.dataset[k] = v;
     return this;
   },
   class_(c) {
