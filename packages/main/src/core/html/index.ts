@@ -1,22 +1,8 @@
-declare global {
-  interface HTMLElement {
-    readonly gpui: true;
+import type { ZedGpuiFuncional } from '../functional.js';
 
-    // #region functional methods
-    /**
-     * Do some custom modification of this element and turns itself
-     */
-    tap_(fn: (thisArg: this) => void): this;
-    map_<T = HTMLElement>(fn: (thisArg: this) => T): this;
-    /**
-     * Iterator over children, simply uses `for` but caches length
-     */
-    iterChildren_(fn: (child: Element) => void): this;
-    /**
-     * Iterator over child nodes, simply uses `for` but caches length
-     */
-    iterChildNodes_(fn: (childNode: Node) => void): this;
-    // #endregion
+declare global {
+  interface HTMLElement extends ZedGpuiFuncional {
+    readonly gpui: true;
 
     // #region attributes
     id_(id: string): this;
