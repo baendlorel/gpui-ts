@@ -1,5 +1,5 @@
 import './common/enhance.js';
-import './core/init.js';
+import './core/html/init.js';
 
 delete (globalThis as any).$_;
 
