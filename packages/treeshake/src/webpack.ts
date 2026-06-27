@@ -1,3 +1,3 @@
-import { zedGpuiTreeshakePlugin } from './index.js';
+import { zedGpuiPlugin } from './index.js';
 
-export default zedGpuiTreeshakePlugin.webpack;
+export default zedGpuiPlugin.webpack;

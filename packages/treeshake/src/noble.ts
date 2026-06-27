@@ -1,4 +1,4 @@
-import { zedGpuiTreeshakePlugin, type PluginOptions } from './index.js';
+import { zedGpuiPlugin, type PluginOptions } from './index.js';
 
-export { zedGpuiTreeshakePlugin as default, type PluginOptions };
-export { zedGpuiTreeshakePlugin } from './index.js';
+export { zedGpuiPlugin as default, type PluginOptions };
+export { zedGpuiPlugin as zedGpuiTreeshakePlugin } from './index.js';

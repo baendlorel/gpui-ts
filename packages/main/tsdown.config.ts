@@ -19,6 +19,7 @@ export default defineConfig([
   {
     entry: ['src/index.ts'],
     format: ['esm'],
+    outExtensions: (_cx) => ({ dts: '.d.ts' }),
     dts: true,
     clean: true,
     sourcemap: true,

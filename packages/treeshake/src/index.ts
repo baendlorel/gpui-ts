@@ -69,7 +69,7 @@ const tagElementTypes: Record<string, string> = {
  * Unplugin for zed-gpui tree-shaking optimization
  * Removes unused zed-gpui methods from the bundle
  */
-export const zedGpuiTreeshakePlugin = createUnplugin((options: PluginOptions = {}) => {
+export const zedGpuiPlugin = createUnplugin((options: PluginOptions = {}) => {
   const opts = { ...defaultOptions, ...options };
   const usedMethods: UsedMethods = {
     unknown: new Set(),
@@ -77,13 +77,13 @@ export const zedGpuiTreeshakePlugin = createUnplugin((options: PluginOptions = {
   };
 
   return {
-    name: 'unplugin-zed-gpui-treeshake',
+    name: 'unplugin-zed-gpui',
 
     transform(code, id) {
       if (hasElementPrototypeAssign(code)) {
         if (opts.debug) {
-          console.log(`[zed-gpui-treeshake] Processing element file: ${id}`);
-          console.log(`[zed-gpui-treeshake] Used methods:`, formatUsedMethods(usedMethods));
+          console.log(`[zed-gpui] Processing element file: ${id}`);
+          console.log(`[zed-gpui] Used methods:`, formatUsedMethods(usedMethods));
         }
 
         return transformElementFile(code, usedMethods, opts);
@@ -150,12 +150,12 @@ function analyzeUsage(code: string, usedMethods: UsedMethods, options: PluginOpt
     scanNodeForMethodCalls(program, usedMethods, new Map());
 
     if (options.debug && (usedMethods.unknown.size > 0 || usedMethods.byPrototype.size > 0)) {
-      console.log(`[zed-gpui-treeshake] Found methods in file:`, formatUsedMethods(usedMethods));
+      console.log(`[zed-gpui] Found methods in file:`, formatUsedMethods(usedMethods));
     }
   } catch (error) {
     // Parse errors are expected for some files (like JSON, config files, etc.)
     if (options.debug) {
-      console.warn(`[zed-gpui-treeshake] Failed to parse:`, error);
+      console.warn(`[zed-gpui] Failed to parse:`, error);
     }
   }
 }
@@ -174,7 +174,11 @@ function hasElementPrototypeAssign(code: string): boolean {
 /**
  * Recursively scan AST nodes for method calls
  */
-function scanNodeForMethodCalls(node: t.Node, usedMethods: UsedMethods, bindings: Map<string, string>) {
+function scanNodeForMethodCalls(
+  node: t.Node,
+  usedMethods: UsedMethods,
+  bindings: Map<string, string>,
+) {
   if (t.isProgram(node) || t.isBlockStatement(node)) {
     const scopedBindings = new Map(bindings);
     for (const child of node.body) {
@@ -183,7 +187,11 @@ function scanNodeForMethodCalls(node: t.Node, usedMethods: UsedMethods, bindings
     return;
   }
 
-  if (t.isFunctionDeclaration(node) || t.isFunctionExpression(node) || t.isArrowFunctionExpression(node)) {
+  if (
+    t.isFunctionDeclaration(node) ||
+    t.isFunctionExpression(node) ||
+    t.isArrowFunctionExpression(node)
+  ) {
     const scopedBindings = new Map(bindings);
     for (const param of node.params) {
       bindElementType(param, scopedBindings);
@@ -198,7 +206,8 @@ function scanNodeForMethodCalls(node: t.Node, usedMethods: UsedMethods, bindings
         scanNodeForMethodCalls(declaration.init, usedMethods, bindings);
       }
       if (t.isIdentifier(declaration.id)) {
-        const elementType = getElementTypeFromTypeAnnotation(declaration.id) ??
+        const elementType =
+          getElementTypeFromTypeAnnotation(declaration.id) ??
           (declaration.init ? inferElementType(declaration.init, bindings) : undefined);
         if (elementType) {
           bindings.set(declaration.id.name, elementType);
@@ -221,7 +230,11 @@ function scanNodeForMethodCalls(node: t.Node, usedMethods: UsedMethods, bindings
     return;
   }
 
-  if (t.isCallExpression(node) && t.isMemberExpression(node.callee) && !t.isSuper(node.callee.object)) {
+  if (
+    t.isCallExpression(node) &&
+    t.isMemberExpression(node.callee) &&
+    !t.isSuper(node.callee.object)
+  ) {
     const property = node.callee.property;
     if (t.isIdentifier(property) && /^[a-z][a-zA-Z0-9_]*$/.test(property.name)) {
       const elementType = inferElementType(node.callee.object, bindings);
@@ -251,7 +264,11 @@ function bindElementType(node: t.Node, bindings: Map<string, string>) {
   }
 }
 
-function addUsedMethod(usedMethods: UsedMethods, elementType: string | undefined, methodName: string) {
+function addUsedMethod(
+  usedMethods: UsedMethods,
+  elementType: string | undefined,
+  methodName: string,
+) {
   if (!elementType) {
     usedMethods.unknown.add(methodName);
     return;
@@ -261,7 +278,6 @@ function addUsedMethod(usedMethods: UsedMethods, elementType: string | undefined
     usedMethods.byPrototype.set(elementType, new Set());
   }
   usedMethods.byPrototype.get(elementType)!.add(methodName);
-
 }
 
 function inferElementType(node: t.Node, bindings: Map<string, string>): string | undefined {
@@ -270,7 +286,9 @@ function inferElementType(node: t.Node, bindings: Map<string, string>): string |
   }
 
   if (t.isTSAsExpression(node) || t.isTSTypeAssertion(node)) {
-    return getElementTypeFromTsType(node.typeAnnotation) ?? inferElementType(node.expression, bindings);
+    return (
+      getElementTypeFromTsType(node.typeAnnotation) ?? inferElementType(node.expression, bindings)
+    );
   }
 
   if (t.isCallExpression(node)) {
@@ -305,7 +323,9 @@ function getElementTypeFromTypeAnnotation(node: t.Identifier): string | undefine
 }
 
 function getElementTypeFromTsType(node: t.TSType): string | undefined {
-  return t.isTSTypeReference(node) && t.isIdentifier(node.typeName) && isElementType(node.typeName.name)
+  return t.isTSTypeReference(node) &&
+    t.isIdentifier(node.typeName) &&
+    isElementType(node.typeName.name)
     ? node.typeName.name
     : undefined;
 }
@@ -343,7 +363,9 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         new Set(
           sourceArg.properties
             .map((prop) =>
-              (t.isObjectProperty(prop) || t.isObjectMethod(prop)) ? getPropertyName(prop.key) : undefined,
+              t.isObjectProperty(prop) || t.isObjectMethod(prop)
+                ? getPropertyName(prop.key)
+                : undefined,
             )
             .filter((methodName): methodName is string => !!methodName),
         ),
@@ -378,12 +400,15 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         }
 
         const methodName = getPropertyName(prop.key);
-        if (!methodName || isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)) {
+        if (
+          !methodName ||
+          isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)
+        ) {
           return true;
         }
 
         if (options.debug) {
-          console.log(`[zed-gpui-treeshake] Removing unused method: ${targetPrototype}.${methodName}`);
+          console.log(`[zed-gpui] Removing unused method: ${targetPrototype}.${methodName}`);
         }
         return false;
       });
@@ -392,7 +417,7 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         modified = true;
         if (options.debug) {
           console.log(
-            `[zed-gpui-treeshake] Removed ${originalProperties - sourceArg.properties.length} unused methods from ${targetPrototype}`,
+            `[zed-gpui] Removed ${originalProperties - sourceArg.properties.length} unused methods from ${targetPrototype}`,
           );
         }
       }
@@ -407,7 +432,7 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
 
     return null;
   } catch (error) {
-    console.error('[zed-gpui-treeshake] Failed to transform element file:', error);
+    console.error('[zed-gpui] Failed to transform element file:', error);
     return null;
   }
 }
@@ -444,7 +469,10 @@ function isMethodUsed(
   usedMethods: UsedMethods,
   prototypeMethods: Map<string, Set<string>>,
 ): boolean {
-  if (usedMethods.unknown.has(methodName) || usedMethods.byPrototype.get(prototypeName)?.has(methodName)) {
+  if (
+    usedMethods.unknown.has(methodName) ||
+    usedMethods.byPrototype.get(prototypeName)?.has(methodName)
+  ) {
     return true;
   }
 
@@ -457,7 +485,11 @@ function isMethodUsed(
   }
 
   for (const [usedPrototype, methods] of usedMethods.byPrototype) {
-    if (usedPrototype !== 'HTMLElement' && methods.has(methodName) && !prototypeMethods.get(usedPrototype)?.has(methodName)) {
+    if (
+      usedPrototype !== 'HTMLElement' &&
+      methods.has(methodName) &&
+      !prototypeMethods.get(usedPrototype)?.has(methodName)
+    ) {
       return true;
     }
   }
@@ -477,4 +509,4 @@ function formatUsedMethods(usedMethods: UsedMethods) {
   };
 }
 
-export default zedGpuiTreeshakePlugin;
+export default zedGpuiPlugin;
