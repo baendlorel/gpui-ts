@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLImageElement {
     src_(src: string): this;
@@ -8,7 +10,7 @@ declare global {
     decoding_(decoding: 'sync' | 'async' | 'auto'): this;
   }
 }
-Object.assign(HTMLImageElement.prototype, {
+enhance(HTMLImageElement, {
   src_(src) {
     this.src = src;
     return this;

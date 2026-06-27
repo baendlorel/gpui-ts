@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLTextAreaElement {
     placeholder_(value: string): this;
@@ -20,7 +22,7 @@ declare global {
     ): this;
   }
 }
-Object.assign(HTMLTextAreaElement.prototype, {
+enhance(HTMLTextAreaElement, {
   placeholder_(value) {
     this.placeholder = value;
     return this;

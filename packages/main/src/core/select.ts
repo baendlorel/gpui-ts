@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLSelectElement {
     value_(value: string): this;
@@ -17,7 +19,7 @@ declare global {
     ): this;
   }
 }
-Object.assign(HTMLSelectElement.prototype, {
+enhance(HTMLSelectElement, {
   value_(value) {
     this.value = value;
     return this;

@@ -54,7 +54,7 @@ function transformRealElementAfterAnalyze(sourceCode: string) {
   const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
   plugin.transform(sourceCode, '/src/main.ts');
   const result = plugin.transform(
-    `Object.assign(HTMLElement.prototype,{id_(e){return this.id=e,this},child_(...e){return this.append(...e),this},class_(e){return this.className=e,this}}),Object.assign(HTMLInputElement.prototype,{value_(e){return this.value=e,this}});`,
+    `enhance(HTMLElement,{id_(e){return this.id=e,this},child_(...e){return this.append(...e),this},class_(e){return this.className=e,this}}),enhance(HTMLInputElement,{value_(e){return this.value=e,this}});`,
     '/node_modules/zed-gpui/dist/index.mjs',
   );
 
@@ -84,9 +84,13 @@ describe('zedGpuiTreeshakePlugin', () => {
     expect(code).toContain('Object.assign(HTMLInputElement.prototype');
     expect(code).toContain('Object.assign(HTMLButtonElement.prototype');
     expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*value_\(\) \{\}/);
-    expect(code).not.toMatch(/HTMLInputElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLInputElement/);
+    expect(code).not.toMatch(
+      /HTMLInputElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
+    );
     expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}/);
-    expect(code).not.toMatch(/HTMLButtonElement\.prototype,[\s\S]*value_\(\) \{\}[\s\S]*\} as HTMLButtonElement/);
+    expect(code).not.toMatch(
+      /HTMLButtonElement\.prototype,[\s\S]*value_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
+    );
   });
 
   it('infers element type from document.createElement and h(tag)', () => {
@@ -98,7 +102,9 @@ describe('zedGpuiTreeshakePlugin', () => {
 
     expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*placeholder_\(\) \{\}/);
     expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*autofocus_\(\) \{\}/);
-    expect(code).not.toMatch(/HTMLInputElement\.prototype,[\s\S]*autofocus_\(\) \{\}[\s\S]*\} as HTMLInputElement/);
+    expect(code).not.toMatch(
+      /HTMLInputElement\.prototype,[\s\S]*autofocus_\(\) \{\}[\s\S]*\} as HTMLInputElement/,
+    );
   });
 
   it('falls back to method-name based preservation when type is unknown', () => {
@@ -123,6 +129,17 @@ describe('zedGpuiTreeshakePlugin', () => {
     expect(code).not.toContain('id_(e)');
     expect(code).not.toContain('class_(e)');
     expect(code).not.toContain('value_(e)');
+    expect(code).not.toContain('HTMLInputElement');
+  });
+
+  it('removes empty enhance calls from sequence expressions', () => {
+    const code = transformRealElementAfterAnalyze(`
+      import 'zed-gpui';
+      document.querySelector<HTMLDivElement>('#app')!.child_('aasdf', 'fds');
+    `);
+
+    expect(code).toContain('enhance(HTMLElement');
+    expect(code).not.toContain('enhance(HTMLInputElement, {})');
   });
 
   it('uses TypeScript annotations to identify exact element methods', () => {
@@ -133,6 +150,8 @@ describe('zedGpuiTreeshakePlugin', () => {
     `);
 
     expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*disabled_\(\) \{\}/);
-    expect(code).not.toMatch(/HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLButtonElement/);
+    expect(code).not.toMatch(
+      /HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
+    );
   });
 });

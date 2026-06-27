@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLMediaElement {
     src_(src: string): this;
@@ -11,7 +13,7 @@ declare global {
     pause_(): this;
   }
 }
-Object.assign(HTMLMediaElement.prototype, {
+enhance(HTMLMediaElement, {
   src_(src) {
     this.src = src;
     return this;

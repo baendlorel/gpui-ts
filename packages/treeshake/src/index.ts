@@ -84,7 +84,7 @@ export const zedGpuiPlugin = createUnplugin((options: PluginOptions = {}) => {
         analyzeUsage(code, usedMethods, opts);
       }
 
-      if (hasElementPrototypeAssign(code)) {
+      if (hasPrototypeEnhancement(code)) {
         if (opts.debug) {
           console.log(`[zed-gpui] Processing element file: ${id}`);
           console.log(`[zed-gpui] Used methods:`, formatUsedMethods(usedMethods));
@@ -167,8 +167,8 @@ function hasZedGpuiUsage(code: string): boolean {
   return /\.\s*([a-z_][a-zA-Z0-9_]*)\s*\(/.test(code);
 }
 
-function hasElementPrototypeAssign(code: string): boolean {
-  return code.includes('Object.assign') && /HTML[A-Za-z]*Element\.prototype/.test(code);
+function hasPrototypeEnhancement(code: string): boolean {
+  return /HTML[A-Za-z]*Element/.test(code);
 }
 
 /**
@@ -358,7 +358,11 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
 
     let modified = false;
     const prototypeMethods = new Map<string, Set<string>>();
-    const assignments: { targetPrototype: string; sourceArg: t.ObjectExpression }[] = [];
+    const assignments: {
+      targetPrototype: string;
+      sourceArg: t.ObjectExpression;
+      call: t.CallExpression;
+    }[] = [];
 
     for (const node of ast.program.body) {
       if (!t.isExpressionStatement(node)) {
@@ -368,20 +372,14 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
       for (const expression of t.isSequenceExpression(node.expression)
         ? node.expression.expressions
         : [node.expression]) {
-        if (
-          !t.isCallExpression(expression) ||
-          !t.isMemberExpression(expression.callee) ||
-          !t.isIdentifier(expression.callee.object, { name: 'Object' }) ||
-          !t.isIdentifier(expression.callee.property, { name: 'assign' }) ||
-          expression.arguments.length < 2
-        ) {
+        if (!t.isCallExpression(expression) || expression.arguments.length < 2) {
           continue;
         }
 
         const targetPrototype = getAssignedPrototype(expression.arguments[0]);
         const sourceArg = unwrapExpression(expression.arguments[1]);
         if (targetPrototype && t.isObjectExpression(sourceArg)) {
-          assignments.push({ targetPrototype, sourceArg });
+          assignments.push({ targetPrototype, sourceArg, call: expression });
           prototypeMethods.set(
             targetPrototype,
             new Set(
@@ -406,7 +404,10 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         }
 
         const methodName = getPropertyName(prop.key);
-        if (!methodName || isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)) {
+        if (
+          !methodName ||
+          isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)
+        ) {
           return true;
         }
 
@@ -426,6 +427,38 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
       }
     }
 
+    ast.program.body = ast.program.body.filter((node) => {
+      if (!t.isExpressionStatement(node)) {
+        return true;
+      }
+
+      if (t.isSequenceExpression(node.expression)) {
+        const expressions = node.expression.expressions.filter(
+          (expression) =>
+            !assignments.some(
+              ({ call, sourceArg }) => call === expression && sourceArg.properties.length === 0,
+            ),
+        );
+        if (expressions.length !== node.expression.expressions.length) {
+          modified = true;
+        }
+        if (expressions.length === 0) {
+          return false;
+        }
+        node.expression =
+          expressions.length === 1 ? expressions[0] : t.sequenceExpression(expressions);
+        return true;
+      }
+
+      const shouldRemove = assignments.some(
+        ({ call, sourceArg }) => call === node.expression && sourceArg.properties.length === 0,
+      );
+      if (shouldRemove) {
+        modified = true;
+      }
+      return !shouldRemove;
+    });
+
     if (modified) {
       const output = generate(ast, {}, code);
       return {
@@ -441,6 +474,10 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
 }
 
 function getAssignedPrototype(node: t.Node): string | undefined {
+  if (t.isIdentifier(node) && isElementType(node.name)) {
+    return node.name;
+  }
+
   return t.isMemberExpression(node) &&
     t.isIdentifier(node.object) &&
     t.isIdentifier(node.property, { name: 'prototype' }) &&

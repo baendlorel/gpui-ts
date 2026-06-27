@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLProgressElement {
     value_(value: number): this;
@@ -12,7 +14,7 @@ declare global {
     optimum_(optimum: number): this;
   }
 }
-Object.assign(HTMLProgressElement.prototype, {
+enhance(HTMLProgressElement, {
   value_(value) {
     this.value = value;
     return this;
@@ -22,7 +24,7 @@ Object.assign(HTMLProgressElement.prototype, {
     return this;
   },
 } as HTMLProgressElement);
-Object.assign(HTMLMeterElement.prototype, {
+enhance(HTMLMeterElement, {
   value_(value) {
     this.value = value;
     return this;

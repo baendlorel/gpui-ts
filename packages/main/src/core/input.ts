@@ -1,3 +1,5 @@
+import { enhance } from '../common/enhance.js';
+
 declare global {
   interface HTMLInputElement {
     placeholder_(value: string): this;
@@ -20,7 +22,7 @@ declare global {
     ): this;
   }
 }
-Object.assign(HTMLInputElement.prototype, {
+enhance(HTMLInputElement, {
   placeholder_(value) {
     this.placeholder = value;
     return this;
