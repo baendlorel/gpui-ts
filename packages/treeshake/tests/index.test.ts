@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { zedGpuiTreeshakePlugin } from '../src/index';
+import { zedGpuiPlugin } from '../src/index';
 
 type PluginInstance = {
   transform: (code: string, id: string) => null | { code: string } | string;
@@ -31,7 +31,7 @@ Object.assign(HTMLButtonElement.prototype, {
 `;
 
 function transformAfterAnalyze(sourceCode: string, sourceId = '/src/app.ts') {
-  const plugin = zedGpuiTreeshakePlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+  const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
   plugin.transform(sourceCode, sourceId);
   const result = plugin.transform(elementCode, '/packages/main/src/core/index.ts');
 
@@ -48,6 +48,17 @@ function expectKept(code: string | null, methodName: string) {
 
 function expectRemoved(code: string | null, methodName: string) {
   expect(code).not.toContain(`${methodName}() {}`);
+}
+
+function transformRealElementAfterAnalyze(sourceCode: string) {
+  const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+  plugin.transform(sourceCode, '/src/main.ts');
+  const result = plugin.transform(
+    `Object.assign(HTMLElement.prototype,{id_(e){return this.id=e,this},child_(...e){return this.append(...e),this},class_(e){return this.className=e,this}}),Object.assign(HTMLInputElement.prototype,{value_(e){return this.value=e,this}});`,
+    '/node_modules/zed-gpui/dist/index.mjs',
+  );
+
+  return result && typeof result !== 'string' ? result.code : result;
 }
 
 describe('zedGpuiTreeshakePlugin', () => {
@@ -100,6 +111,18 @@ describe('zedGpuiTreeshakePlugin', () => {
     expect(code).toMatch(/HTMLInputElement\.prototype,[\s\S]*value_\(\) \{\}/);
     expect(code).toMatch(/HTMLButtonElement\.prototype,[\s\S]*value_\(\) \{\}/);
     expectRemoved(code, 'unused_');
+  });
+
+  it('transforms bundled sequence expressions and querySelector typed usage', () => {
+    const code = transformRealElementAfterAnalyze(`
+      import 'zed-gpui';
+      document.querySelector<HTMLDivElement>('#app')!.child_('aasdf', 'fds');
+    `);
+
+    expect(code).toContain('child_(...e)');
+    expect(code).not.toContain('id_(e)');
+    expect(code).not.toContain('class_(e)');
+    expect(code).not.toContain('value_(e)');
   });
 
   it('uses TypeScript annotations to identify exact element methods', () => {

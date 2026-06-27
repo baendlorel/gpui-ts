@@ -80,6 +80,10 @@ export const zedGpuiPlugin = createUnplugin((options: PluginOptions = {}) => {
     name: 'unplugin-zed-gpui',
 
     transform(code, id) {
+      if (shouldProcessFile(id)) {
+        analyzeUsage(code, usedMethods, opts);
+      }
+
       if (hasElementPrototypeAssign(code)) {
         if (opts.debug) {
           console.log(`[zed-gpui] Processing element file: ${id}`);
@@ -87,10 +91,6 @@ export const zedGpuiPlugin = createUnplugin((options: PluginOptions = {}) => {
         }
 
         return transformElementFile(code, usedMethods, opts);
-      }
-
-      if (shouldProcessFile(id)) {
-        analyzeUsage(code, usedMethods, opts);
       }
 
       return null;
@@ -291,17 +291,22 @@ function inferElementType(node: t.Node, bindings: Map<string, string>): string |
     );
   }
 
-  if (t.isCallExpression(node)) {
-    if (t.isIdentifier(node.callee)) {
-      if (node.callee.name === 'h' && t.isStringLiteral(node.arguments[0])) {
-        return tagElementTypes[node.arguments[0].value] ?? 'HTMLElement';
-      }
-      return factoryElementTypes[node.callee.name];
-    }
+  if (t.isTSNonNullExpression(node)) {
+    return inferElementType(node.expression, bindings);
+  }
 
+  if (t.isCallExpression(node)) {
     if (t.isMemberExpression(node.callee)) {
       if (
-        t.isMemberExpression(node.callee) &&
+        t.isIdentifier(node.callee.object, { name: 'document' }) &&
+        (t.isIdentifier(node.callee.property, { name: 'querySelector' }) ||
+          t.isIdentifier(node.callee.property, { name: 'getElementById' }))
+      ) {
+        const typeArg = node.typeArguments?.params[0];
+        return typeArg && t.isTSType(typeArg) ? getElementTypeFromTsType(typeArg) : 'HTMLElement';
+      }
+
+      if (
         t.isIdentifier(node.callee.property, { name: 'createElement' }) &&
         t.isIdentifier(node.callee.object, { name: 'document' }) &&
         t.isStringLiteral(node.arguments[0])
@@ -310,6 +315,13 @@ function inferElementType(node: t.Node, bindings: Map<string, string>): string |
       }
 
       return inferElementType(node.callee.object, bindings);
+    }
+
+    if (t.isIdentifier(node.callee)) {
+      if (node.callee.name === 'h' && t.isStringLiteral(node.arguments[0])) {
+        return tagElementTypes[node.arguments[0].value] ?? 'HTMLElement';
+      }
+      return factoryElementTypes[node.callee.name];
     }
   }
 
@@ -346,53 +358,47 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
 
     let modified = false;
     const prototypeMethods = new Map<string, Set<string>>();
+    const assignments: { targetPrototype: string; sourceArg: t.ObjectExpression }[] = [];
 
     for (const node of ast.program.body) {
-      if (!t.isExpressionStatement(node) || !t.isCallExpression(node.expression)) {
+      if (!t.isExpressionStatement(node)) {
         continue;
       }
 
-      const targetPrototype = getAssignedPrototype(node.expression.arguments[0]);
-      const sourceArg = unwrapExpression(node.expression.arguments[1]);
-      if (!targetPrototype || !t.isObjectExpression(sourceArg)) {
-        continue;
-      }
+      for (const expression of t.isSequenceExpression(node.expression)
+        ? node.expression.expressions
+        : [node.expression]) {
+        if (
+          !t.isCallExpression(expression) ||
+          !t.isMemberExpression(expression.callee) ||
+          !t.isIdentifier(expression.callee.object, { name: 'Object' }) ||
+          !t.isIdentifier(expression.callee.property, { name: 'assign' }) ||
+          expression.arguments.length < 2
+        ) {
+          continue;
+        }
 
-      prototypeMethods.set(
-        targetPrototype,
-        new Set(
-          sourceArg.properties
-            .map((prop) =>
-              t.isObjectProperty(prop) || t.isObjectMethod(prop)
-                ? getPropertyName(prop.key)
-                : undefined,
-            )
-            .filter((methodName): methodName is string => !!methodName),
-        ),
-      );
+        const targetPrototype = getAssignedPrototype(expression.arguments[0]);
+        const sourceArg = unwrapExpression(expression.arguments[1]);
+        if (targetPrototype && t.isObjectExpression(sourceArg)) {
+          assignments.push({ targetPrototype, sourceArg });
+          prototypeMethods.set(
+            targetPrototype,
+            new Set(
+              sourceArg.properties
+                .map((prop) =>
+                  t.isObjectProperty(prop) || t.isObjectMethod(prop)
+                    ? getPropertyName(prop.key)
+                    : undefined,
+                )
+                .filter((methodName): methodName is string => !!methodName),
+            ),
+          );
+        }
+      }
     }
 
-    for (const node of ast.program.body) {
-      if (!t.isExpressionStatement(node) || !t.isCallExpression(node.expression)) {
-        continue;
-      }
-
-      const callExpr = node.expression;
-      if (
-        !t.isMemberExpression(callExpr.callee) ||
-        !t.isIdentifier(callExpr.callee.object, { name: 'Object' }) ||
-        !t.isIdentifier(callExpr.callee.property, { name: 'assign' }) ||
-        callExpr.arguments.length < 2
-      ) {
-        continue;
-      }
-
-      const targetPrototype = getAssignedPrototype(callExpr.arguments[0]);
-      const sourceArg = unwrapExpression(callExpr.arguments[1]);
-      if (!targetPrototype || !t.isObjectExpression(sourceArg)) {
-        continue;
-      }
-
+    for (const { targetPrototype, sourceArg } of assignments) {
       const originalProperties = sourceArg.properties.length;
       sourceArg.properties = sourceArg.properties.filter((prop) => {
         if (!t.isObjectProperty(prop) && !t.isObjectMethod(prop)) {
@@ -400,10 +406,7 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         }
 
         const methodName = getPropertyName(prop.key);
-        if (
-          !methodName ||
-          isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)
-        ) {
+        if (!methodName || isMethodUsed(targetPrototype, methodName, usedMethods, prototypeMethods)) {
           return true;
         }
 
