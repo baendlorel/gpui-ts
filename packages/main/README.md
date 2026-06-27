@@ -1,128 +1,173 @@
-# Zed Gpui TS
+# zed-gpui
 
 [![npm version](https://img.shields.io/npm/v/zed-gpui.svg)](https://www.npmjs.org/package/zed-gpui)
 [![npm downloads](https://img.shields.io/npm/dm/zed-gpui.svg)](https://www.npmjs.org/package/zed-gpui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="../../assets/icon.png" width="240px" alt="zed-gpui logo" />
+  <img src="assets/icon.png" width="240px" alt="zed-gpui logo" />
 </p>
 
-> A functional web front-end framework with gpui-inspired syntax
+A small TypeScript / Web UI framework with a **gpui-inspired** style.
 
-zed-gpui is a lightweight, functional web framework that provides an elegant, chainable API for building HTML elements with JavaScript/TypeScript. Inspired by the gpui philosophy, it offers a fluent interface for styling, event handling, and DOM manipulation.
+Its core characteristics are simple and explicit:
 
-## Features
+- **Chainable API**: methods return `this` so calls can be composed fluently
+- **All instance methods end with `_`**: such as `flex_()`, `w_()`, `onClick_()`
+- **Directly uses native DOM**: the returned value is an actual `HTMLElement`
+- **Creates elements by tag**: `div()`, `btn()`, `input()`, `h('section')`
+- **Adds capabilities through prototype enhancement**: styling, attributes, events, and form helpers live on native elements
 
-- 🎨 **Rich styling API** - Flexbox, Grid, spacing, colors, typography, and more
-- ⚡ **Event handling** - Comprehensive event listeners (mouse, keyboard, touch, drag & drop, etc.)
-- 🔧 **Type-safe** - Full TypeScript support with type inference
-- 🪶 **Lightweight** - Zero dependencies, tree-shakeable
-
-## Installation
+## Install
 
 ```bash
 pnpm add zed-gpui
 ```
 
-## Quick Start
+## Design conventions
 
-```typescript
-import { div, p, btn } from 'zed-gpui';
+### 1. Chain-first API
 
-// Create elements with chained styling
-const container = div().flex().gap('1rem').p('2rem').bg('#f0f0f0');
+Almost every method returns the current element, so the normal style is fluent chaining:
 
-const title = p().textSize('1.5rem').text('#333').text('Hello, zed-gpui!');
+```ts
+const app = div()
+  .flex_()
+  .items_('center')
+  .justify_('center')
+  .w_('100%')
+  .h_('100vh')
+  .bg_('#f5f5f5');
+```
+
+### 2. Every method ends with an underscore
+
+This is one of the most recognizable parts of the library.
+
+```ts
+id_()
+class_()
+child_()
+text_()
+onClick_()
+placeholder_()
+```
+
+The goal is straightforward:
+
+- distinguish framework methods from native properties
+- distinguish chainable element methods from ordinary utility functions
+- make zed-gpui calls visually obvious at a glance
+
+### 3. The result is real DOM, not a virtual node
+
+```ts
+const node = div().text_('hello');
+document.body.appendChild(node);
+```
+
+`node` is a real `HTMLDivElement`, not a virtual DOM node and not an intermediate description object.
+
+## Quick example
+
+```ts
+import { div, btn, input } from 'zed-gpui';
+
+const app = div()
+  .flex_()
+  .flexDirection_('column')
+  .gap_('12px')
+  .items_('center')
+  .justify_('center')
+  .w_('100%')
+  .h_('100vh');
+
+const field = input()
+  .placeholder_('Enter text...')
+  .px_('12px')
+  .py_('8px')
+  .border_()
+  .rounded_('8px')
+  .w_('280px')
+  .onInput_((event) => {
+    console.log(event.currentTarget.value);
+  });
 
 const button = btn()
-  .px('1rem')
-  .py('0.5rem')
-  .bg('#007bff')
-  .text('#fff')
-  .rounded('0.25rem')
-  .cursorPointer()
-  .onClick(() => console.log('Clicked!'))
-  .text('Click Me');
+  .text_('Click me')
+  .px_('16px')
+  .py_('10px')
+  .bg_('blue')
+  .textColor_('white')
+  .rounded_('8px')
+  .cursorPointer_()
+  .onClick_(() => {
+    console.log('clicked');
+  });
 
-// Build and append to DOM
-document.body.append(container.build(), title.build(), button.build());
+app.child_(field, button);
+document.body.appendChild(app);
 ```
 
-## API Overview
+## API style
 
-### Element Creation
+### Create elements
 
-```typescript
-div(); // <div>
-span(); // <span>
-section(); // <section>
-p(); // <p>
-btn(); // <button>
+```ts
+div();
+span();
+section();
+p();
+btn();
+input();
+textarea();
+select([{ value: 1, label: 'One' }]);
+h('dialog');
 ```
 
-### Layout & Display
+### Common capabilities
 
-```typescript
-.flex()                    // display: flex
-.flexDirection('column')  // flex-direction
-.grid()                    // display: grid
-.gridTemplateColumns('1fr 1fr')
-.block()                   // display: block
-.hidden()                  // display: none
+```ts
+div()
+  .id_('app')
+  .class_('container')
+  .child_(span().text_('hello'))
+  .w_('320px')
+  .h_('80px')
+  .p_('16px')
+  .rounded_('12px')
+  .shadowMd_()
+  .onClick_(() => {});
 ```
 
-### Spacing
+The API surface broadly includes:
 
-```typescript
-.p('1rem')              // padding
-.px('1rem')             // padding-left & right
-.py('1rem')             // padding-top & bottom
-.m('1rem')              // margin
-.mx('auto')             // margin-left & right
-.gap('1rem')            // gap (for flex/grid)
-```
+- element attributes: `id_`, `attr_`, `name_`
+- children and text: `child_`, `text_`
+- layout: `flex_`, `grid_`, `justify_`, `items_`
+- sizing and spacing: `w_`, `h_`, `p_`, `m_`, `gap_`
+- border and radius: `border_`, `borderColor_`, `rounded_`
+- color and typography: `bg_`, `textColor_`, `textSize_`
+- positioning and overflow: `absolute_`, `top_`, `overflow_`
+- events: `onClick_`, `onInput_`, `onChange_`, `on_`
+- form helpers: `value_`, `placeholder_`, `checked_`, `options_`
 
-### Sizing
+## Good fit for
 
-```typescript
-.w('100%')              // width
-.h('100px')            // height
-.size('50px', '50px')  // width & height
-.minW('200px')         // min-width
-.maxW('100%')          // max-width
-```
+This library is a good match if you want to:
 
-### Colors & Backgrounds
+- build UI directly with **native DOM**
+- use a **chainable API** for styling and events
+- keep a consistent naming style with **underscore-suffixed methods**
+- write lightweight pages, tools, panels, or experimental UI
 
-```typescript
-.bg('#fff')                    // background-color
-.bgImage('url(...)')           // background-image
-.text('#333')                 // color
-.borderColor('#ccc')          // border-color
-```
+## Repository structure
 
-### Typography
+This repository is a monorepo and mainly contains:
 
-```typescript
-.textSize('1rem')        // font-size
-.fontWeight('bold')      // font-weight
-.textAlign('center')     // text-align
-.lineHeight('1.5')       // line-height
-.truncate()              // text-overflow: ellipsis
-```
-
-### Events
-
-```typescript
-.onClick((e) => {})
-.onKeyDown((e) => {})
-.onMouseDown((e) => {})
-.onTouchStart((e) => {})
-.onDrag((e) => {})
-.onScroll((e) => {})
-.on('customEvent', handler)
-```
+- `zed-gpui`: the main runtime package
+- `unplugin-zed-gpui-treeshake`: the companion tree-shaking plugin
+- `@zed-gpui/example`: the example project
 
 ## License
 
