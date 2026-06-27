@@ -2,14 +2,39 @@ declare global {
   interface HTMLElement {
     jpui: true;
 
+    // #region functional methods
+    /**
+     * Do some custom modification of this element and turns itself
+     */
+    tap_(fn: (thisArg: this) => void): this;
+    map_<T = HTMLElement>(fn: (thisArg: this) => T): this;
+    /**
+     * Iterator over children, simply uses `for` but caches length
+     */
+    iterChildren_(fn: (child: Element) => void): this;
+    /**
+     * Iterator over child nodes, simply uses `for` but caches length
+     */
+    iterChildNodes_(fn: (childNode: Node) => void): this;
+    // #endregion
+
+    // #region attributes
     id_(id: string): this;
     attr_(attr: string, value: any): this;
     name_(name: string): this;
+    /**
+     * Equivalent to `append`
+     */
     child_(...nodes: any[]): this;
+    /**
+     * Equivalent to `this.textContent = xxx`
+     */
     text_(text: string): this;
     remove_(): this;
     dataset_(key: string, value: any): this;
+    // #endregion
 
+    // #region styles
     class_(classList: string[]): this;
     class_(className: string): this;
     w_(w: string): this;
@@ -136,7 +161,9 @@ declare global {
     transitionDuration_(duration: string): this;
     transitionTimingFunction_(timing: string): this;
     transitionDelay_(delay: string): this;
+    // #endregion
 
+    // #region events
     onClick_(handler: (event: MouseEvent) => void): this;
     onDoubleClick_(handler: (event: MouseEvent) => void): this;
     onMouseDown_(handler: (event: MouseEvent) => void): this;
@@ -190,10 +217,34 @@ declare global {
     onPointerCancel_(handler: (event: PointerEvent) => void): this;
     on_(eventName: string, handler: EventListener): this;
     off_(eventName: string, handler: EventListener): this;
+    // #endregion
   }
 }
 
 $_(HTMLElement, {
+  // #region functional methods
+  tap_(fn) {
+    fn(this);
+    return this;
+  },
+  map_(fn) {
+    return fn(this);
+  },
+  iterChildren_(fn) {
+    const len = this.children.length;
+    for (let i = 0; i < len; i++) {
+      fn(this.children[i]);
+    }
+    return this;
+  },
+  iterChildNodes_(fn) {
+    const len = this.childNodes.length;
+    for (let i = 0; i < len; i++) {
+      fn(this.childNodes[i]);
+    }
+    return this;
+  },
+  // #endregion
   id_(id) {
     this.id = id;
     return this;

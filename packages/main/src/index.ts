@@ -1,7 +1,8 @@
 import './common/enhance.js';
 import './core/init.js';
 
-Reflect.deleteProperty(globalThis, '$_');
+delete (globalThis as any).$_;
+
 export const h = <T extends keyof HTMLElementTagNameMap>(tag: T): HTMLElementTagNameMap[T] =>
   document.createElement(tag);
 export const div = () => document.createElement('div');

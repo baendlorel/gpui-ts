@@ -16,3 +16,7 @@
 优化：
 1. 我写了enhance函数来减少运行时大小，并改写了packages/main/src/core/a.ts文件，请你改写core里其他文件；
 2. 同步更新treeshake的逻辑。并且增加一个新规则，如果产物里有`enhance(p,{})`（但可能打包后名字不再叫做enhance），第二个入参为{}，则去掉 `enhance(p,{})`这一项
+
+---
+readme要介绍treeshake子包，说明它会自动裁剪未使用的方法。
+还要介绍新增的函数式编程方法
