@@ -1,6 +1,17 @@
 # unplugin-zed-gpui-treeshake
+# zed-gpui
+
+[![npm version](https://img.shields.io/npm/v/unplugin-zed-gpui-treeshake.svg)](https://www.npmjs.org/package/unplugin-zed-gpui-treeshake)
+[![npm downloads](https://img.shields.io/npm/dm/unplugin-zed-gpui-treeshakesvg)](https://www.npmjs.org/package/unplugin-zed-gpui-treeshake)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<p align="center">
+  <img src="../../assets/icon.png" width="240px" alt="zed-gpui logo" />
+</p>
 
 > 🌳 Tree-shaking optimization plugin for zed-gpui framework
+
+## Framework: [Zed Gpui](https://www.npmjs.com/package/zed-gpui)
 
 Remove unused zed-gpui methods from your bundle to reduce bundle size.
 

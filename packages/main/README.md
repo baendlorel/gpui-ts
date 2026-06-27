@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="assets/icon.png" width="240px" alt="zed-gpui logo" />
+  <img src="../../assets/icon.png" width="240px" alt="zed-gpui logo" />
 </p>
 
 A small TypeScript / Web UI framework with a **gpui-inspired** style.
