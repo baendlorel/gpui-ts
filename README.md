@@ -31,13 +31,7 @@ pnpm add zed-gpui
 Almost every method returns the current element, so the normal style is fluent chaining:
 
 ```ts
-const app = div()
-  .flex_()
-  .items_('center')
-  .justify_('center')
-  .w_('100%')
-  .h_('100vh')
-  .bg_('#f5f5f5');
+const app = div().flex_().items_('center').justify_('center').w_('100%').h_('100vh').bg_('#f5f5f5');
 ```
 
 ### 2. Every method ends with an underscore
@@ -45,12 +39,12 @@ const app = div()
 This is one of the most recognizable parts of the library.
 
 ```ts
-id_()
-class_()
-child_()
-text_()
-onClick_()
-placeholder_()
+id_();
+class_();
+child_();
+text_();
+onClick_();
+placeholder_();
 ```
 
 The goal is straightforward:
@@ -151,6 +145,46 @@ The API surface broadly includes:
 - positioning and overflow: `absolute_`, `top_`, `overflow_`
 - events: `onClick_`, `onInput_`, `onChange_`, `on_`
 - form helpers: `value_`, `placeholder_`, `checked_`, `options_`
+
+## Functional chain helpers
+
+`HTMLElement` also includes small functional helpers for keeping custom logic inside a chain:
+
+```ts
+div()
+  .class_('card')
+  .tap_((el) => {
+    el.dataset.ready = 'true';
+  })
+  .iterChildren_((child) => {
+    child.classList.add('card-child');
+  });
+```
+
+- `tap_(fn)`: runs `fn(this)` for side effects, then returns the same element.
+- `map_(fn)`: runs `fn(this)` and returns the callback result, useful when you want to leave the chain.
+- `iterChildren_(fn)`: iterates `children` and returns the same element.
+- `iterChildNodes_(fn)`: iterates `childNodes` and returns the same element.
+
+## Tree-shaking plugin
+
+For production builds, install the companion plugin to automatically remove unused prototype methods from the final bundle:
+
+```bash
+pnpm add -D unplugin-zed-gpui
+```
+
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite';
+import zedGpui from 'unplugin-zed-gpui';
+
+export default defineConfig({
+  plugins: [zedGpui.vite()],
+});
+```
+
+The plugin scans your source code for used zed-gpui methods, then trims the generated prototype enhancement table. For example, if your app only calls `child_`, unused methods such as `flex_`, `bg_`, `onClick_`, or `placeholder_` can be removed from the output.
 
 ## Good fit for
 

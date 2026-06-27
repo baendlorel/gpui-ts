@@ -245,6 +245,8 @@ $_(HTMLElement, {
     return this;
   },
   // #endregion
+
+  // #region attributes
   id_(id) {
     this.id = id;
     return this;
@@ -261,6 +263,10 @@ $_(HTMLElement, {
     this.append(...nodes);
     return this;
   },
+  text_(t) {
+    this.textContent = t;
+    return this;
+  },
   remove_() {
     this.remove();
     return this;
@@ -269,6 +275,9 @@ $_(HTMLElement, {
     this.dataset[k] = v;
     return this;
   },
+  // #endregion
+
+  // #region styles
   class_(c) {
     this.className = Array.isArray(c) ? c.join(' ') : c;
     return this;
@@ -547,10 +556,6 @@ $_(HTMLElement, {
     this.style.opacity = String(value);
     return this;
   },
-  text_(t) {
-    this.textContent = t;
-    return this;
-  },
   textColor_(color) {
     this.style.color = color;
     return this;
@@ -789,6 +794,9 @@ $_(HTMLElement, {
     this.style.transitionDelay = delay;
     return this;
   },
+  // #endregion
+
+  // #region events
   onClick_(handler) {
     return this.on_('click', handler as EventListener);
   },
@@ -950,6 +958,7 @@ $_(HTMLElement, {
     this.removeEventListener(eventName, handler);
     return this;
   },
+  // #endregion
 } as HTMLElement);
 
 export {};
