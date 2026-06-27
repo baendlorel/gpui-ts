@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLMediaElement {
     src_(src: string): this;
@@ -13,7 +11,7 @@ declare global {
     pause_(): this;
   }
 }
-enhance(HTMLMediaElement, {
+$_(HTMLMediaElement, {
   src_(src) {
     this.src = src;
     return this;

@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLFormElement {
     action_(action: string): this;
@@ -12,7 +10,7 @@ declare global {
     requestSubmit_(): this;
   }
 }
-enhance(HTMLFormElement, {
+$_(HTMLFormElement, {
   action_(action) {
     this.action = action;
     return this;

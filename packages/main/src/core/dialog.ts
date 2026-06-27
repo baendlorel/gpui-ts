@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLDialogElement {
     open_(open?: boolean): this;
@@ -8,7 +6,7 @@ declare global {
     close_(returnValue?: string): this;
   }
 }
-enhance(HTMLDialogElement, {
+$_(HTMLDialogElement, {
   open_(open = true) {
     this.open = open;
     return this;

@@ -1,11 +1,9 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLLabelElement {
     for_(htmlFor: string): this;
   }
 }
-enhance(HTMLLabelElement, {
+$_(HTMLLabelElement, {
   for_(htmlFor) {
     this.htmlFor = htmlFor;
     return this;

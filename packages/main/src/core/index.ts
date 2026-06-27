@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLElement {
     jpui: true;
@@ -193,7 +191,7 @@ declare global {
   }
 }
 
-enhance(HTMLElement, {
+$_(HTMLElement, {
   id_(id) {
     this.id = id;
     return this;

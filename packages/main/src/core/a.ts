@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLAnchorElement {
     href_(href: string): this;
@@ -9,7 +7,7 @@ declare global {
     referrerPolicy_(policy: ReferrerPolicy): this;
   }
 }
-enhance(HTMLAnchorElement, {
+$_(HTMLAnchorElement, {
   href_(href) {
     this.href = href;
     return this;

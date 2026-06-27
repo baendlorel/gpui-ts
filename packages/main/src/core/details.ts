@@ -1,11 +1,9 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLDetailsElement {
     open_(open?: boolean): this;
   }
 }
-enhance(HTMLDetailsElement, {
+$_(HTMLDetailsElement, {
   open_(open = true) {
     this.open = open;
     return this;

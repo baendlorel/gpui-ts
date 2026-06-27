@@ -23,12 +23,7 @@ export default defineConfig([
     dts: true,
     clean: true,
     sourcemap: true,
-    minify: isDev
-      ? false
-      : {
-          compress: { keepNames: { function: true, class: false } },
-          mangle: { keepNames: { function: true, class: false } },
-        },
+    minify: !isDev,
     target: 'node24',
     treeshake: !isDev,
     plugins: plugins(),

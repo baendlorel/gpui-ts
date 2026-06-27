@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLOptionElement {
     value_(value: string): this;
@@ -8,7 +6,7 @@ declare global {
     label_(label: string): this;
   }
 }
-enhance(HTMLOptionElement, {
+$_(HTMLOptionElement, {
   value_(value) {
     this.value = value;
     return this;

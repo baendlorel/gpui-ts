@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLProgressElement {
     value_(value: number): this;
@@ -14,7 +12,7 @@ declare global {
     optimum_(optimum: number): this;
   }
 }
-enhance(HTMLProgressElement, {
+$_(HTMLProgressElement, {
   value_(value) {
     this.value = value;
     return this;
@@ -24,7 +22,7 @@ enhance(HTMLProgressElement, {
     return this;
   },
 } as HTMLProgressElement);
-enhance(HTMLMeterElement, {
+$_(HTMLMeterElement, {
   value_(value) {
     this.value = value;
     return this;

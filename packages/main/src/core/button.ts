@@ -1,5 +1,3 @@
-import { enhance } from '../common/enhance.js';
-
 declare global {
   interface HTMLButtonElement {
     type_(type: 'button' | 'submit' | 'reset'): this;
@@ -9,7 +7,7 @@ declare global {
     autofocus_(autofocus?: boolean): this;
   }
 }
-enhance(HTMLButtonElement, {
+$_(HTMLButtonElement, {
   type_(type) {
     this.type = type;
     return this;
