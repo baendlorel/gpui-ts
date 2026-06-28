@@ -1,6 +1,6 @@
 {
   "name": "unplugin-zed-gpui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Unplugin for zed-gpui tree-shaking optimization - removes unused zed-gpui methods from bundle",
   "author": {
     "name": "Kasukabe Tsumugi",
