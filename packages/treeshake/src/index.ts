@@ -648,6 +648,10 @@ function isMethodUsed(
   usedMethods: UsedMethods,
   prototypeMethods: Map<string, Set<string>>,
 ): boolean {
+  if (keepHTMLElementMethods.has(methodName)) {
+    return true;
+  }
+
   if (
     (prototypeName === 'HTMLElement' ||
       prototypeName === 'SVGElement' ||
@@ -676,10 +680,6 @@ function isMethodUsed(
 
   if (prototypeName !== 'HTMLElement') {
     return false;
-  }
-
-  if (keepHTMLElementMethods.has(methodName)) {
-    return true;
   }
 
   for (const [usedPrototype, methods] of usedMethods.byPrototype) {

@@ -189,6 +189,20 @@ describe('zedGpuiTreeshakePlugin', () => {
     expect(code).not.toContain('unused_() {}');
   });
 
+  it('keeps on_ when event shortcut methods depend on it internally', () => {
+    const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+    plugin.transform(`import { div } from 'zed-gpui'; div().onClick_(() => {});`, '/src/app.ts');
+    const result = plugin.transform(
+      `const t={on_(){},unused_(){}};$_(HTMLElement,t,{onClick_(){return this.on_('click')}}),$_(SVGElement,t),$_(MathMLElement,t);`,
+      '/node_modules/zed-gpui/dist/index.mjs',
+    );
+    const code = result && typeof result !== 'string' ? result.code : result;
+
+    expect(code).toContain('on_() {}');
+    expect(code).toContain('onClick_()');
+    expect(code).not.toContain('unused_() {}');
+  });
+
   it('rewrites forbidden h(svg/mathml) calls and injects throws_ only when needed', () => {
     const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
     const result = plugin.transform(
