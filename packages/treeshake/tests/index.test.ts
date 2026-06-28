@@ -154,4 +154,28 @@ describe('zedGpuiTreeshakePlugin', () => {
       /HTMLButtonElement\.prototype,[\s\S]*disabled_\(\) \{\}[\s\S]*\} as HTMLButtonElement/,
     );
   });
+
+  it('rewrites forbidden h(svg/mathml) calls and injects throws_ only when needed', () => {
+    const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+    const result = plugin.transform(
+      `import { h } from 'zed-gpui';
+       h('svg');
+       h('mathml');
+       h('div');`,
+      '/src/app.ts',
+    );
+    const code = result && typeof result !== 'string' ? result.code : result;
+
+    expect(code).toContain(`throws_("Cannot use h('svg') to create SVGElement")`);
+    expect(code).toContain(`throws_("Cannot use h('mathml') to create MathMLElement")`);
+    expect(code).toContain(`h('div')`);
+    expect(code).toContain('function throws_(message)');
+  });
+
+  it('does not inject throws_ without forbidden h calls', () => {
+    const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+    const result = plugin.transform(`import { h } from 'zed-gpui'; h('div');`, '/src/app.ts');
+
+    expect(result).toBeNull();
+  });
 });

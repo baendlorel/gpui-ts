@@ -17,9 +17,18 @@ export const btn = () => document.createElement('button');
 export const select = (options: Array<{ value: any; label: string }>) =>
   document.createElement('select').options_(options);
 
+/**
+ * Creates svg related elements
+ * @param tag left empty will make it an `<svg></svg>`
+ */
 export const svg = <T extends keyof SVGElementTagNameMap>(
   tag: T = 'svg' as any,
 ): SVGElementTagNameMap[T] => document.createElementNS('http://www.w3.org/2000/svg', tag);
+
+/**
+ * Creates mathml related elements
+ * @param tag left empty will make it an `<mathml></mathml>`
+ */
 export const mathml = <T extends keyof MathMLElementTagNameMap>(
   tag: T = 'mathml' as any,
 ): MathMLElementTagNameMap[T] =>

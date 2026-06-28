@@ -84,6 +84,10 @@ export const zedGpuiPlugin = createUnplugin<PluginOptions | undefined>((options 
     transform(code, id) {
       if (shouldProcessFile(id)) {
         analyzeUsage(code, usedMethods, opts);
+        const result = transformForbiddenHCalls(code, opts);
+        if (result) {
+          return result;
+        }
       }
 
       if (hasPrototypeEnhancement(code)) {
@@ -116,6 +120,87 @@ function shouldProcessFile(id: string): boolean {
 
   // Only process TypeScript and JavaScript files
   return /\.(ts|js|tsx|jsx)$/.test(id);
+}
+
+function transformForbiddenHCalls(code: string, options: PluginOptions) {
+  if (!hasZedGpuiImport(code, options) || !/\bh\s*\(\s*(['"])(svg|mathml)\1/.test(code)) {
+    return null;
+  }
+
+  try {
+    const ast = parse(code, {
+      sourceType: 'module',
+      plugins: ['typescript', 'jsx'],
+    });
+    let modified = false;
+
+    visitAst(ast.program, (node) => {
+      if (!t.isCallExpression(node) || !t.isIdentifier(node.callee, { name: 'h' })) {
+        return;
+      }
+
+      const arg = node.arguments[0];
+      if (!t.isStringLiteral(arg) || (arg.value !== 'svg' && arg.value !== 'mathml')) {
+        return;
+      }
+
+      node.callee = t.identifier('throws_');
+      node.arguments = [
+        t.stringLiteral(
+          arg.value === 'svg'
+            ? "Cannot use h('svg') to create SVGElement"
+            : "Cannot use h('mathml') to create MathMLElement",
+        ),
+      ];
+      node.typeArguments = undefined;
+      modified = true;
+    });
+
+    if (!modified) {
+      return null;
+    }
+
+    ast.program.body.push(
+      t.functionDeclaration(
+        t.identifier('throws_'),
+        [t.identifier('message')],
+        t.blockStatement([
+          t.throwStatement(t.newExpression(t.identifier('Error'), [t.identifier('message')])),
+        ]),
+      ),
+    );
+
+    const output = generate(ast, {}, code);
+    return { code: output.code };
+  } catch (error) {
+    if (options.debug) {
+      console.warn(`[zed-gpui] Failed to transform forbidden h() calls:`, error);
+    }
+    return null;
+  }
+}
+
+function hasZedGpuiImport(code: string, options: PluginOptions): boolean {
+  const packageName = options.zedGpuiPackageName!.replace(/[.*+?^\${}()|[\]\\]/g, '\\$&');
+  return new RegExp(
+    `from\\s+['"]${packageName}(?:\\/[^'"]*)?['"]|import\\s+['"]${packageName}(?:\\/[^'"]*)?['"]`,
+  ).test(code);
+}
+
+function visitAst(node: t.Node, visitor: (node: t.Node) => void) {
+  visitor(node);
+
+  for (const key in node) {
+    if (!Object.prototype.hasOwnProperty.call(node, key)) {
+      continue;
+    }
+    const child = (node as any)[key];
+    if (Array.isArray(child)) {
+      child.forEach((item) => item?.type && visitAst(item, visitor));
+    } else if (child?.type) {
+      visitAst(child, visitor);
+    }
+  }
 }
 
 /**
