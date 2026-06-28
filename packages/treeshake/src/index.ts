@@ -449,12 +449,25 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
     });
 
     let modified = false;
+    const objectBindings = new Map<string, t.ObjectExpression>();
     const prototypeMethods = new Map<string, Set<string>>();
     const assignments: {
       targetPrototype: string;
       sourceArg: t.ObjectExpression;
       call: t.CallExpression;
     }[] = [];
+
+    for (const node of ast.program.body) {
+      if (!t.isVariableDeclaration(node)) {
+        continue;
+      }
+      for (const declaration of node.declarations) {
+        const init = declaration.init && unwrapExpression(declaration.init);
+        if (t.isIdentifier(declaration.id) && init && t.isObjectExpression(init)) {
+          objectBindings.set(declaration.id.name, init);
+        }
+      }
+    }
 
     for (const node of ast.program.body) {
       if (!t.isExpressionStatement(node)) {
@@ -473,21 +486,27 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         }
 
         const targetPrototype = getEnhancedPrototype(expression.arguments[0]);
-        const sourceArg = unwrapExpression(expression.arguments[1]);
-        if (targetPrototype && t.isObjectExpression(sourceArg)) {
+        if (!targetPrototype) {
+          continue;
+        }
+
+        for (const arg of expression.arguments.slice(1)) {
+          const sourceArg = getObjectArgument(arg, objectBindings);
+          if (!sourceArg) {
+            continue;
+          }
           assignments.push({ targetPrototype, sourceArg, call: expression });
-          prototypeMethods.set(
-            targetPrototype,
-            new Set(
-              sourceArg.properties
-                .map((prop) =>
-                  t.isObjectProperty(prop) || t.isObjectMethod(prop)
-                    ? getPropertyName(prop.key)
-                    : undefined,
-                )
-                .filter((methodName): methodName is string => !!methodName),
-            ),
-          );
+          const methods = prototypeMethods.get(targetPrototype) ?? new Set<string>();
+          for (const prop of sourceArg.properties) {
+            const methodName =
+              t.isObjectProperty(prop) || t.isObjectMethod(prop)
+                ? getPropertyName(prop.key)
+                : undefined;
+            if (methodName) {
+              methods.add(methodName);
+            }
+          }
+          prototypeMethods.set(targetPrototype, methods);
         }
       }
     }
@@ -524,16 +543,29 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
     }
 
     ast.program.body = ast.program.body.filter((node) => {
+      if (t.isVariableDeclaration(node)) {
+        const declarations = node.declarations.filter((declaration) => {
+          if (!t.isIdentifier(declaration.id)) {
+            return true;
+          }
+          const sourceArg = objectBindings.get(declaration.id.name);
+          if (!sourceArg || sourceArg.properties.length > 0) {
+            return true;
+          }
+          modified = true;
+          return false;
+        });
+        node.declarations = declarations;
+        return declarations.length > 0;
+      }
+
       if (!t.isExpressionStatement(node)) {
         return true;
       }
 
       if (t.isSequenceExpression(node.expression)) {
         const expressions = node.expression.expressions.filter(
-          (expression) =>
-            !assignments.some(
-              ({ call, sourceArg }) => call === expression && sourceArg.properties.length === 0,
-            ),
+          (expression) => !isEmptyEnhancementCall(expression, assignments),
         );
         if (expressions.length !== node.expression.expressions.length) {
           modified = true;
@@ -546,9 +578,7 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
         return true;
       }
 
-      const shouldRemove = assignments.some(
-        ({ call, sourceArg }) => call === node.expression && sourceArg.properties.length === 0,
-      );
+      const shouldRemove = isEmptyEnhancementCall(node.expression, assignments);
       if (shouldRemove) {
         modified = true;
       }
@@ -567,6 +597,28 @@ function transformElementFile(code: string, usedMethods: UsedMethods, options: P
     console.error('[zed-gpui] Failed to transform element file:', error);
     return null;
   }
+}
+
+function getObjectArgument(
+  node: t.Node,
+  objectBindings: Map<string, t.ObjectExpression>,
+): t.ObjectExpression | undefined {
+  const unwrapped = unwrapExpression(node);
+  if (t.isObjectExpression(unwrapped)) {
+    return unwrapped;
+  }
+  return t.isIdentifier(unwrapped) ? objectBindings.get(unwrapped.name) : undefined;
+}
+
+function isEmptyEnhancementCall(
+  expression: t.Node,
+  assignments: { sourceArg: t.ObjectExpression; call: t.CallExpression }[],
+): boolean {
+  return (
+    t.isCallExpression(expression) &&
+    assignments.some(({ call, sourceArg }) => call === expression && sourceArg.properties.length === 0) &&
+    assignments.filter(({ call }) => call === expression).every(({ sourceArg }) => sourceArg.properties.length === 0)
+  );
 }
 
 function getEnhancedPrototype(node: t.Node): string | undefined {

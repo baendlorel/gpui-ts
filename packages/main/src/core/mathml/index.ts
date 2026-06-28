@@ -13,11 +13,6 @@ declare global {
   }
 }
 
-$_(MathMLElement, implementation, {
-  // #region attributes
-  // #endregion
-  // #region events
-  // #endregion
-} as MathMLElement);
+$_(MathMLElement, implementation);
 
 export {};
