@@ -6,17 +6,7 @@ declare global {
 
     // #region attributes
     id_(id: string): this;
-    attr_(attr: string, value: any): this;
     name_(name: string): this;
-    /**
-     * Equivalent to `append`
-     */
-    child_(...nodes: any[]): this;
-    /**
-     * Equivalent to `this.textContent = xxx`
-     */
-    text_(text: string): this;
-    remove_(): this;
     dataset_(key: string, value: any): this;
     // #endregion
 
@@ -212,7 +202,6 @@ declare global {
       handler: EventListener,
       options?: boolean | AddEventListenerOptions,
     ): this;
-    off_(eventName: string, handler: EventListener): this;
     // #endregion
   }
 }
@@ -276,6 +265,10 @@ $_(HTMLElement, {
   // #region styles
   class_(c) {
     this.className = Array.isArray(c) ? c.join(' ') : c;
+    return this;
+  },
+  style_(property, value) {
+    this.style.setProperty(property, value);
     return this;
   },
   w_(w) {

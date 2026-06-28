@@ -5,18 +5,11 @@ declare global {
     readonly gpui: 'svg';
 
     // #region attributes
-    attr_(attr: string, value: any): this;
-    child_(...nodes: any[]): this;
-    text_(text: string): this;
-    remove_(): this;
-    class_(className: string): this;
     fill_(fill: string): this;
     stroke_(stroke: string): this;
     // #endregion
 
     // #region events
-    on_(eventName: string, handler: EventListener): this;
-    off_(eventName: string, handler: EventListener): this;
     // #endregion
   }
 }
@@ -65,6 +58,10 @@ $_(SVGElement, {
   },
   class_(className) {
     this.setAttribute('class', className);
+    return this;
+  },
+  style_(property, value) {
+    this.style.setProperty(property, value);
     return this;
   },
   fill_(fill) {
