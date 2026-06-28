@@ -2,7 +2,7 @@ import type { ZedGpuiFuncional } from '../functional.js';
 
 declare global {
   interface HTMLElement extends ZedGpuiFuncional {
-    readonly gpui: true;
+    readonly gpui: 'html';
 
     // #region attributes
     id_(id: string): this;
@@ -201,14 +201,23 @@ declare global {
     onPointerEnter_(handler: (event: PointerEvent) => void): this;
     onPointerLeave_(handler: (event: PointerEvent) => void): this;
     onPointerCancel_(handler: (event: PointerEvent) => void): this;
-    on_(eventName: string, handler: EventListener): this;
+
+    on_<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): this;
+    on_(
+      eventName: string,
+      handler: EventListener,
+      options?: boolean | AddEventListenerOptions,
+    ): this;
     off_(eventName: string, handler: EventListener): this;
     // #endregion
   }
 }
 
 $_(HTMLElement, {
-  gpui: true,
   // #region functional methods
   tap_(fn) {
     fn(this);
@@ -937,8 +946,8 @@ $_(HTMLElement, {
   onPointerCancel_(handler) {
     return this.on_('pointercancel', handler as EventListener);
   },
-  on_(eventName, handler) {
-    this.addEventListener(eventName, handler);
+  on_(eventName: string, handler: (ev: Event) => void, options: boolean | AddEventListenerOptions) {
+    this.addEventListener(eventName, handler, options);
     return this;
   },
   off_(eventName, handler) {

@@ -1,5 +1,7 @@
 import './common/enhance.js';
 import './core/html/init.js';
+import './core/svg/init.js';
+import './core/mathml/init.js';
 
 delete (globalThis as any).$_;
 
@@ -14,3 +16,11 @@ export const textarea = () => document.createElement('textarea');
 export const btn = () => document.createElement('button');
 export const select = (options: Array<{ value: any; label: string }>) =>
   document.createElement('select').options_(options);
+
+export const svg = <T extends keyof SVGElementTagNameMap>(
+  tag: T = 'svg' as any,
+): SVGElementTagNameMap[T] => document.createElementNS('http://www.w3.org/2000/svg', tag);
+export const mathml = <T extends keyof MathMLElementTagNameMap>(
+  tag: T = 'mathml' as any,
+): MathMLElementTagNameMap[T] =>
+  document.createElementNS('http://www.w3.org/1998/Math/MathML', tag);

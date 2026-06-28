@@ -45,6 +45,8 @@ const factoryElementTypes: Record<string, string> = {
   textarea: 'HTMLTextAreaElement',
   btn: 'HTMLButtonElement',
   select: 'HTMLSelectElement',
+  svg: 'SVGElement',
+  mathml: 'MathMLElement',
 };
 
 const tagElementTypes: Record<string, string> = {
@@ -168,7 +170,7 @@ function hasZedGpuiUsage(code: string): boolean {
 }
 
 function hasPrototypeEnhancement(code: string): boolean {
-  return code.includes('$_(') && /HTML[A-Za-z]*Element/.test(code);
+  return code.includes('$_(') && /(HTML[A-Za-z]*Element|SVGElement|MathMLElement)/.test(code);
 }
 
 /**
@@ -343,7 +345,12 @@ function getElementTypeFromTsType(node: t.TSType): string | undefined {
 }
 
 function isElementType(name: string): boolean {
-  return name === 'HTMLElement' || /^HTML[A-Za-z]*Element$/.test(name);
+  return (
+    name === 'HTMLElement' ||
+    /^HTML[A-Za-z]*Element$/.test(name) ||
+    name === 'SVGElement' ||
+    name === 'MathMLElement'
+  );
 }
 
 /**
