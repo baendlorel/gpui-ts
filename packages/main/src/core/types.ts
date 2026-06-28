@@ -1,3 +1,5 @@
+type ActualElement = HTMLElement | SVGElement | MathMLElement;
+
 export interface ZedGpuiFuncional extends Element {
   // # Elements related
   attr_(attr: string, value: any): this;
@@ -5,7 +7,8 @@ export interface ZedGpuiFuncional extends Element {
   child_(...nodes: any[]): this;
   text_(text: string): this;
   remove_(): this;
-  class_(className: string | string[]): this;
+  class_(classNames: string): this;
+  classList_(classList: string[]): this;
   on_(eventName: string, handler: EventListener, options?: boolean | AddEventListenerOptions): this;
   off_(eventName: string, handler: EventListener, options?: boolean | EventListenerOptions): this;
 
@@ -57,9 +60,9 @@ export const implementation = {
   },
   style_(o) {
     if (typeof o === 'string') {
-      (this as HTMLElement).style.cssText = o;
+      (this as ActualElement).style.cssText = o;
     } else {
-      Object.assign((this as HTMLElement).style, o);
+      Object.assign((this as ActualElement).style, o);
     }
     return this;
   },
@@ -76,7 +79,11 @@ export const implementation = {
     return this;
   },
   class_(className) {
-    this.className = Array.isArray(className) ? className.join(' ') : className;
+    this.className = className;
+    return this;
+  },
+  classList_(className) {
+    this.className = className.join(' ');
     return this;
   },
   on_(eventName, handler, options) {
