@@ -140,57 +140,57 @@ declare global {
     // #endregion
 
     // #region events
-    onClick_(handler: (event: MouseEvent) => void): this;
-    onDoubleClick_(handler: (event: MouseEvent) => void): this;
-    onMouseDown_(handler: (event: MouseEvent) => void): this;
-    onMouseUp_(handler: (event: MouseEvent) => void): this;
-    onMouseMove_(handler: (event: MouseEvent) => void): this;
-    onMouseEnter_(handler: (event: MouseEvent) => void): this;
-    onMouseLeave_(handler: (event: MouseEvent) => void): this;
-    onMouseOver_(handler: (event: MouseEvent) => void): this;
-    onMouseOut_(handler: (event: MouseEvent) => void): this;
-    onMouseWheel_(handler: (event: WheelEvent) => void): this;
-    onKeyDown_(handler: (event: KeyboardEvent) => void): this;
-    onKeyUp_(handler: (event: KeyboardEvent) => void): this;
-    onKeyPress_(handler: (event: KeyboardEvent) => void): this;
-    onFocus_(handler: (event: FocusEvent) => void): this;
-    onBlur_(handler: (event: FocusEvent) => void): this;
-    onFocusIn_(handler: (event: FocusEvent) => void): this;
-    onFocusOut_(handler: (event: FocusEvent) => void): this;
-    onChange_(handler: (event: Event) => void): this;
-    onInput_(handler: (event: Event) => void): this;
-    onSubmit_(handler: (event: SubmitEvent) => void): this;
-    onReset_(handler: (event: Event) => void): this;
-    onTouchStart_(handler: (event: TouchEvent) => void): this;
-    onTouchEnd_(handler: (event: TouchEvent) => void): this;
-    onTouchMove_(handler: (event: TouchEvent) => void): this;
-    onTouchCancel_(handler: (event: TouchEvent) => void): this;
-    onDrag_(handler: (event: DragEvent) => void): this;
-    onDragStart_(handler: (event: DragEvent) => void): this;
-    onDragEnd_(handler: (event: DragEvent) => void): this;
-    onDragEnter_(handler: (event: DragEvent) => void): this;
-    onDragLeave_(handler: (event: DragEvent) => void): this;
-    onDragOver_(handler: (event: DragEvent) => void): this;
-    onDragDrop_(handler: (event: DragEvent) => void): this;
-    onCopy_(handler: (event: ClipboardEvent) => void): this;
-    onCut_(handler: (event: ClipboardEvent) => void): this;
-    onPaste_(handler: (event: ClipboardEvent) => void): this;
-    onScroll_(handler: (event: Event) => void): this;
-    onResize_(handler: (event: UIEvent) => void): this;
-    onPlay_(handler: (event: Event) => void): this;
-    onPause_(handler: (event: Event) => void): this;
-    onEnded_(handler: (event: Event) => void): this;
-    onVolumeChange_(handler: (event: Event) => void): this;
-    onAnimationStart_(handler: (event: AnimationEvent) => void): this;
-    onAnimationEnd_(handler: (event: AnimationEvent) => void): this;
-    onAnimationIteration_(handler: (event: AnimationEvent) => void): this;
-    onTransitionEnd_(handler: (event: TransitionEvent) => void): this;
-    onPointerDown_(handler: (event: PointerEvent) => void): this;
-    onPointerUp_(handler: (event: PointerEvent) => void): this;
-    onPointerMove_(handler: (event: PointerEvent) => void): this;
-    onPointerEnter_(handler: (event: PointerEvent) => void): this;
-    onPointerLeave_(handler: (event: PointerEvent) => void): this;
-    onPointerCancel_(handler: (event: PointerEvent) => void): this;
+    onClick_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDoubleClick_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseDown_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseUp_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseMove_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseEnter_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseLeave_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseOver_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseOut_(handler: (event: MouseEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onMouseWheel_(handler: (event: WheelEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onKeyDown_(handler: (event: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onKeyUp_(handler: (event: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onKeyPress_(handler: (event: KeyboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onFocus_(handler: (event: FocusEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onBlur_(handler: (event: FocusEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onFocusIn_(handler: (event: FocusEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onFocusOut_(handler: (event: FocusEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onChange_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onInput_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onSubmit_(handler: (event: SubmitEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onReset_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onTouchStart_(handler: (event: TouchEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onTouchEnd_(handler: (event: TouchEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onTouchMove_(handler: (event: TouchEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onTouchCancel_(handler: (event: TouchEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDrag_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragStart_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragEnd_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragEnter_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragLeave_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragOver_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onDragDrop_(handler: (event: DragEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onCopy_(handler: (event: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onCut_(handler: (event: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPaste_(handler: (event: ClipboardEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onScroll_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onResize_(handler: (event: UIEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPlay_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onPause_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onEnded_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onVolumeChange_(handler: (event: Event) => void, options?: boolean | AddEventListenerOptions): this;
+    onAnimationStart_(handler: (event: AnimationEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onAnimationEnd_(handler: (event: AnimationEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onAnimationIteration_(handler: (event: AnimationEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onTransitionEnd_(handler: (event: TransitionEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerDown_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerUp_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerMove_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerEnter_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerLeave_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
+    onPointerCancel_(handler: (event: PointerEvent) => void, options?: boolean | AddEventListenerOptions): this;
 
     on_<K extends keyof HTMLElementEventMap>(
       type: K,
@@ -733,160 +733,160 @@ $_(HTMLElement, implementation, {
   // #endregion
 
   // #region events
-  onClick_(handler) {
-    return this.on_('click', handler as EventListener);
+  onClick_(handler, options) {
+    return this.on_('click', handler as EventListener, options);
   },
-  onDoubleClick_(handler) {
-    return this.on_('dblclick', handler as EventListener);
+  onDoubleClick_(handler, options) {
+    return this.on_('dblclick', handler as EventListener, options);
   },
-  onMouseDown_(handler) {
-    return this.on_('mousedown', handler as EventListener);
+  onMouseDown_(handler, options) {
+    return this.on_('mousedown', handler as EventListener, options);
   },
-  onMouseUp_(handler) {
-    return this.on_('mouseup', handler as EventListener);
+  onMouseUp_(handler, options) {
+    return this.on_('mouseup', handler as EventListener, options);
   },
-  onMouseMove_(handler) {
-    return this.on_('mousemove', handler as EventListener);
+  onMouseMove_(handler, options) {
+    return this.on_('mousemove', handler as EventListener, options);
   },
-  onMouseEnter_(handler) {
-    return this.on_('mouseenter', handler as EventListener);
+  onMouseEnter_(handler, options) {
+    return this.on_('mouseenter', handler as EventListener, options);
   },
-  onMouseLeave_(handler) {
-    return this.on_('mouseleave', handler as EventListener);
+  onMouseLeave_(handler, options) {
+    return this.on_('mouseleave', handler as EventListener, options);
   },
-  onMouseOver_(handler) {
-    return this.on_('mouseover', handler as EventListener);
+  onMouseOver_(handler, options) {
+    return this.on_('mouseover', handler as EventListener, options);
   },
-  onMouseOut_(handler) {
-    return this.on_('mouseout', handler as EventListener);
+  onMouseOut_(handler, options) {
+    return this.on_('mouseout', handler as EventListener, options);
   },
-  onMouseWheel_(handler) {
-    return this.on_('wheel', handler as EventListener);
+  onMouseWheel_(handler, options) {
+    return this.on_('wheel', handler as EventListener, options);
   },
-  onKeyDown_(handler) {
-    return this.on_('keydown', handler as EventListener);
+  onKeyDown_(handler, options) {
+    return this.on_('keydown', handler as EventListener, options);
   },
-  onKeyUp_(handler) {
-    return this.on_('keyup', handler as EventListener);
+  onKeyUp_(handler, options) {
+    return this.on_('keyup', handler as EventListener, options);
   },
-  onKeyPress_(handler) {
-    return this.on_('keypress', handler as EventListener);
+  onKeyPress_(handler, options) {
+    return this.on_('keypress', handler as EventListener, options);
   },
-  onFocus_(handler) {
-    return this.on_('focus', handler as EventListener);
+  onFocus_(handler, options) {
+    return this.on_('focus', handler as EventListener, options);
   },
-  onBlur_(handler) {
-    return this.on_('blur', handler as EventListener);
+  onBlur_(handler, options) {
+    return this.on_('blur', handler as EventListener, options);
   },
-  onFocusIn_(handler) {
-    return this.on_('focusin', handler as EventListener);
+  onFocusIn_(handler, options) {
+    return this.on_('focusin', handler as EventListener, options);
   },
-  onFocusOut_(handler) {
-    return this.on_('focusout', handler as EventListener);
+  onFocusOut_(handler, options) {
+    return this.on_('focusout', handler as EventListener, options);
   },
-  onChange_(handler) {
-    return this.on_('change', handler as EventListener);
+  onChange_(handler, options) {
+    return this.on_('change', handler as EventListener, options);
   },
-  onInput_(handler) {
-    return this.on_('input', handler as EventListener);
+  onInput_(handler, options) {
+    return this.on_('input', handler as EventListener, options);
   },
-  onSubmit_(handler) {
-    return this.on_('submit', handler as EventListener);
+  onSubmit_(handler, options) {
+    return this.on_('submit', handler as EventListener, options);
   },
-  onReset_(handler) {
-    return this.on_('reset', handler as EventListener);
+  onReset_(handler, options) {
+    return this.on_('reset', handler as EventListener, options);
   },
-  onTouchStart_(handler) {
-    return this.on_('touchstart', handler as EventListener);
+  onTouchStart_(handler, options) {
+    return this.on_('touchstart', handler as EventListener, options);
   },
-  onTouchEnd_(handler) {
-    return this.on_('touchend', handler as EventListener);
+  onTouchEnd_(handler, options) {
+    return this.on_('touchend', handler as EventListener, options);
   },
-  onTouchMove_(handler) {
-    return this.on_('touchmove', handler as EventListener);
+  onTouchMove_(handler, options) {
+    return this.on_('touchmove', handler as EventListener, options);
   },
-  onTouchCancel_(handler) {
-    return this.on_('touchcancel', handler as EventListener);
+  onTouchCancel_(handler, options) {
+    return this.on_('touchcancel', handler as EventListener, options);
   },
-  onDrag_(handler) {
-    return this.on_('drag', handler as EventListener);
+  onDrag_(handler, options) {
+    return this.on_('drag', handler as EventListener, options);
   },
-  onDragStart_(handler) {
-    return this.on_('dragstart', handler as EventListener);
+  onDragStart_(handler, options) {
+    return this.on_('dragstart', handler as EventListener, options);
   },
-  onDragEnd_(handler) {
-    return this.on_('dragend', handler as EventListener);
+  onDragEnd_(handler, options) {
+    return this.on_('dragend', handler as EventListener, options);
   },
-  onDragEnter_(handler) {
-    return this.on_('dragenter', handler as EventListener);
+  onDragEnter_(handler, options) {
+    return this.on_('dragenter', handler as EventListener, options);
   },
-  onDragLeave_(handler) {
-    return this.on_('dragleave', handler as EventListener);
+  onDragLeave_(handler, options) {
+    return this.on_('dragleave', handler as EventListener, options);
   },
-  onDragOver_(handler) {
-    return this.on_('dragover', handler as EventListener);
+  onDragOver_(handler, options) {
+    return this.on_('dragover', handler as EventListener, options);
   },
-  onDragDrop_(handler) {
-    return this.on_('drop', handler as EventListener);
+  onDragDrop_(handler, options) {
+    return this.on_('drop', handler as EventListener, options);
   },
-  onCopy_(handler) {
-    return this.on_('copy', handler as EventListener);
+  onCopy_(handler, options) {
+    return this.on_('copy', handler as EventListener, options);
   },
-  onCut_(handler) {
-    return this.on_('cut', handler as EventListener);
+  onCut_(handler, options) {
+    return this.on_('cut', handler as EventListener, options);
   },
-  onPaste_(handler) {
-    return this.on_('paste', handler as EventListener);
+  onPaste_(handler, options) {
+    return this.on_('paste', handler as EventListener, options);
   },
-  onScroll_(handler) {
-    return this.on_('scroll', handler as EventListener);
+  onScroll_(handler, options) {
+    return this.on_('scroll', handler as EventListener, options);
   },
-  onResize_(handler) {
-    return this.on_('resize', handler as EventListener);
+  onResize_(handler, options) {
+    return this.on_('resize', handler as EventListener, options);
   },
-  onPlay_(handler) {
-    return this.on_('play', handler as EventListener);
+  onPlay_(handler, options) {
+    return this.on_('play', handler as EventListener, options);
   },
-  onPause_(handler) {
-    return this.on_('pause', handler as EventListener);
+  onPause_(handler, options) {
+    return this.on_('pause', handler as EventListener, options);
   },
-  onEnded_(handler) {
-    return this.on_('ended', handler as EventListener);
+  onEnded_(handler, options) {
+    return this.on_('ended', handler as EventListener, options);
   },
-  onVolumeChange_(handler) {
-    return this.on_('volumechange', handler as EventListener);
+  onVolumeChange_(handler, options) {
+    return this.on_('volumechange', handler as EventListener, options);
   },
-  onAnimationStart_(handler) {
-    return this.on_('animationstart', handler as EventListener);
+  onAnimationStart_(handler, options) {
+    return this.on_('animationstart', handler as EventListener, options);
   },
-  onAnimationEnd_(handler) {
-    return this.on_('animationend', handler as EventListener);
+  onAnimationEnd_(handler, options) {
+    return this.on_('animationend', handler as EventListener, options);
   },
-  onAnimationIteration_(handler) {
-    return this.on_('animationiteration', handler as EventListener);
+  onAnimationIteration_(handler, options) {
+    return this.on_('animationiteration', handler as EventListener, options);
   },
-  onTransitionEnd_(handler) {
-    return this.on_('transitionend', handler as EventListener);
+  onTransitionEnd_(handler, options) {
+    return this.on_('transitionend', handler as EventListener, options);
   },
-  onPointerDown_(handler) {
-    return this.on_('pointerdown', handler as EventListener);
+  onPointerDown_(handler, options) {
+    return this.on_('pointerdown', handler as EventListener, options);
   },
-  onPointerUp_(handler) {
-    return this.on_('pointerup', handler as EventListener);
+  onPointerUp_(handler, options) {
+    return this.on_('pointerup', handler as EventListener, options);
   },
-  onPointerMove_(handler) {
-    return this.on_('pointermove', handler as EventListener);
+  onPointerMove_(handler, options) {
+    return this.on_('pointermove', handler as EventListener, options);
   },
-  onPointerEnter_(handler) {
-    return this.on_('pointerenter', handler as EventListener);
+  onPointerEnter_(handler, options) {
+    return this.on_('pointerenter', handler as EventListener, options);
   },
-  onPointerLeave_(handler) {
-    return this.on_('pointerleave', handler as EventListener);
+  onPointerLeave_(handler, options) {
+    return this.on_('pointerleave', handler as EventListener, options);
   },
-  onPointerCancel_(handler) {
-    return this.on_('pointercancel', handler as EventListener);
+  onPointerCancel_(handler, options) {
+    return this.on_('pointercancel', handler as EventListener, options);
   },
-  on_(eventName: string, handler: (ev: Event) => void, options: boolean | AddEventListenerOptions) {
+  on_(eventName: string, handler: (ev: Event) => void, options?: boolean | AddEventListenerOptions) {
     this.addEventListener(eventName, handler, options);
     return this;
   },

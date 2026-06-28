@@ -9,11 +9,13 @@ declare global {
       handler: (
         event: Event & { currentTarget: HTMLSelectElement; target: HTMLSelectElement },
       ) => void,
+      options?: boolean | AddEventListenerOptions,
     ): this;
     onInput_(
       handler: (
         event: Event & { currentTarget: HTMLSelectElement; target: HTMLSelectElement },
       ) => void,
+      options?: boolean | AddEventListenerOptions,
     ): this;
   }
 }
@@ -45,11 +47,11 @@ $_(HTMLSelectElement, {
     this.blur();
     return this;
   },
-  onChange_(handler) {
-    return this.on_('change', handler as EventListener);
+  onChange_(handler, options) {
+    return this.on_('change', handler as EventListener, options);
   },
-  onInput_(handler) {
-    return this.on_('input', handler as EventListener);
+  onInput_(handler, options) {
+    return this.on_('input', handler as EventListener, options);
   },
 } as HTMLSelectElement);
 export {};
