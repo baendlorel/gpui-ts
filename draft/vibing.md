@@ -26,3 +26,8 @@
 
 我发现有个别方法，在html、svg、mathml中都存在
 比如attr_ style_ 等等。我希望你将它们梳理成interface CommonFunctional，写入packages/main/src/core/types.ts中。
+
+---
+1、测试发现class_也可公用，你加上；
+2、这些函数如果实现上也是一样的话，那么将它们的实现统一写入packages/main/src/core/types.ts的implementation对象；
+3、在使用enhance函数的时候，即可简化为`$_(要加强的类,implementation,独有的实现对象)`

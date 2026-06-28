@@ -1,4 +1,4 @@
-import type { ZedGpuiFuncional } from '../types.js';
+import { implementation, type ZedGpuiFuncional } from '../types.js';
 
 declare global {
   interface HTMLElement extends ZedGpuiFuncional {
@@ -197,63 +197,18 @@ declare global {
       listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
       options?: boolean | AddEventListenerOptions,
     ): this;
-    on_(
-      eventName: string,
-      handler: EventListener,
-      options?: boolean | AddEventListenerOptions,
-    ): this;
     // #endregion
   }
 }
 
-$_(HTMLElement, {
-  // #region functional methods
-  tap_(fn) {
-    fn(this);
-    return this;
-  },
-  map_(fn) {
-    return fn(this);
-  },
-  iterChildren_(fn) {
-    const len = this.children.length;
-    for (let i = 0; i < len; i++) {
-      fn(this.children[i]);
-    }
-    return this;
-  },
-  iterChildNodes_(fn) {
-    const len = this.childNodes.length;
-    for (let i = 0; i < len; i++) {
-      fn(this.childNodes[i]);
-    }
-    return this;
-  },
-  // #endregion
-
+$_(HTMLElement, implementation, {
   // #region attributes
   id_(id) {
     this.id = id;
     return this;
   },
-  attr_(attr, value) {
-    this.setAttribute(attr, value);
-    return this;
-  },
   name_(name) {
     this.setAttribute('name', name);
-    return this;
-  },
-  child_(...nodes) {
-    this.append(...nodes);
-    return this;
-  },
-  text_(t) {
-    this.textContent = t;
-    return this;
-  },
-  remove_() {
-    this.remove();
     return this;
   },
   dataset_(k, v) {
@@ -263,14 +218,6 @@ $_(HTMLElement, {
   // #endregion
 
   // #region styles
-  class_(c) {
-    this.className = Array.isArray(c) ? c.join(' ') : c;
-    return this;
-  },
-  style_(property, value) {
-    this.style.setProperty(property, value);
-    return this;
-  },
   w_(w) {
     this.style.width = w;
     return this;
@@ -941,10 +888,6 @@ $_(HTMLElement, {
   },
   on_(eventName: string, handler: (ev: Event) => void, options: boolean | AddEventListenerOptions) {
     this.addEventListener(eventName, handler, options);
-    return this;
-  },
-  off_(eventName, handler) {
-    this.removeEventListener(eventName, handler);
     return this;
   },
   // #endregion

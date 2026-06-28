@@ -1,4 +1,4 @@
-globalThis.$_ = (c, o) => Object.assign(c.prototype, o);
+globalThis.$_ = (c, ...o) => Object.assign(c.prototype, ...o);
 
 let dfn = (c: { prototype: Element }, v: unknown) =>
   Object.defineProperty(c.prototype, 'gpui', { value: v });
@@ -10,7 +10,7 @@ dfn(MathMLElement, 'mathml');
 dfn = null as any;
 
 declare global {
-  function $_(c: { prototype: Element }, o: unknown): void;
+  function $_(c: { prototype: Element }, ...o: object[]): void;
 
   interface Element {
     gpui: string;

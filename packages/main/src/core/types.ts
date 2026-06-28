@@ -1,24 +1,20 @@
-export interface ZedGpuiFuncional {
+export interface ZedGpuiFuncional extends Element {
   // # Elements related
-
   attr_(attr: string, value: any): this;
-  /**
-   * Set an inline CSS property with `style.setProperty`.
-   */
-  style_(property: string, value: string): this;
+  style_(style: string | CSSStyleDeclaration): this;
   child_(...nodes: any[]): this;
   text_(text: string): this;
   remove_(): this;
-  class_(className: string): this;
-  on_(eventName: string, handler: EventListener): this;
-  off_(eventName: string, handler: EventListener): this;
+  class_(className: string | string[]): this;
+  on_(eventName: string, handler: EventListener, options?: boolean | AddEventListenerOptions): this;
+  off_(eventName: string, handler: EventListener, options?: boolean | EventListenerOptions): this;
 
   // # Functional related
   /**
    * Do some custom modification of this element and turns itself
    */
   tap_(fn: (thisArg: this) => void): this;
-  map_<T = Element>(fn: (thisArg: this) => T): this;
+  map_<T = Element>(fn: (thisArg: this) => T): T;
   /**
    * Iterator over children, simply uses `for` but caches length
    */
@@ -28,3 +24,68 @@ export interface ZedGpuiFuncional {
    */
   iterChildNodes_(fn: (childNode: Node) => void): this;
 }
+
+export const implementation = {
+  // #region functional methods
+  tap_(fn) {
+    fn(this);
+    return this;
+  },
+  map_(fn) {
+    return fn(this);
+  },
+  iterChildren_(fn) {
+    const len = this.children.length;
+    for (let i = 0; i < len; i++) {
+      fn(this.children[i]);
+    }
+    return this;
+  },
+  iterChildNodes_(fn) {
+    const len = this.childNodes.length;
+    for (let i = 0; i < len; i++) {
+      fn(this.childNodes[i]);
+    }
+    return this;
+  },
+  // #endregion
+
+  // #region common element methods
+  attr_(attr, value) {
+    this.setAttribute(attr, value);
+    return this;
+  },
+  style_(o) {
+    if (typeof o === 'string') {
+      (this as HTMLElement).style.cssText = o;
+    } else {
+      Object.assign((this as HTMLElement).style, o);
+    }
+    return this;
+  },
+  child_(...nodes) {
+    this.append(...nodes);
+    return this;
+  },
+  text_(text) {
+    this.textContent = text;
+    return this;
+  },
+  remove_() {
+    this.remove();
+    return this;
+  },
+  class_(className) {
+    this.className = Array.isArray(className) ? className.join(' ') : className;
+    return this;
+  },
+  on_(eventName, handler, options) {
+    this.addEventListener(eventName, handler, options);
+    return this;
+  },
+  off_(eventName, handler, options) {
+    this.removeEventListener(eventName, handler, options);
+    return this;
+  },
+  // #endregion
+} as ZedGpuiFuncional;
