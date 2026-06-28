@@ -1,5 +1,5 @@
 import type { ZedGpuiFuncional } from '../types.js';
-import { implementation } from './implementation.js';
+import { implementation } from '../implementations.js';
 
 declare global {
   interface MathMLElement extends ZedGpuiFuncional {

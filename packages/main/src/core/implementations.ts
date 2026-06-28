@@ -1,4 +1,6 @@
-import type { ZedGpuiFuncional } from '../types.js';
+import type { ZedGpuiFuncional } from './types.js';
+
+type ActualElement = HTMLElement | SVGElement | MathMLElement;
 
 export const implementation = {
   tap_(fn) {
@@ -28,9 +30,9 @@ export const implementation = {
   },
   style_(o) {
     if (typeof o === 'string') {
-      (this as HTMLElement).style.cssText = o;
+      (this as ActualElement).style.cssText = o;
     } else {
-      Object.assign((this as HTMLElement).style, o);
+      Object.assign((this as ActualElement).style, o);
     }
     return this;
   },

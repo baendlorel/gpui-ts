@@ -155,6 +155,26 @@ describe('zedGpuiTreeshakePlugin', () => {
     );
   });
 
+  it('keeps shared element methods when html/svg/mathml uses any one of them', () => {
+    const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
+    plugin.transform(
+      `import { svg } from 'zed-gpui';
+       svg().child_('icon');`,
+      '/src/app.ts',
+    );
+    const result = plugin.transform(
+      `$_(HTMLElement,{child_(){},unused_(){}}),$_(SVGElement,{child_(){},unused_(){}}),$_(MathMLElement,{child_(){},unused_(){}});`,
+      '/node_modules/zed-gpui/dist/index.mjs',
+    );
+    const code = result && typeof result !== 'string' ? result.code : result;
+
+    expect(code).toContain('$_(HTMLElement');
+    expect(code).toContain('$_(SVGElement');
+    expect(code).toContain('$_(MathMLElement');
+    expect(code?.match(/child_\(\) {}/g)).toHaveLength(3);
+    expect(code).not.toContain('unused_() {}');
+  });
+
   it('rewrites forbidden h(svg/mathml) calls and injects throws_ only when needed', () => {
     const plugin = zedGpuiPlugin.raw({ zedGpuiPackageName: 'zed-gpui' }) as PluginInstance;
     const result = plugin.transform(
