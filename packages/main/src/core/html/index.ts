@@ -1,4 +1,4 @@
-import type { ZedGpuiFuncional } from '../functional.js';
+import type { ZedGpuiFuncional } from '../types.js';
 
 declare global {
   interface HTMLElement extends ZedGpuiFuncional {

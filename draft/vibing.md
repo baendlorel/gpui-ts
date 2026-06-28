@@ -21,3 +21,8 @@
 1、像声明块中那样给实现的地方加上`// #region` 块
 2、readme要介绍treeshake子包，说明它会自动裁剪未使用的方法。还要介绍新增的函数式编程方法
 3、完成1、2后，说说你觉得还有没有可以补上的函数式方法
+
+---
+
+我发现有个别方法，在html、svg、mathml中都存在
+比如attr_ style_ 等等。我希望你将它们梳理成interface CommonFunctional，写入packages/main/src/core/types.ts中。
