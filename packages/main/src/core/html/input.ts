@@ -21,7 +21,13 @@ declare global {
       options?: boolean | AddEventListenerOptions,
     ): this;
 
-    // simple reactive
+    /**
+     * Bind a property of an object with this element.
+     * - It's a 2-way binding.
+     * - 1 key can be bound only once.
+     * @param o Some object.
+     * @param key Key of the object.
+     */
     bind_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
