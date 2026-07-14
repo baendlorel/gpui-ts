@@ -20,6 +20,9 @@ declare global {
       ) => void,
       options?: boolean | AddEventListenerOptions,
     ): this;
+
+    // simple reactive
+    bind_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
 $_(HTMLInputElement, {
@@ -60,6 +63,20 @@ $_(HTMLInputElement, {
   },
   onInput_(handler, options) {
     return this.on_('input', handler as EventListener, options);
+  },
+
+  // bind
+  bind_(o, key) {
+    let privateValue: unknown = o[key];
+    Object.defineProperty(o, key, {
+      get: () => privateValue,
+      set: (v: unknown) => {
+        privateValue = v;
+        this.value = v as string;
+      },
+    });
+    this.addEventListener('input', () => (privateValue = this.value));
+    return this;
   },
 } as HTMLInputElement);
 export {};
