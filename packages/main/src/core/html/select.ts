@@ -17,6 +17,15 @@ declare global {
       ) => void,
       options?: boolean | AddEventListenerOptions,
     ): this;
+
+    /**
+     * Bind a property of an object with this element.
+     * - It's a 2-way binding.
+     * - 1 key can be bound only once.
+     * @param o Some object.
+     * @param key Key of the object.
+     */
+    bind_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
 $_(HTMLSelectElement, {
@@ -52,6 +61,22 @@ $_(HTMLSelectElement, {
   },
   onInput_(handler, options) {
     return this.on_('input', handler as EventListener, options);
+  },
+
+  // bind
+  bind_(o, key) {
+    let privateValue: unknown = o[key];
+    Object.defineProperty(o, key, {
+      get: () => privateValue,
+      set: (v: unknown) => {
+        privateValue = v;
+        this.value = v as string;
+      },
+      configurable: true,
+      enumerable: true,
+    });
+    this.addEventListener('change', () => (privateValue = this.value));
+    return this;
   },
 } as HTMLSelectElement);
 export {};

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FormData 测试示例</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+
+    .form-group label {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    .form-group .label-block {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #output {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>📋 FormData 测试</h1>
+  <p>点击按钮查看 <code>new FormData(form)</code> 的解析结果</p>
+
+  <!-- 测试用的 Form -->
+  <form id="testForm">
+    <!-- 1. 文本输入 -->
+    <div class="form-group">
+      <label class="label-block">📝 文本输入</label>
+      <label>用户名: <input type="text" name="username" value="张三"></label>
+      <label>邮箱: <input type="email" name="email" value="zhangsan@example.com"></label>
+      <label>密码: <input type="password" name="password" value="123456"></label>
+    </div>
+
+    <!-- 2. 数字、范围、颜色 -->
+    <div class="form-group">
+      <label class="label-block">🔢 数字/范围/颜色</label>
+      <label>年龄: <input type="number" name="age" value="25"></label>
+      <label>评分: <input type="range" name="rating" min="0" max="10" value="7"></label>
+      <label>颜色: <input type="color" name="favColor" value="#ff5733"></label>
+    </div>
+
+    <!-- 3. 日期时间 -->
+    <div class="form-group">
+      <label class="label-block">📅 日期/时间</label>
+      <label>日期: <input type="date" name="birthDate" value="1995-05-15"></label>
+      <label>时间: <input type="time" name="meetingTime" value="14:30"></label>
+      <label>月份: <input type="month" name="month" value="2024-01"></label>
+    </div>
+
+    <!-- 4. 按钮类型 (不会被 FormData 收录) -->
+    <div class="form-group">
+      <label class="label-block">🔘 按钮 (不收录)</label>
+      <input type="button" value="普通按钮">
+      <input type="submit" value="提交按钮">
+      <input type="reset" value="重置按钮">
+    </div>
+
+    <!-- 5. 隐藏字段 -->
+    <div class="form-group">
+      <label class="label-block">🕵️ 隐藏字段</label>
+      <input type="hidden" name="token" value="abc123xyz">
+      <input type="hidden" name="userId" value="10086">
+    </div>
+
+    <!-- 6. 单选框 (Radio) - 同名分组 -->
+    <div class="form-group">
+      <label class="label-block">⚪ 单选框 (同名, 只取选中值)</label>
+      <label><input type="radio" name="gender" value="male" checked> 男</label>
+      <label><input type="radio" name="gender" value="female"> 女</label>
+      <label><input type="radio" name="gender" value="other"> 其他</label>
+    </div>
+
+    <!-- 7. 复选框 (Checkbox) - 同名分组 -->
+    <div class="form-group">
+      <label class="label-block">☑️ 复选框 (同名, 可多选)</label>
+      <label><input type="checkbox" name="hobby" value="reading" checked> 阅读</label>
+      <label><input type="checkbox" name="hobby" value="music" checked> 音乐</label>
+      <label><input type="checkbox" name="hobby" value="sports"> 运动</label>
+      <label><input type="checkbox" name="hobby" value="travel" checked> 旅行</label>
+    </div>
+
+    <!-- 8. 文件上传 -->
+    <div class="form-group">
+      <label class="label-block">📎 文件上传</label>
+      <input type="file" name="avatar" accept="image/*">
+      <input type="file" name="docs" multiple>
+    </div>
+
+    <!-- 9. 下拉列表 (Select) -->
+    <div class="form-group">
+      <label class="label-block">📋 下拉列表</label>
+      <label>城市:
+        <select name="city">
+          <option value="beijing">北京</option>
+          <option value="shanghai" selected>上海</option>
+          <option value="guangzhou">广州</option>
+          <option value="shenzhen">深圳</option>
+        </select>
+      </label>
+      <label>多选城市:
+        <select name="cities" multiple size="3">
+          <option value="beijing" selected>北京</option>
+          <option value="shanghai" selected>上海</option>
+          <option value="guangzhou">广州</option>
+          <option value="shenzhen" selected>深圳</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- 10. 文本域 -->
+    <div class="form-group">
+      <label class="label-block">📄 文本域</label>
+      <textarea name="bio" rows="3" cols="40">这是一个自我介绍，用于测试 FormData 对文本域的支持。</textarea>
+    </div>
+  </form>
+
+  <button id="parseBtn">🔍 解析 FormData</button>
+  <h3>📊 解析结果 (key -> value)</h3>
+  <div id="output"></div>
+
+  <script>
+    document.getElementById('parseBtn').addEventListener('click', function () {
+      const form = document.getElementById('testForm');
+      const formData = new FormData(form);
+      const outputDiv = document.getElementById('output');
+      console.log('formData', formData)
+
+      let result = '';
+
+      // 使用 for...of 遍历 FormData 的所有条目
+      for (const [key, value] of formData.entries()) {
+        // 判断是否为文件对象 (File 或 Blob)
+        if (value instanceof File) {
+          result += `${key}: [File] 名称=${value.name}, 大小=${value.size}bytes, 类型=${value.type}\n`;
+        } else {
+          result += `${key}: ${value}\n`;
+        }
+        console.log('键值对', key, value)
+      }
+
+      // 如果没有数据，输出提示
+      if (result === '') {
+        result = '(表单中没有可提交的字段)';
+      }
+
+      outputDiv.textContent = result;
+    });
+  </script>
+
+</body>
+
+</html>
