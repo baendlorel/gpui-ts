@@ -31,6 +31,11 @@ declare global {
     bind_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
 
     /**
+     * Same as `bind_` but uses `input.checked`
+     */
+    bindChecked_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
+
+    /**
      * Same as `bind_` but uses `input.valueAsNumber`
      */
     bindAsNumber_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
@@ -51,6 +56,7 @@ declare global {
     bindRadioGroup_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
+const checkboxesSym = Symbol('zed-gpui.checkboxes');
 $_(HTMLInputElement, {
   placeholder_(value) {
     this.placeholder = value;
@@ -91,19 +97,108 @@ $_(HTMLInputElement, {
     return this.on_('input', handler as EventListener, options);
   },
 
-  // TODO 这里要正确绑定name相同的checkbox、radio
   bind_(o, key) {
-    let privateValue: unknown = o[key];
+    let v: unknown = o[key];
     Object.defineProperty(o, key, {
-      get: () => privateValue,
+      get: () => v,
       set: (v: unknown) => {
-        privateValue = v;
+        v = v;
         this.value = v as string;
       },
       configurable: true, // & This makes it can be bound more times. But will override it.
       enumerable: true,
     });
-    this.addEventListener('input', () => (privateValue = this.value));
+    this.addEventListener('input', () => (v = this.value));
+    return this;
+  },
+  bindChecked_(o, key) {
+    let v: unknown = o[key];
+    Object.defineProperty(o, key, {
+      get: () => v,
+      set: (val: unknown) => {
+        v = val;
+        this.checked = v as boolean;
+      },
+      configurable: true,
+      enumerable: true,
+    });
+    this.addEventListener('input', () => (v = this.checked));
+    return this;
+  },
+  bindAsNumber_(o, key) {
+    let v: unknown = o[key];
+    Object.defineProperty(o, key, {
+      get: () => v,
+      set: (v: unknown) => {
+        v = v;
+        this.valueAsNumber = v as number;
+      },
+      configurable: true, // & This makes it can be bound more times. But will override it.
+      enumerable: true,
+    });
+    this.addEventListener('input', () => (v = this.valueAsNumber));
+    return this;
+  },
+  bindAsDate_(o, key) {
+    let v: unknown = o[key];
+    Object.defineProperty(o, key, {
+      get: () => v,
+      set: (v: unknown) => {
+        v = v;
+        this.valueAsDate = v as Date;
+      },
+      configurable: true, // & This makes it can be bound more times. But will override it.
+      enumerable: true,
+    });
+    this.addEventListener('input', () => (v = this.valueAsDate));
+    return this;
+  },
+  bindCheckboxGroup_(o, key) {
+    if (this.type !== 'checkbox') {
+      _throw('bindCheckboxGroup_ should be called on a checkbox input element');
+    }
+    let v: string[] = [];
+    checkboxesSym; // TODO 这里如何避免覆盖前一个
+    Object.defineProperty(o, key, {
+      get: () => v,
+      set: (val: string[]) => {
+        v = val;
+
+        this.checked = v.includes(this.value);
+      },
+      configurable: true,
+      enumerable: true,
+    });
+    this.addEventListener('change', () => {
+      if (this.checked) {
+        if (!v.includes(this.value)) {
+          v.push(this.value);
+        }
+        return;
+      }
+      const i = v.indexOf(this.value);
+      if (i !== -1) {
+        v[i] = v[v.length - 1];
+        v.pop();
+      }
+    });
+    return this;
+  },
+  bindRadioGroup_(o, key) {
+    if (this.type !== 'radio') {
+      _throw('bindRadioGroup_ should be called on a radio input element');
+    }
+    let v = o[key] as string;
+    Object.defineProperty(o, key, {
+      get: () => v,
+      set: (val: string) => {
+        v = val;
+        this.checked = v === this.value;
+      },
+      configurable: true,
+      enumerable: true,
+    });
+    this.addEventListener('change', () => (this.checked = v === this.value));
     return this;
   },
 } as HTMLInputElement);

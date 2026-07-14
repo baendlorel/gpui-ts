@@ -9,10 +9,10 @@ const plugins = () => [
     delimiters: ['', ''],
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 
-    // global $throw
-    "$throw('": `throw new Error('[zed-gpui error] `,
-    '$throw(`': 'throw new Error(`[zed-gpui error] ',
-    '$throw("': `throw new Error("[zed-gpui error] `,
+    // global _throw
+    "_throw('": `throw new Error('[zed-gpui] `,
+    '_throw(`': 'throw new Error(`[zed-gpui] ',
+    '_throw("': `throw new Error("[zed-gpui] `,
   }),
 ];
 

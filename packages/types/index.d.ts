@@ -1,1 +1,1 @@
-declare function $throw(message: string): never;
+declare function _throw(message: string): never;
