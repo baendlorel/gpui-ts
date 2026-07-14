@@ -74,6 +74,8 @@ $_(HTMLInputElement, {
         privateValue = v;
         this.value = v as string;
       },
+      configurable: true, // & This makes it can be bound more times. But will override it.
+      enumerable: true,
     });
     this.addEventListener('input', () => (privateValue = this.value));
     return this;
