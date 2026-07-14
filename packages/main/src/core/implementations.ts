@@ -2,7 +2,7 @@ import type { ZedGpuiFuncional } from './types.js';
 
 type ActualElement = HTMLElement | SVGElement | MathMLElement;
 
-export const implementation = {
+export const implementation: ZedGpuiFuncional = {
   tap_(fn) {
     fn(this);
     return this;
