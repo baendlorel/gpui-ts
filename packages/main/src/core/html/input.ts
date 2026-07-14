@@ -56,7 +56,15 @@ declare global {
     bindRadioGroup_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
-const checkboxesSym = Symbol('zed-gpui.checkboxes');
+const CHECKBOXES = Symbol('zed-gpui.checkboxes');
+const RADIOS = Symbol('zed-gpui.radios');
+
+interface BoundObject {
+  [CHECKBOXES]: Record<string, HTMLInputElement[]>;
+  [RADIOS]: Record<string, HTMLInputElement[]>;
+  [key: string]: unknown;
+}
+
 $_(HTMLInputElement, {
   placeholder_(value) {
     this.placeholder = value;
@@ -153,53 +161,81 @@ $_(HTMLInputElement, {
     this.addEventListener('input', () => (v = this.valueAsDate));
     return this;
   },
-  bindCheckboxGroup_(o, key) {
+  bindCheckboxGroup_(o: any, key) {
     if (this.type !== 'checkbox') {
       _throw('bindCheckboxGroup_ should be called on a checkbox input element');
     }
-    let v: string[] = [];
-    checkboxesSym; // TODO 这里如何避免覆盖前一个
-    Object.defineProperty(o, key, {
-      get: () => v,
-      set: (val: string[]) => {
-        v = val;
+    o[CHECKBOXES] ??= {};
+    o[CHECKBOXES][key] ??= [];
 
-        this.checked = v.includes(this.value);
-      },
-      configurable: true,
-      enumerable: true,
-    });
+    const group = o[CHECKBOXES][key] as HTMLInputElement[];
+
+    let v: string[] = [];
+    if (group.length === 0) {
+      Object.defineProperty(o, key, {
+        get: () => v,
+        set: (val: string[]) => {
+          v = val;
+          for (const el of group) {
+            el.checked = v.includes(el.value);
+          }
+        },
+        configurable: true,
+        enumerable: true,
+      });
+    }
+
+    group.push(this);
+    this.checked = v.includes(this.value);
+
     this.addEventListener('change', () => {
+      const values = o[key] as string[];
       if (this.checked) {
-        if (!v.includes(this.value)) {
-          v.push(this.value);
+        if (!values.includes(this.value)) {
+          values.push(this.value);
         }
-        return;
-      }
-      const i = v.indexOf(this.value);
-      if (i !== -1) {
-        v[i] = v[v.length - 1];
-        v.pop();
+      } else {
+        const i = values.indexOf(this.value);
+        if (i !== -1) {
+          values[i] = values[values.length - 1];
+          values.pop();
+        }
       }
     });
     return this;
   },
-  bindRadioGroup_(o, key) {
+  bindRadioGroup_(o: any, key) {
     if (this.type !== 'radio') {
       _throw('bindRadioGroup_ should be called on a radio input element');
     }
-    let v = o[key] as string;
-    Object.defineProperty(o, key, {
-      get: () => v,
-      set: (val: string) => {
-        v = val;
-        this.checked = v === this.value;
-      },
-      configurable: true,
-      enumerable: true,
+    o[RADIOS] ??= {};
+    o[RADIOS][key] ??= [];
+
+    const group: HTMLInputElement[] = o[RADIOS][key];
+
+    let v: string = o[key] ?? '';
+    if (group.length === 0) {
+      Object.defineProperty(o, key, {
+        get: () => v,
+        set: (newVal: string) => {
+          v = newVal;
+          group.forEach((e) => (e.checked = e.value === v));
+        },
+        configurable: true,
+        enumerable: true,
+      });
+    }
+
+    group.push(this);
+    this.checked = this.value === o[key];
+    this.addEventListener('change', () => {
+      if (this.checked) {
+        v = this.value;
+      }
     });
-    this.addEventListener('change', () => (this.checked = v === this.value));
     return this;
   },
 } as HTMLInputElement);
 export {};
+
+// TODO TEST 待编写测试
