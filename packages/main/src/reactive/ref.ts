@@ -42,7 +42,7 @@ export class Ref<T> extends Reactive<T> {
   set value(newValue: T) {
     const old = this._value;
     this._value = newValue;
-    this.listeners.forEach((v) => v(newValue, old));
+    this.notify(newValue, old);
   }
 }
 
@@ -56,7 +56,7 @@ export class Computed<T> extends Reactive<T> {
     this._value = getter();
 
     for (let i = 0; i < reactives.length; i++) {
-      // @ts-expect-error
+      // @ts-expect-error this is because computes is protected.
       reactives[i].computes.add(this);
     }
   }
