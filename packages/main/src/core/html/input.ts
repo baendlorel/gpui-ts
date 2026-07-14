@@ -29,6 +29,26 @@ declare global {
      * @param key Key of the object.
      */
     bind_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
+
+    /**
+     * Same as `bind_` but uses `input.valueAsNumber`
+     */
+    bindAsNumber_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
+
+    /**
+     * Same as `bind_` but uses `input.valueAsDate`
+     */
+    bindAsDate_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
+
+    /**
+     * Change of this checkbox element will toggle the `this.value` in the result array.
+     */
+    bindCheckboxGroup_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
+
+    /**
+     * Change of this radio element will toggle `o[key]` by the selected `this.value`.
+     */
+    bindRadioGroup_<T extends Record<string, unknown> | unknown[]>(o: T, key: keyof T): this;
   }
 }
 $_(HTMLInputElement, {
@@ -71,7 +91,7 @@ $_(HTMLInputElement, {
     return this.on_('input', handler as EventListener, options);
   },
 
-  // bind
+  // TODO 这里要正确绑定name相同的checkbox、radio
   bind_(o, key) {
     let privateValue: unknown = o[key];
     Object.defineProperty(o, key, {
